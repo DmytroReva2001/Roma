@@ -1,0 +1,56 @@
+<div class="container mt-5">
+    <div class="row">
+        <!-- Columna de imágenes adicionales -->
+        <div class="col-md-6">
+            <div class="row mb-2">
+                <div class="col-3">
+                    <img src="{{ imagenesAdicionales[image - 1] ? imagenesAdicionales[image - 1] : 'addImage.png' }}" class="img-principal img-fluid mb-2" alt="Empty Image# {{image}}" *ngFor="let image of [1, 2, 3, 4];" (click)="openFilePicker(image)">
+                </div>
+                <div class="col">
+                    <!-- Imagen principal -->
+                    <img src="{{imagenPrincipal ? imagenPrincipal: 'addImage.png'}}" class="img-secundaria img-fluid mb-2" alt="Empty First Image" (click)="openFilePicker(0)">
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna del formulario -->
+        <div class="col-md-6">
+            <!-- Formulario -->
+            <form [formGroup]="formularioProducto" (ngSubmit)="guardarProducto()">
+                <!-- Nombre -->
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" formControlName="nombreProducto" required>
+                </div>
+                <!-- Descripción Corta -->
+                <div class="form-group">
+                    <label for="descripcionCorta">Descripción Corta:</label>
+                    <input type="text" class="form-control" id="descripcionCorta" formControlName="descripcionCorta" >
+                </div>
+                <!-- Descripción Larga -->
+                <div class="form-group">
+                    <label for="descripcionLarga">Descripción Larga:</label>
+                    <textarea class="form-control" id="descripcionLarga" formControlName="descripcionLarga" rows="3" required></textarea>
+                </div>
+                <!-- Precio -->
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <input type="number" class="form-control" id="precio" formControlName="precio" step="0.01" min="0" required>
+                </div>
+                <!-- Tipo de Producto -->
+                <div class="form-group">
+                    <label for="tipoProducto">Tipo de Producto:</label>
+                    <select class="form-control" id="tipoProducto" formControlName="tipoProducto" required>
+                        <option value="" disabled selected>Seleccione...</option> <!-- Agregamos la opción predeterminada -->
+                        <option *ngFor="let tipo of tiposDeProductos" [value]="tipo.tipoProducto">{{ tipo.tipoProducto }}</option>
+                    </select>
+                </div>
+                <!-- Botón de guardar -->
+                <button type="submit" class="btn btn-dark m-2" [disabled]="formularioProducto.invalid || !hayImagenes()">Guardar</button>
+                <button type="submit" class="btn btn-danger m-2" (click)="clearData()">Restablecer formulario</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Input file oculto -->
+<input type="file" #fileInput accept="image/*" style="display:none" (change)="handleFileChange($event)">

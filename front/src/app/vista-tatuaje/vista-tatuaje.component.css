@@ -1,0 +1,20 @@
+img
+{
+height: 500px;
+width: auto;
+}
+
+.row
+{
+margin:5px;
+background-color: white;
+}
+
+/* Estilo geeneral de contenedor */
+.sobre-nosotros {
+    padding: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px 10px 10px 10px;
+}

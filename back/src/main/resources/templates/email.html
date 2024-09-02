@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Template</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .email-container {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .email-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .email-body {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .email-footer {
+            font-size: 14px;
+            color: #888;
+            margin-top: 20px;
+        }
+        a {
+            color: #FFFFFF !important;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #000000;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .cta-button:hover {
+            background-color: #555;
+        }
+        .email-logo {
+            max-width: 100px;
+            height: auto;
+        }
+        .logo-block {
+            padding: 3%;
+            background-color: #000000;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="logo-block">
+        <img src="https://drive.google.com/uc?export=view&id=1r5Jl6OIjfOi3EjEoapKIj4mX_0rf4Wg7" alt="Logo" class="email-logo"/>
+    </div>
+    <div class="email-header">
+        ¡Hola, <span th:text="${name}">Nombre</span>!
+    </div>
+    <div class="email-body">
+        <span th:text="${mensaje}">Mensaje</span>
+    </div>
+    <a th:if="${subject == 'Registro'}" th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/activate(token=${token})}" class="cta-button">Activar</a>
+    <a th:if="${subject == 'Recuperación de contraseña'}" th:href="@{https://qlf28rf1-4200.uks1.devtunnels.ms/nueva_clave(token=${token})}" class="cta-button">Recuperar contraseña</a>
+    <div class="email-footer">
+        <p>&copy; 2024 <span th:text="${companyName}"></span>. Todos los derechos reservados.</p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+/* Estilo general de header */
+.header {
+  background-color: #000000;
+  color: white;
+  padding: 10px 15px; /* Ajuste el padding para un mejor espacio en móviles */
+}
+
+/* Estilo de logo */
+.logo {
+  width: 60px;
+  height: auto;
+  margin-right: 15px; /* Cambiado a margin-right para separación */
+}
+
+/* Estilo de enlaces de nav */
+.nav-link {
+  font-size: 16px;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+/* Estilo de enlaces de nav con hover*/
+.nav-link:hover {
+  color: rgb(185, 185, 185);
+}
+
+/* Estilo de enlace de elemento de login */
+.login-link {
+  font-size: 16px;
+  padding: 5px 10px;
+  transition: color 0.3s ease;
+}
+
+/* Estilo de enlace de elemento de login para su alineación */
+.loginblock {
+  margin-left: auto;
+}
+
+/* Estilo de toggler (vista móvil) */
+.navbar-toggler {
+  border-color: #ffffff;
+  background-color: white;
+}
+
+/* Alineación de texto de dropdown */
+.dropdown-menu {
+  text-align: center;
+}

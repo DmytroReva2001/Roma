@@ -1,0 +1,118 @@
+<div class="container">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="text-center">
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">
+              <img src="logo.png" alt="Logo" class="logo">
+            </a>
+          </div>
+
+          <!-- Dependiendo de apartado seleccionado aparece el texto correspondiente -->
+          <h2 class="text-center">{{ formMode === 'login' ? 'Inicio de sesión' : 'Registro' }}</h2>
+
+          <!-- Formulario de Inicio de sesión con su control de formulario y control de errores con config de acción al enviar el formulario -->
+          <form *ngIf="formMode === 'login'" [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" class="form-control" formControlName="email">
+              <div *ngIf="loginForm.get('email')!.invalid && loginForm.get('email')!.touched" class="text-danger">
+                El email es requerido y debe ser válido.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" id="password" class="form-control" formControlName="password">
+              <div *ngIf="loginForm.get('password')!.invalid && loginForm.get('password')!.touched" class="text-danger">
+                La contraseña es requerida.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-secondary w-100" [disabled]="loginForm.invalid">Iniciar sesión</button>
+            
+            <!-- Bloque de recuperación de contraseña -->
+            <div class="auth-switch text-center mt-2">
+              <p>¿Has olvidado la contraseña?<br><span class="link-like" (click)="restablecerPassword()">Recuperar contraseña</span></p>
+            </div>
+
+            <!-- Separador -->
+            <div class="my-1">
+              <hr class="hr-text" data-content="O">
+            </div>
+
+            <!-- Bloque de invitación a crear una cuenta -->
+            <div class="auth-switch text-center">
+              <p>¿No tienes cuenta? ¡Creala!</p>
+            </div>
+
+            <div class="auth-switch text-center mt-1">
+              <button type="button" (click)="switchToRegister()" class="btn btn-outline-dark">Registrarse</button>
+            </div>
+          </form>
+
+          <!-- Formulario de Registro con su control de formulario y control de errores con config de acción al enviar el formulario -->
+          <form *ngIf="formMode === 'register'" [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" class="form-control" formControlName="email">
+              <div *ngIf="registerForm.get('email')!.invalid && registerForm.get('email')!.touched" class="text-danger">
+                El email es requerido y debe ser válido.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" id="password" class="form-control" formControlName="password">
+              <div *ngIf="registerForm.get('password')!.invalid && registerForm.get('password')!.touched" class="text-danger">
+                <strong>La contraseña debe tener:</strong><br>Al menos 6 caracteres.<br>Una letra mayúscula.<br>Una letra minúscula.<br>Un número.<br>Un carácter especial.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" id="nombre" class="form-control" formControlName="nombre">
+              <div *ngIf="registerForm.get('nombre')!.invalid && registerForm.get('nombre')!.touched" class="text-danger">
+                El nombre es requerido.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="apellidos" class="form-label">Apellidos</label>
+              <input type="text" id="apellidos" class="form-control" formControlName="apellidos">
+              <div *ngIf="registerForm.get('apellidos')!.invalid && registerForm.get('apellidos')!.touched" class="text-danger">
+                Los apellidos son requeridos.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="telefono" class="form-label">Teléfono</label>
+              <input type="number" id="telefono" class="form-control" formControlName="telefono">
+              <div *ngIf="registerForm.get('telefono')!.invalid && registerForm.get('telefono')!.touched" class="text-danger">
+                El teléfono es requerido y debe ser válido.
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-secondary w-100" [disabled]="registerForm.invalid">Registrarse</button>
+            
+            <!-- Separador -->
+            <div class="my-3">
+              <hr class="hr-text" data-content="O">
+            </div>
+
+            <!-- Bloque de invitación a iniciar sesión -->
+            <div class="auth-switch text-center">
+              <p>Si ya tienes cuenta, inicie sesión.</p>
+            </div>
+
+            <div class="auth-switch text-center mt-1">
+              <button type="button" (click)="switchToLogin()" class="btn btn-outline-dark">Iniciar sesión</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

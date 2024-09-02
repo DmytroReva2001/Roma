@@ -1,0 +1,11 @@
+.btns
+{
+    width: 100%;
+    text-align: center;
+}
+
+.btns button
+{
+    width: 40%;
+    margin: 1%;
+}

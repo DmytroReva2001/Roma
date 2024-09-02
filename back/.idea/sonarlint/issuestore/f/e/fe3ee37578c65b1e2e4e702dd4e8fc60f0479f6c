@@ -1,0 +1,5 @@
+
+	java:S112!"FDefine and throw a dedicated exception instead of using a generic one.(ÌÚ¯úÿÿÿÿ8ÉÖ÷“ÿ1J$a1bd0eeb-d808-4fc1-a364-15e5c048097d
+	java:S1126"FDefine and throw a dedicated exception instead of using a generic one.(ÌÚ¯úÿÿÿÿ8ÊÖ÷“ÿ1J$5cdb5dfe-80de-415f-9ec6-520112719226
+¨
+java:S3655?"fCall "optionalInformacion.isPresent()" or "!optionalInformacion.isEmpty()" before accessing the value.(ºÄîS8í‚æá2J$2bfc7d10-c85e-4dfa-b874-6016c130cc1c

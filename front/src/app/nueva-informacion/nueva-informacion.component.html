@@ -1,0 +1,45 @@
+<div class="container mt-5">
+
+  <div class="col-md-6">
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary" (click)="switchToTexto()" [class.active]="formMode === 'texto'">Texto</button>
+      <button type="button" class="btn btn-secondary" (click)="switchToImagen()" [class.active]="formMode === 'imagen'">Imagen</button>
+    </div>
+  </div>
+
+  <div class="col-md-6 m-2 p-2">
+    <form [formGroup]="infoFormTexto" *ngIf="formMode === 'texto'">
+      <div class="form-group">
+        <label for="dato">Título:</label>
+        <input type="text" class="form-control" formControlName="dato">
+      </div>
+      
+      <div class="form-group">
+        <label for="valor">Valor:</label>
+        <input type="text" class="form-control" formControlName="valor">
+      </div>
+      
+      <div class="form-group m-2">
+        <label for="isUrl">¿Es una URL?</label>
+        <input type="checkbox" (change)="checkboxChange($event)" [checked]="informacion.tipoDato === 'url'">    
+      </div>    
+      
+      <button type="button" class="btn btn-success mt-2" (click)="onSubmit()">Guardar</button>
+    </form>
+    
+    <form [formGroup]="infoFormImagen" *ngIf="formMode === 'imagen'">
+      <div class="form-group">
+        <label for="dato">Título:</label>
+        <input type="text" class="form-control" formControlName="dato">
+      </div>
+      
+      <div class="form-group m-2">
+        <input type="file" (change)="handleFileChange($event)" #fileInput style="display: none">
+        <img src="{{imagen ? imagen: 'addImage.png'}}" class="img-secundaria img-fluid mb-2" alt="Empty First Image" (click)="openFilePicker()">
+
+      </div>
+      
+      <button type="button" class="btn btn-success" (click)="onSubmit()">Guardar</button>
+    </form>
+  </div>
+</div>

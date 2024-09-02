@@ -1,0 +1,28 @@
+  /* Ajusta el tamaño del logo */
+  .logo {
+    max-width: 60px; 
+    height: auto;
+  }
+  
+  /* Estilo para los card */
+  .card {
+    border-radius: 1rem;
+  }
+  
+  /* Ajuste de la anchura de los botones */
+  .btn {
+    width: 100%;
+  }
+
+  /* Estilo para botón de recuperación de contraseña que simula un enlace */
+  .link-like {
+    color: #007bff; /* Color típico de enlace */
+    text-decoration: underline; /* Subrayado como los enlaces */
+    cursor: pointer; /* Cambia el cursor a la mano */
+  }
+  
+  /* Hover de botón de recuperación de contraseña */
+  .link-like:hover {
+    color: #0056b3; /* Color más oscuro al pasar el ratón */
+    text-decoration: none; /* Quita el subrayado al pasar el ratón */
+  }

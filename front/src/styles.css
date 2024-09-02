@@ -1,0 +1,93 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* Estilo general de página */
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-image: url('/background.png');
+  background-repeat: repeat;
+  background-size: 10%;
+}
+
+/* Estilo para botón de recuperación de contraseña que simula un enlace */
+.volver {
+  padding: 1%;
+  color: #000000;
+  /* Color típico de enlace */
+  cursor: pointer;
+  /* Cambia el cursor a la mano */
+  background-color: white;
+}
+
+/* Hover de botón de recuperación de contraseña */
+.volver:hover {
+  color: #525252;
+  /* Color más oscuro al pasar el ratón */
+  text-decoration: underline;
+}
+
+.estilo-card-productos {
+  background-color: black;
+  color: white;
+  border-radius: 20px 20px 20px 20px;
+  width: 32%;
+}
+
+@media screen and (max-width: 768px) {
+  .estilo-card-productos
+  {
+    background-color: black;
+    color:white;
+    border-radius: 20px 20px 20px 20px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Estilos para el contenido principal de productos */
+.ropa-image img {
+  height: 400px;
+  width: 100%;
+}
+
+.tatuaje-image img {
+  height: 500px;
+  width: 100%;
+}
+
+/* Estilo para quitar transparencia que sobra de las imagenes */
+.product-image {
+  background-color: white;
+  border-radius: 20px 20px 20px 20px;
+  padding: 10%;
+}
+
+/* Estilo para los card de los productos */
+.estilo-card-tatuajes
+{
+  background-color: black;
+  color:white;
+  border-radius: 20px 20px 20px 20px;
+  width: 100%;
+  height: 100%;
+  flex: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .estilo-card-tatuajes
+  {
+    background-color: black;
+    color:white;
+    border-radius: 20px 20px 20px 20px;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .estilo-card-productos,
+  .estilo-card-tatuajes {
+    margin: auto; /* Center the cards horizontally */
+  }
+}

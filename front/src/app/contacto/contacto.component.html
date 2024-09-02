@@ -1,0 +1,21 @@
+<div class="container-fluid mt-5">
+  <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <!-- Contenido -->
+        <h2>Contacto</h2>
+        <p>Contacta con {{informacion.nombreEmpresa}} a través de las redes sociales o directamente a través de teléfono. También puedes encontrar el local en Google Maps.</p>
+        <div class="contact-info">
+            <h4>Información de contacto:</h4>
+            <p><i class="bi bi-whatsapp"></i> <a href="tel:{{informacion.telefono}}"> {{informacion.telefono}}</a></p>
+            <p><i class="bi bi-envelope-at"></i> <a href="mailto:{{informacion.email}}"> {{informacion.email}}</a></p>
+            <p><i class="bi bi-instagram"></i> <a href="{{informacion.instagram}}" target="_blank"> Instagram</a></p>
+            <p><i class="bi bi-geo-alt"></i> <a href="{{informacion.ubicacion}}" target="_blank"> {{informacion.nombreEmpresa}}</a></p>
+        </div>
+        <div class="mt-4">
+            <h4>Horarios de atención:</h4>
+            <p>{{informacion.horarioLaboral}}</p>
+            <p>{{informacion.horarioDescanso}}</p>
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+.logo
+{
+    width: 120px;
+    height: auto;
+    padding-bottom: 20px;
+}
+
+/* Estilo geeneral de contenedor */
+.container {
+  background-color: #f9f9f9;
+  padding: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.txt_tattoo
+{
+  width: 100%;
+  text-align: center;
+  background-color: black;
+  color: white;
+  padding:1%;
+  border-radius: 30px 30px 30px 30px;
+}

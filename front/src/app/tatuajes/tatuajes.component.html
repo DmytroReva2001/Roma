@@ -1,0 +1,36 @@
+<div class="container-fluid p-5">
+
+  <h3 class="txt_tattoo"><strong>Diseños destacados:</strong></h3>
+
+  <!-- Contenido principal de tatuajes -->
+  <div class="row">
+    <div class="col-md-4 mb-2" *ngFor="let tatuaje of tatuajes">
+      <div type="button" class="estilo-card-tatuajes m-1 p-2" (click)="verMas(tatuaje)">
+        <div class="product-image tatuaje-image justify-content-center align-items-center">
+          <img [src]="tatuaje.imagenes[0]" [alt]="tatuaje.nombreTatuaje">
+        </div>
+        <div class="card-body d-flex flex-column m-2">
+          <h5 class="card-title">{{ tatuaje.nombreTatuaje }}</h5>
+          <p class="card-text">{{ tatuaje.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Contenido adicional "Sobre Nosotros" -->
+<div class="container">
+  <div class="row">
+      <div class="col text-center">
+          <img src="logo.png" class="logo mx-auto d-block" alt="Logo">
+          <p class="text-center">Para nosotros, los tatuajes no son solo dibujos, sino un arte, al igual que la ropa.</p>
+          <p class="text-center">Estamos aquí para ayudarte a encontrar el diseño perfecto que has estado soñando. Ya sea tu primer tatuaje o uno más para añadir a tu colección, nuestro equipo está listo para hacer realidad tus ideas.</p>
+          <p class="text-center">También tenemos una gran variedad de ropa que tendrán nuestros diseños personalizados.</p>
+          <p class="text-center">¡Pide tu cita! Puedes contactarnos a través de teléfono, WhatsApp, correo electrónico o visitar nuestro local en Sevilla.</p>
+          <div class="d-flex justify-content-center">
+              <button [routerLink]="['/contacto']" class="btn btn-outline-dark">Contáctanos</button>
+          </div>
+      </div>
+  </div>
+</div>

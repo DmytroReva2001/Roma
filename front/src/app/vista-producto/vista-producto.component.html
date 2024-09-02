@@ -1,0 +1,39 @@
+<div class="volver" [routerLink]="['/menu_ropa']">
+<i class="bi bi-arrow-left"> Volver</i>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <!-- Columna de imágenes adicionales -->
+    <div class="col-md-6 text-center">
+
+    <img [src]="selectedImage" class="img-fluid" (click)="abrirImg()" alt="{{ product.nombreProducto }}">
+
+      <div class="row">
+        <div class="col-3" *ngFor="let imagen of product.imagenes; let i = index">
+          <!-- Iterar sobre las imágenes del producto -->
+          <img 
+            [src]="imagen" 
+            class="img-fluid" 
+            [alt]="product.nombreProducto" 
+            (click)="selectImage(imagen)">
+        </div>        
+      </div>
+    </div>
+
+    <!-- Columna de la descripción con botón "Comprar" -->
+    <div class="col-md-6">
+      <div class="row mb-2">
+          <h2>{{ product.nombreProducto }}</h2>
+          <h4>{{ product.descripcionCorta }}</h4>
+          <p class="lead">{{ product.descripcionLarga }}</p>
+          <!-- Dividir el precio en dos partes para aplicar estilos -->
+          <h4>
+            <span class="integer">{{ product.precio.toFixed(0) }}</span>
+            <sup class="decimal">{{ product.precio.toFixed(2).split('.')[1] }} €</sup>
+          </h4>
+        <button class="btn btn-outline-dark">Comprar</button>
+      </div>
+    </div>
+  </div>
+</div>

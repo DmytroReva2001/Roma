@@ -1,0 +1,28 @@
+/* Estilo para los dígitos enteros del precio */
+.integer {
+  font-size: 25px; /* Tamaño de fuente más grande para los dígitos enteros */
+}
+
+/* Estilo para los decimales del precio */
+.decimal {
+  font-size: 18px; /* Tamaño de fuente más pequeño para los decimales */
+}
+
+img
+{
+  width: 400px;
+  height: 400px;
+  
+}
+
+.col-3 img
+{
+  width: 100px;
+  height: 100px;
+}
+
+.row
+{
+  margin:5px;
+  background-color: white;
+}

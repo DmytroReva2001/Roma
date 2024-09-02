@@ -1,0 +1,113 @@
+/* Estilo para los controles de carrusel */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+    margin: 1%
+}
+
+/* Estilo para los controles de carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 25px; /* Tamaño de los íconos de control */
+    height: 25px;
+    background-color: #8a8a8a; /* Color de las flechas */
+    border-radius: 50%;
+}
+
+/* Estilo para los h2 */
+h2 {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Ajuste de espaciado entre bloques */
+.carousel {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Establecer margenes entre las filas de contenido */
+.row {
+    margin-bottom: 30px;
+}
+
+/* Estilo para el logo */
+.logo
+{
+    width: 120px;
+    height: auto;
+    padding-bottom: 20px;
+}
+
+/* Estilo para las imagenes de los card */
+.card img
+{
+    width: 400px;
+    height: 400px;
+}
+
+/* Estilo para los card en hover */
+.card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el ratón */
+}
+
+/* Estilo para las imagenes de carrousel */
+.card-img-top {
+    max-width: 100%; /* Ancho máximo del contenedor */
+    max-height: 100%; /* Altura máxima del contenedor */
+    width: auto; /* Ancho automático para mantener la proporción */
+    height: auto; /* Altura automática para mantener la proporción */
+    object-fit: contain; /* Ajusta la imagen para contenerse dentro del contenedor */
+}
+
+/* Estilo de botón de "Ver más" */
+.btn-ver-mas {
+    margin-top: auto; /* Mover el botón hacia abajo */
+    display: block; /* Mostrar el botón como bloque para centrarlo */
+    margin-left: auto; /* Centrar el botón horizontalmente */
+    margin-right: auto;
+}
+
+/* Estilo geeneral de contenedor */
+.container {
+    background-color: #f9f9f9;
+    padding: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilo para las tarjetas de productos y tatuajes */
+.card {
+    background-color: #fff; /* Fondo blanco */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: box-shadow 0.3s ease; /* Transición suave de sombra */
+    display: flex;
+    flex-direction: column; /* Cambiar a columna en dispositivos móviles */
+    height: 100%; /* Asegura que la tarjeta ocupe toda la altura disponible */
+}
+
+/* Estilo para el contenido de cada card */
+.card-body {
+    flex: 1; /* Ocupar todo el espacio vertical disponible */
+    padding: 1rem; /* Añade un poco de espacio interior */
+    text-align: center; /* Centrar texto en dispositivos móviles */
+    border-radius: 10px 10px 10px 10px;
+}
+
+/* Estilo para título de cada carrousel */
+.background-title-carrousel {
+    background-color: #f7f7f7;
+    padding: 20px; /* Espaciado interno para mayor legibilidad */
+    border-radius: 10px; /* Borde redondeado */
+}
+
+/* Estilo para texto de cada objeto de carrousel */
+.carrousel-text
+{
+    background-color: #000000;
+    color: white;
+    text-align: center; /* Centrar texto en dispositivos móviles */
+    margin-right: 5%;
+    margin-left: 5%
+}

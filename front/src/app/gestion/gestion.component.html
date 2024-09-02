@@ -1,0 +1,86 @@
+<div class="container-fluid p-5">
+
+  <div class="btn-add">
+    <i type="button" class="bi bi-plus-circle text-success" (click)="addElemento()"> Añadir {{formatString(nombreElemento, false)}}</i>
+  </div>
+
+  <div class="row">
+    <div class="estilo-card-productos p-2 m-2 center" *ngFor="let elemento of elementos">
+      <ng-container *ngIf="nombreElemento === 'productos'">
+        <div type="button" (click)="editarElemento(elemento.id)">
+        <div class="product-image ropa-image justify-content-center align-items-center">
+          <img [src]="elemento.imagenes[0]" [alt]="elemento.nombreProducto">
+        </div>
+
+        <div class="card-body d-flex flex-column m-2">
+          <h5 class="card-title">{{ elemento.nombreProducto }}</h5>
+          <p class="card-text">{{ elemento.descripcionCorta }}</p>
+          <h4>
+            <strong>
+              <span>{{ elemento.precio.toFixed(0) }}</span>
+              <sup>{{ elemento.precio.toFixed(2).split('.')[1] }} €</sup>
+            </strong>
+          </h4>
+          </div>
+      </div>
+      </ng-container>
+
+      <ng-container *ngIf="nombreElemento === 'tatuajes'">
+        <div type="button" (click)="editarElemento(elemento.id)">
+        <div class="product-image tatuaje-image justify-content-center align-items-center">
+          <img [src]="elemento.imagenes[0]" [alt]="elemento.nombreTatuaje">
+        </div>
+
+        <div class="card-body d-flex flex-column m-2">
+          <h5 class="card-title">{{ elemento.nombreTatuaje }}</h5>
+          <p class="card-text">{{ elemento.descripcion }}</p>
+        </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="nombreElemento === 'tipos_productos'">
+        <div class="card-body d-flex flex-column m-2 p-2">
+          <h5 class="custom-title card-title text-center p-2 m-2">{{ elemento.tipoProducto }}</h5>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="nombreElemento === 'informacion'">
+        <div class="card-body d-flex flex-column m-2 text-center">
+          <h5 class="custom-title card-title p-1">{{ formatString(elemento.dato, true) }}:</h5>
+      
+          <ng-container *ngIf="elemento.tipoDato === 'imagen'; else urlCheck">
+            <img class="img-info m-auto mt-3" [src]="elemento.valor" />
+          </ng-container>
+      
+          <ng-template #urlCheck>
+          <ng-container *ngIf="elemento.tipoDato === 'url'; else emailCheck">
+            <a [href]="elemento.valor" target="_blank" class="mt-2">Enlace</a>
+          </ng-container>
+          </ng-template>
+
+          <ng-template #emailCheck>
+            <ng-container *ngIf="elemento.tipoDato === 'email'; else telefonoCheck">
+              <a href="mailto:{{elemento.valor}}" target="_blank" class="mt-2">{{elemento.valor}}</a>
+            </ng-container>
+            </ng-template>
+
+            <ng-template #telefonoCheck>
+              <ng-container *ngIf="elemento.tipoDato === 'telefono'; else defaultCheck">
+                <a href="tel:{{elemento.telefono}}" target="_blank" class="mt-2">{{elemento.valor}}</a>
+              </ng-container>
+              </ng-template>
+      
+          <ng-template #defaultCheck>
+            <p class="card-text mt-3">{{ elemento.valor }}</p>
+          </ng-template>
+        </div>
+      </ng-container>
+
+      <div class="btn-container m-1 p-1">
+        <button type="button" class="btn btn-primary m-1" (click)="editarElemento(elemento.id)">Editar</button>
+        <button type="button" class="btn btn-danger m-1" (click)="eliminarElemento(elemento.id)">Eliminar</button>
+      </div>
+    </div>
+
+  </div>
+</div>

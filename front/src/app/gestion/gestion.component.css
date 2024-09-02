@@ -1,0 +1,25 @@
+.btn {
+    width: 48%;
+}
+
+.bi {
+    font-size: 30px;
+    background-color: white;
+    margin: auto;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.custom-title {
+    background-color: white;
+    color: black;
+    border-radius: 20px 20px 20px 20px;
+}
+
+.img-info {
+    width: 100px;
+}
+
+.btn-container {
+    text-align: center;
+}

@@ -1,0 +1,64 @@
+<!-- Estructura del encabezado de navegación -->
+<div class="header">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <!-- Logo de la página -->
+    <a class="navbar-brand" href="#">
+      <img src="logoblanco.png" alt="Logo" class="logo">
+    </a>
+    <!-- Botón para desplegar menú en dispositivos móviles -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menú de navegación -->
+    <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!-- Opción de menú "Ropa" -->
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/menu_ropa']">Ropa</a>
+        </li>
+        <!-- Opción de menú "Tatuajes" -->
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/tatuajes']">Tatuajes</a>
+        </li>
+        <!-- Opción de menú "Contacto" -->
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/contacto']">Contacto</a>
+        </li>
+      </ul>
+      
+      <!-- Bloque de inicio de sesión -->
+      <ul class="navbar-nav loginblock">
+        <!-- Menú desplegable para usuarios autenticados -->
+        <li class="nav-item dropstart" *ngIf="isAuthenticated; else loginBlock">
+          <div class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+            {{ userName }}
+          </a>
+          <!-- Menú desplegable con opciones adicionales -->
+          <ul class="dropdown-menu">
+            <!-- Opciones para administradores -->
+            <ng-container *ngIf="isAdmin">
+              <li><a class="dropdown-item" [routerLink]="['/productos_admin']">Productos</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/gestion', 'tatuajes']">Tatuajes</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/gestion', 'informacion']">Información</a></li>
+              
+              <div class="dropdown-divider"></div>
+            </ng-container>
+            <!-- Opción para cerrar sesión -->
+            <li><a class="dropdown-item" (click)="logout()">Cerrar sesión</a></li>
+          </ul>
+        </div>
+        </li>
+        <!-- Plantilla para el bloque de inicio de sesión -->
+        <ng-template #loginBlock>
+          <li class="nav-item">
+            <a class="nav-link login-link" [routerLink]="['/auth']">Iniciar sesión</a>
+          </li>
+        </ng-template>
+      </ul>
+      
+    </div>
+  </nav>
+</div>

@@ -1,0 +1,86 @@
+<!-- Carrusel de tatuajes -->
+<div id="carouselTatuajes" class="carousel slide mt-5" data-ride="carousel" data-interval="5000">
+    <div class="carousel-inner p-4">
+        <div class="carrousel-title text-center background-title-carrousel fs-5">
+            <p><strong>Diseños destacados:</strong></p>
+        </div>
+        <div *ngFor="let tatuaje of tatuajes; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+            <div class="card product-card mx-auto p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <img class="card-img-top mx-auto d-block" [src]="tatuaje.imagenes[0]" [alt]="tatuaje.nombreTatuaje">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="carrousel-text card-body text-center text-md-left">
+                            <h5 class="card-title">{{ tatuaje.nombreTatuaje }}</h5>
+                            <p class="card-text">
+                                {{ tatuaje.descripcion }}
+                            </p>
+                            <div class="d-flex justify-content-center">
+                                <button [routerLink]="['/tatuajes']" type="button" class="btn btn-sm btn-outline-light btn-ver-mas">Ver más</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Controles de avance y retroceso -->
+    <a class="carousel-control-prev" href="#carouselTatuajes" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next" href="#carouselTatuajes" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </a>
+</div>
+
+<!-- Carrusel de productos -->
+<div id="carouselProductos" class="carousel slide mt-5" data-ride="carousel" data-interval="5000">
+    <div class="carousel-inner p-4">
+        <div class="carrousel-title text-center background-title-carrousel fs-5">
+            <p><strong>Ropa destacada:</strong></p>
+        </div>
+        <div *ngFor="let product of products; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+            <div class="card product-card mx-auto p-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <img class="card-img-top mx-auto d-block" [src]="product.imagenes[0]" [alt]="product.nombreProducto">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="carrousel-text card-body text-center text-md-left">
+                            <h5 class="card-title">Explora {{product.tipoProducto}} de {{informacion.nombreEmpresa}}</h5>
+                            <p class="card-text">{{ product.nombreProducto }}</p>
+                            <p class="card-text">{{ product.descripcionLarga }}</p>
+                            <div class="d-flex justify-content-center">
+                                <button [routerLink]="['/menu_ropa', product.tipoProducto]" type="button" class="btn btn-sm btn-outline-light btn-ver-mas">Ver {{product.tipoProducto}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Controles de avance y retroceso -->
+    <a class="carousel-control-prev" href="#carouselProductos" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next" href="#carouselProductos" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </a>
+</div>
+
+<!-- Contenido adicional "Sobre Nosotros" -->
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <img src="logo.png" class="logo mx-auto d-block" alt="Logo">
+            <p class="text-center">Para nosotros, los tatuajes no son solo dibujos, sino un arte, al igual que la ropa.</p>
+            <p class="text-center">Estamos aquí para ayudarte a encontrar el diseño perfecto que has estado soñando. Ya sea tu primer tatuaje o uno más para añadir a tu colección, nuestro equipo está listo para hacer realidad tus ideas.</p>
+            <p class="text-center">También tenemos una gran variedad de ropa que tendrán nuestros diseños personalizados.</p>
+            <p class="text-center">¡Pide tu cita! Puedes contactarnos a través de teléfono, WhatsApp, correo electrónico o visitar nuestro local en Sevilla.</p>
+            <div class="d-flex justify-content-center">
+                <button [routerLink]="['/contacto']" class="btn btn-outline-dark">Contáctanos</button>
+            </div>
+        </div>
+    </div>
+</div>

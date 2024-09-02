@@ -1,0 +1,40 @@
+
+˜	java:S117\"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®à´Èúÿÿÿÿ8ËÂ€õ€2J$db5cc4e7-e68e-4cdf-a1ac-bb77c6c5e764
+y
+java:S18746"1Remove this use of "setClaims"; it is deprecated.(Ûªæ§ûÿÿÿÿ8æÂ€õ€2J$c701d37b-2164-4d42-ae3e-a4003d6cf483
+u
+java:S18747"2Remove this use of "setSubject"; it is deprecated.(òÃêù8æÂ€õ€2J$b1d4b846-6ce8-44e3-8104-df6400679dd4
+v
+java:S18748"3Remove this use of "setIssuedAt"; it is deprecated.(øÔ÷ò8çÂ€õ€2J$f2bf2531-52d6-4fbe-8d29-cde3ae45a802
+}
+java:S18749"5Remove this use of "setExpiration"; it is deprecated.(ã§ĞŸÿÿÿÿÿ8èÂ€õ€2J$1365fa17-7855-4561-a063-6ad6b8e4ed47
+s
+java:S1874:"0Remove this use of "signWith"; it is deprecated.(ÅşØ·8èÂ€õ€2J$2e6bb581-26e5-46fb-bd3a-c03e5acb1d79
+}
+java:S1874:":Remove this use of "SignatureAlgorithm"; it is deprecated.(ÅşØ·8éÂ€õ€2J$c5e360f7-1662-4e20-9de5-e81b2dee1a35
+}
+java:S1874:":Remove this use of "SignatureAlgorithm"; it is deprecated.(ÅşØ·8éÂ€õ€2J$8345e0d3-0a5f-478f-8a12-e20c02705b7b
+w
+java:S1874V"5Remove this use of "setSigningKey"; it is deprecated.(¨½–88Çøõ€2J$86373153-9673-4f65-9da7-c29cbb937e9d
+~
+java:S1874X"6Remove this use of "parseClaimsJws"; it is deprecated.(ëÙ–ºıÿÿÿÿ8Èøõ€2J$426ee756-f1aa-47dd-9d30-8ceb6531436a
+r
+java:S1874Y"/Remove this use of "getBody"; it is deprecated.(ÊÄ¿Ì8Èøõ€2J$02e37377-6580-482e-b9a8-670d6a249b41
+w
+java:S1874h"5Remove this use of "setSigningKey"; it is deprecated.(¨½–88Á¿›õ€2J$24c377f4-80c0-4065-8702-ca60aca28642
+~
+java:S1874j"6Remove this use of "parseClaimsJws"; it is deprecated.(ËƒÎÑüÿÿÿÿ8Â¿›õ€2J$c9bd75f6-6a8b-4476-a63c-7c77348f4fde
+y
+java:S1874n"1Remove this use of "setClaims"; it is deprecated.(“‡¾˜ıÿÿÿÿ8·™õ€2J$3ed1fd46-bc75-4e26-82f1-ec91d726e057
+w
+java:S1874n"/Remove this use of "getBody"; it is deprecated.(“‡¾˜ıÿÿÿÿ8ä˜™õ€2J$62b40fe0-feca-4067-a57f-547244d29525
+}
+java:S1874o"5Remove this use of "setExpiration"; it is deprecated.(Ñôøƒüÿÿÿÿ8ä˜™õ€2J$07ab89be-34a8-4fe3-94fd-02ed7f785379
+s
+java:S1874p"0Remove this use of "signWith"; it is deprecated.(ÅşØ·8¸™õ€2J$ae00edb6-c46e-4b90-9b95-ec9e4c829635
+}
+java:S1874p":Remove this use of "SignatureAlgorithm"; it is deprecated.(ÅşØ·8¸™õ€2J$693d2300-88f2-4890-a926-5b303cbeb907
+}
+java:S1874p":Remove this use of "SignatureAlgorithm"; it is deprecated.(ÅşØ·8å˜™õ€2J$9c882b2d-2723-48bb-87e1-3881c5e4ceb2
+ƒ
+java:S1128";Remove this unused import 'romatattoo.entities.UserTienda'.(„äƒâûÿÿÿÿ8Â»Ãá2J$77ab383e-4110-47de-8e98-39452035af94
