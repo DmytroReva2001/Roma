@@ -25,7 +25,12 @@
 
             <div class="mb-3">
               <label for="password" class="form-label">Contraseña</label>
+              <div class="password">
               <input type="password" id="password" class="form-control" formControlName="password">
+              <button type="button" (click)="togglePasswordVisibility('login')">
+                <img src="https://cdn-icons-png.flaticon.com/512/6405/6405909.png">
+              </button>
+              </div>
               <div *ngIf="loginForm.get('password')!.invalid && loginForm.get('password')!.touched" class="text-danger">
                 La contraseña es requerida.
               </div>
@@ -65,7 +70,12 @@
 
             <div class="mb-3">
               <label for="password" class="form-label">Contraseña</label>
-              <input type="password" id="password" class="form-control" formControlName="password">
+              <div class="password">
+                <input type="password" id="password" class="form-control" formControlName="password">
+                <button type="button" (click)="togglePasswordVisibility('login')">
+                  <img src="https://cdn-icons-png.flaticon.com/512/6405/6405909.png">
+                </button>
+                </div>
               <div *ngIf="registerForm.get('password')!.invalid && registerForm.get('password')!.touched" class="text-danger">
                 <strong>La contraseña debe tener:</strong><br>Al menos 6 caracteres.<br>Una letra mayúscula.<br>Una letra minúscula.<br>Un número.<br>Un carácter especial.
               </div>

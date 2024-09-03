@@ -202,4 +202,18 @@ export class AuthComponent {
       }
     });
   }
+
+  togglePasswordVisibility(formType: string) {
+    const passwordField = formType === 'login' ? this.loginForm.get('password') : this.registerForm.get('password');
+    const passwordFieldElement = document.getElementById('password');
+  
+    if (passwordFieldElement) {
+      if (passwordFieldElement.getAttribute('type') === 'password') {
+        passwordFieldElement.setAttribute('type', 'text');
+      } else {
+        passwordFieldElement.setAttribute('type', 'password');
+      }
+    }
+  }
+  
 }
