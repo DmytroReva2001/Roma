@@ -23,3 +23,8 @@
 .btn-container {
     text-align: center;
 }
+
+.estilo-card-productos {
+    display: flex;
+    flex-direction: column;
+}
