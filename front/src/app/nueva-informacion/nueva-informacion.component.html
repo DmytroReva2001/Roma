@@ -24,7 +24,8 @@
         <input type="checkbox" (change)="checkboxChange($event)" [checked]="informacion.tipoDato === 'url'">    
       </div>    
       
-      <button type="button" class="btn btn-success mt-2" (click)="onSubmit()">Guardar</button>
+      <button type="button" class="btn btn-success m-1" (click)="onSubmit()">Guardar</button>
+      <button type="button" class="btn btn-danger m-1" (click)="back();">Cancelar</button>
     </form>
     
     <form [formGroup]="infoFormImagen" *ngIf="formMode === 'imagen'">
@@ -39,7 +40,8 @@
 
       </div>
       
-      <button type="button" class="btn btn-success" (click)="onSubmit()">Guardar</button>
+      <button type="button" class="btn btn-success m-1" (click)="onSubmit()">Guardar</button>
+      <button type="button" class="btn btn-danger m-1" (click)="back();">Cancelar</button>
     </form>
   </div>
 </div>

@@ -46,8 +46,9 @@
                     </select>
                 </div>
                 <!-- Botón de guardar -->
-                <button type="submit" class="btn btn-dark m-2" [disabled]="formularioProducto.invalid || !hayImagenes()">Guardar</button>
-                <button type="submit" class="btn btn-danger m-2" (click)="clearData()">Restablecer formulario</button>
+                <button type="submit" class="btn btn-success m-2" [disabled]="formularioProducto.invalid || !hayImagenes()">Guardar</button>
+                <button type="button" class="btn btn-danger m-1" (click)="back();">Cancelar</button>
+                <p><button type="submit" class="btn btn-warning m-2" (click)="clearData()">Restablecer formulario</button></p>
             </form>
         </div>
     </div>

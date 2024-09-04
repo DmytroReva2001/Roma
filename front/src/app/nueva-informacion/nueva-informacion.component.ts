@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { informacion } from '../models/informacion';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-nueva-informacion',
@@ -29,6 +30,7 @@ export class NuevaInformacionComponent implements OnInit{
     private infoService: InfoService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private location: Location
   ) {
     this.infoFormTexto = this.fb.group({
       id: [''],
@@ -199,5 +201,10 @@ export class NuevaInformacionComponent implements OnInit{
         });
       }
     });
+  }
+
+  back()
+  {
+    this.location.back();
   }
 }

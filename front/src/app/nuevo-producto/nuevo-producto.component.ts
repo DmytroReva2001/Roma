@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Producto } from '../models/producto';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -29,6 +30,7 @@ export class NuevoProductoComponent implements OnInit{
     private productoService: ProductoService,
     private tipoProductoService: TipoProductoService,
     private route: ActivatedRoute,
+    private location: Location
   ) {
     this.formularioProducto = this.fb.group({
       id: [''],
@@ -215,5 +217,9 @@ export class NuevoProductoComponent implements OnInit{
         }
       }
     });
+  }
+  back()
+  {
+    this.location.back();
   }
 }

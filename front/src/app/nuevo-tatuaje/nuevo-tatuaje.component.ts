@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Tatuaje } from '../models/tatuaje';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-nuevo-tatuaje',
@@ -25,6 +26,7 @@ export class NuevoTatuajeComponent implements OnInit{
     private fb: FormBuilder,
     private tatuajeService: TatuajeService,
     private route: ActivatedRoute,
+    private location: Location
   ) {
     this.formularioTatuaje = this.fb.group({
       id: [''],
@@ -223,4 +225,8 @@ export class NuevoTatuajeComponent implements OnInit{
     });
   }
   
+  back()
+  {
+    this.location.back();
+  }
 }
