@@ -1,6 +1,5 @@
 // Importaciones de módulos y servicios necesarios
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { InfoService } from '../services/info.service';
 import { AuthService } from '../services/auth.service';
 import { UserTiendaService } from '../services/user-tienda.service';
 import { Subscription } from 'rxjs';
@@ -24,17 +23,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // Constructor para inicializar servicios y obtener información
   constructor(
-    private infoService: InfoService,
     private authService: AuthService,
     private userTiendaService: UserTiendaService,
     private router: Router
-  ) {
-    this.infoService.getInformacion().subscribe(datos => {
-      datos.forEach(item => {
-        this.informacion[item.dato] = item.valor;
-      });
-    });
-  }
+  ) {}
 
   // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
