@@ -1,1 +1,64 @@
-<p>mi-perfil works!</p>
+<div class="container">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow">
+        <div class="card-body">
+
+          <form [formGroup]="updateForm" (ngSubmit)="onSubmitUpdate()" *ngIf="user">
+              
+              <div class="mb-3">
+                  <label for="imagen" class="form-label text-center">Foto de perfil</label>
+                  <img src="{{ user.imagen ? user.imagen : 'emptyAccountImage.jpg' }}" class="img-fluid mb-2" alt="Empty Image# {{accountImage}}" (click)="pickImg()">
+              </div>
+              
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" formControlName="email">
+                <div *ngIf="updateForm.get('email')!.invalid && updateForm.get('email')!.touched" class="text-danger">
+                  El email es requerido y debe ser válido.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                  
+                <!-- Meter boton de cambio de contraseña con dlg de contraseña antigua y 2 nuevas y botón de recuperar contraseña -->
+
+                <div *ngIf="updateForm.get('password')!.invalid && updateForm.get('password')!.touched" class="text-danger">
+                  <strong>La contraseña debe tener:</strong><br>Al menos 6 caracteres.<br>Una letra mayúscula.<br>Una letra minúscula.<br>Un número.<br>Un carácter especial.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" class="form-control" formControlName="nombre">
+                <div *ngIf="updateForm.get('nombre')!.invalid && updateForm.get('nombre')!.touched" class="text-danger">
+                  El nombre es requerido.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="apellidos" class="form-label">Apellidos</label>
+                <input type="text" id="apellidos" class="form-control" formControlName="apellidos">
+                <div *ngIf="updateForm.get('apellidos')!.invalid && updateForm.get('apellidos')!.touched" class="text-danger">
+                  Los apellidos son requeridos.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="number" id="telefono" class="form-control" formControlName="telefono">
+                <div *ngIf="updateForm.get('telefono')!.invalid && updateForm.get('telefono')!.touched" class="text-danger">
+                  El teléfono es requerido y debe ser válido.
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-outline-secondary w-100" [disabled]="updateForm.invalid">Actualizar</button>
+              <button class="btn btn-outline-error w-100" (click)='back()' >Cancelar</button>
+            </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

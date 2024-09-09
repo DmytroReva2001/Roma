@@ -26,39 +26,3 @@
     color: #0056b3; /* Color más oscuro al pasar el ratón */
     text-decoration: none; /* Quita el subrayado al pasar el ratón */
   }
-
-  .password img
-  {
-    width: 150%;
-    transition: 0.3s;
-    border-radius: 50%;
-  }
-
-  .password
-  {
-    display: flex; 
-    align-items: center;
-  }
-
-  .password input
-  {
-    flex:1;
-  }
-
-  .password button
-  {
-    flex: 0 0 10%;
-    border: none;
-    background-color: transparent;
-    text-align: center;
-  }
-
-  .password img:hover
-  {
-    background-color: #a2adba;
-  }
-
-.password input[type="text"] + button
-img {
-    background-color: #7a828b;
-}

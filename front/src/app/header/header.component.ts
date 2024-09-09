@@ -21,29 +21,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAdmin: boolean = false;
   private authSubscription: Subscription | undefined;
 
-  // Constructor para inicializar servicios y obtener información
   constructor(
     private authService: AuthService,
     private userTiendaService: UserTiendaService,
     private router: Router
   ) {}
 
-  // Método que se ejecuta al iniciar el componente
   ngOnInit(): void {
-    this.checkAuthentication();
     this.authSubscription = this.authService.authChanged.subscribe({
       next: (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
         if (this.isAuthenticated) {
-          this.updateUser();
+          this.updateUserAndRole();
         } else {
           this.user = {} as User;
         }
       }
     });
+    
+    this.checkAuthentication(); // Unificamos la lógica de autenticación inicial
   }
 
-  // Método que se ejecuta al destruir el componente
   ngOnDestroy(): void {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
@@ -56,8 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       next: (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
         if (this.isAuthenticated) {
-          this.updateUser();
-          this.updateRoleUser();
+          this.updateUserAndRole(); // Unificamos la actualización del usuario y rol
         } else {
           this.user = {} as User;
         }
@@ -66,29 +63,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Actualiza el rol del usuario
-  updateRoleUser() 
-  {
-    this.authService.isAdmin().subscribe({
-      next: (role) => this.isAdmin = role,
-      error: (error) => console.error('Error fetching user name', error)
-    });
-  }
-
-  // Actualiza el usuario
-  updateUser(): void {
+  // Actualiza el usuario y el rol
+  updateUserAndRole(): void {
     this.userTiendaService.getUser().subscribe({
       next: (user) => this.user = user,
       error: (error) => console.error('Error fetching user', error),
     });
-  }  
+
+    this.authService.isAdmin().subscribe({
+      next: (role) => this.isAdmin = role,
+      error: (error) => console.error('Error fetching user role', error)
+    });
+  }
 
   // Método para cerrar sesión
   logout(): void {
-    // Muestra un mensaje de confirmación antes de cerrar sesión
     Swal.fire({
       title: "¿Estas seguro de cerrar sesión?",
-      text: "",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -97,7 +88,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       cancelButtonText: "No"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Elimina el token del almacenamiento local, actualiza el estado de autenticación y redirige a la página de inicio de sesión
         localStorage.removeItem('token');
         this.authService.updateAuthStatus(false);
         this.isAuthenticated = false;
