@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { UserTiendaService } from '../services/user-tienda.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router'; // Importa Router correctamente
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',

@@ -2,7 +2,7 @@
 <i class="bi bi-arrow-left"> Volver</i>
 </div>
 
-<div class="container mt-5">
+<div *ngIf="product" class="container mt-5">
   <div class="row">
     <!-- Columna de imágenes adicionales -->
     <div class="col-md-6 text-center">
@@ -32,7 +32,7 @@
             <span class="integer">{{ product.precio.toFixed(0) }}</span>
             <sup class="decimal">{{ product.precio.toFixed(2).split('.')[1] }} €</sup>
           </h4>
-        <button class="btn btn-outline-success">Comprar</button>
+        <button (click)="buy(product)" class="btn btn-outline-success">Comprar</button>
       </div>
     </div>
   </div>

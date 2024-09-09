@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Producto } from '../models/producto';
 import { ProductoService } from '../services/producto.service';
 import Swal from 'sweetalert2';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vista-producto',
@@ -16,7 +18,9 @@ export class VistaProductoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private authService: AuthService,
+    private router: Router
   ) {}
   
   ngOnInit(): void {
@@ -58,4 +62,17 @@ export class VistaProductoComponent implements OnInit {
       showConfirmButton: false
     });
   }
+
+  buy(product: Producto) {
+    this.authService.tokenValidation().subscribe(isAuthenticated => {
+      if (isAuthenticated) {
+        console.log("User autenticado: ", isAuthenticated);
+        // Aquí puedes proceder con la lógica de compra
+      } else {
+        this.router.navigateByUrl('/auth');
+        Swal.fire("Para iniciar la compra, inicie sesión");
+      }
+    });
+  }
+  
 }
