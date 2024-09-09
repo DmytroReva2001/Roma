@@ -4,7 +4,6 @@ import { Producto } from '../models/producto';
 import { ProductoService } from '../services/producto.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vista-producto',
@@ -15,12 +14,12 @@ export class VistaProductoComponent implements OnInit {
   product!: Producto;
 
   selectedImage: string = '';
+  isAuthenticated: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private productoService: ProductoService,
     private authService: AuthService,
-    private router: Router
   ) {}
   
   ngOnInit(): void {
@@ -46,6 +45,10 @@ export class VistaProductoComponent implements OnInit {
         this.selectImage(this.product.imagenes[0]);
       });
     }
+
+    this.authService.tokenValidation().subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+    });
   }  
 
   // Método para seleccionar la imagen principal
@@ -63,16 +66,9 @@ export class VistaProductoComponent implements OnInit {
     });
   }
 
-  buy(product: Producto) {
-    this.authService.tokenValidation().subscribe(isAuthenticated => {
-      if (isAuthenticated) {
-        console.log("User autenticado: ", isAuthenticated);
-        // Aquí puedes proceder con la lógica de compra
-      } else {
-        this.router.navigateByUrl('/auth');
-        Swal.fire("Para iniciar la compra, inicie sesión");
-      }
-    });
+  buy(producto: Producto)
+  {
+    
   }
   
 }

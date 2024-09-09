@@ -32,7 +32,14 @@
             <span class="integer">{{ product.precio.toFixed(0) }}</span>
             <sup class="decimal">{{ product.precio.toFixed(2).split('.')[1] }} €</sup>
           </h4>
-        <button (click)="buy(product)" class="btn btn-outline-success">Comprar</button>
+          <div *ngIf="isAuthenticated; else loginMessage">
+            <button (click)="buy(product)" class="btn btn-outline-success">Comprar</button>
+          </div>
+          
+          <!-- Mensaje si no está autenticado -->
+          <ng-template #loginMessage>
+            <p class="m-4">Para iniciar la compra, <a [routerLink]="['/auth']">inicie sesión</a>.</p>
+          </ng-template>
       </div>
     </div>
   </div>
