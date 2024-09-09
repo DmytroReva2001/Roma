@@ -2,7 +2,7 @@
     <i class="bi bi-arrow-left"> Volver</i>
     </div>
     
-    <div class="container mt-5">
+    <div *ngIf="tatuaje" class="container mt-5">
       <div class="row">
         <div class="col-md-6 text-center">  
         <img [src]="selectedImage" class="img-fluid" (click)="abrirImg()" alt="{{ tatuaje.nombreTatuaje }}">
