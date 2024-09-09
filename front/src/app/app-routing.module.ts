@@ -10,6 +10,7 @@ import { NuevoTatuajeComponent } from './nuevo-tatuaje/nuevo-tatuaje.component';
 import { NuevoTipoProductoComponent } from './nuevo-tipo-producto/nuevo-tipo-producto.component';
 import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './auth/role.guard';
+import { AuthenticatedGuard } from './auth/role.guard';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { ProductosAdminComponent } from './productos-admin/productos-admin.component';
 import { ActivateComponent } from './activate/activate.component';
@@ -17,6 +18,8 @@ import { NuevaClaveComponent } from './nueva-clave/nueva-clave.component';
 import { VistaTatuajeComponent } from './vista-tatuaje/vista-tatuaje.component';
 import { GestionComponent } from './gestion/gestion.component';
 import { NuevaInformacionComponent } from './nueva-informacion/nueva-informacion.component';
+import { CestaComponent } from './cesta/cesta.component';
+import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 
 const routes: Routes = [
   // Componentes sin header y footer
@@ -46,6 +49,8 @@ const routes: Routes = [
       { path: 'nuevo_tipo_producto/:id', component: NuevoTipoProductoComponent, canActivate: [AuthGuard] },
       { path: 'productos_admin', component: ProductosAdminComponent, canActivate: [AuthGuard] },
       { path: 'gestion/:elemento', component: GestionComponent, canActivate: [AuthGuard] },
+      { path: 'mi-perfil', component: MiPerfilComponent, canActivate: [AuthenticatedGuard] },
+      { path: 'cesta', component: CestaComponent, canActivate: [AuthenticatedGuard] },
     ]
   }
 ];

@@ -25,6 +25,8 @@ import { NuevaClaveComponent } from './nueva-clave/nueva-clave.component';
 import { VistaTatuajeComponent } from './vista-tatuaje/vista-tatuaje.component';
 import { GestionComponent } from './gestion/gestion.component';
 import { NuevaInformacionComponent } from './nueva-informacion/nueva-informacion.component';
+import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
+import { CestaComponent } from './cesta/cesta.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { NuevaInformacionComponent } from './nueva-informacion/nueva-informacion
     VistaTatuajeComponent,
     GestionComponent,
     NuevaInformacionComponent,
+    MiPerfilComponent,
+    CestaComponent,
   ],
   imports: [
     BrowserModule,

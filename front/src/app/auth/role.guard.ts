@@ -53,3 +53,31 @@ export const AuthGuard: CanActivateFn = (route, state) => {
     })
   );
 };
+
+export const AuthenticatedGuard: CanActivateFn = () => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  const restrictedRoutes = ['/mi_perfil', '/cesta'];
+
+  // Consultamos el método de validación de token
+  return authService.tokenValidation().pipe(
+    // Consultamos si hay user autenticado cuando accede a un ruta restringuida
+    switchMap(isAuthenticated => {
+      // Si user no está autenticado
+      if (!isAuthenticated) {
+        // Lo dirigimos a login
+        router.navigateByUrl('/auth');
+        return of(false);
+      } 
+      // Si tiene token
+      else {
+        return of(true);
+      }
+    }),
+    catchError(() => {
+      // Si hay error general se dirige a menú principal
+      router.navigateByUrl('/auth');
+      return of(false);
+    })
+  );
+}
