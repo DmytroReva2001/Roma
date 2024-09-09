@@ -6,6 +6,7 @@ import { UserTiendaService } from '../services/user-tienda.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // Variables de clase
   informacion: any = {};
   isAuthenticated = false;
-  userName: string = '';
+  user!: User;
   isAdmin: boolean = false;
   private authSubscription: Subscription | undefined;
 
@@ -42,9 +43,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       next: (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
         if (this.isAuthenticated) {
-          this.updateUserName();
+          this.updateUser();
         } else {
-          this.userName = '';
+          this.user = {} as User;
         }
       }
     });
@@ -63,10 +64,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       next: (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
         if (this.isAuthenticated) {
-          this.updateUserName();
+          this.updateUser();
           this.updateRoleUser();
         } else {
-          this.userName = '';
+          this.user = {} as User;
         }
       },
       error: (error) => console.error('Error during token validation', error)
@@ -82,13 +83,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Actualiza el nombre de usuario
-  updateUserName(): void {
-    this.userTiendaService.getUserName().subscribe({
-      next: (name) => this.userName = name,
-      error: (error) => console.error('Error fetching user name', error)
+  // Actualiza el usuario
+  updateUser(): void {
+    this.userTiendaService.getUser().subscribe({
+      next: (user) => this.user = user,
+      error: (error) => console.error('Error fetching user', error),
     });
-  }
+  }  
 
   // Método para cerrar sesión
   logout(): void {
@@ -108,7 +109,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         localStorage.removeItem('token');
         this.authService.updateAuthStatus(false);
         this.isAuthenticated = false;
-        this.userName = '';
+        this.user = {} as User;
         this.router.navigateByUrl('/auth');
       }
     });

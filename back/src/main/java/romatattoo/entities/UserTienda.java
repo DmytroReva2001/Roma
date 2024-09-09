@@ -36,6 +36,9 @@ public class UserTienda implements UserDetails {
 
     private String telefono;
 
+    @Column(name = "imagen", columnDefinition = "LONGTEXT")
+    private String imagen;
+
     // Campo de rol
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)

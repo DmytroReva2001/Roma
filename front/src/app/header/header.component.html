@@ -32,22 +32,33 @@
       <ul class="navbar-nav loginblock">
         <!-- Menú desplegable para usuarios autenticados -->
         <li class="nav-item dropstart" *ngIf="isAuthenticated; else loginBlock">
-          <div class="dropdown">
+          <div class="dropdown" *ngIf="user">
           <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-            {{ userName }}
+            <img class="account-image" 
+            [src]="user.imagen ? user.imagen : 'https://static.vecteezy.com/system/resources/previews/007/335/692/original/account-icon-template-vector.jpg'" 
+            alt="account image">
+            
+            {{ user.nombre }}
           </a>
           <!-- Menú desplegable con opciones adicionales -->
           <ul class="dropdown-menu">
+             <!-- Opciones para usuarios normales -->
+             <li><a class="dropdown-item" [routerLink]="['/cesta']"><i class="bi bi-person"></i> Mi perfil</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/cesta']"><i class="bi bi-cart"></i> Mi cesta</a></li>
+
+            <div class="dropdown-divider"></div>
+           
             <!-- Opciones para administradores -->
             <ng-container *ngIf="isAdmin">
-              <li><a class="dropdown-item" [routerLink]="['/productos_admin']">Productos</a></li>
-              <li><a class="dropdown-item" [routerLink]="['/gestion', 'tatuajes']">Tatuajes</a></li>
-              <li><a class="dropdown-item" [routerLink]="['/gestion', 'informacion']">Información</a></li>
-              
+              <li><strong>Admin:</strong></li>
+              <li><a class="dropdown-item" [routerLink]="['/productos_admin']"><i class="bi bi-pencil"></i> Productos</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/gestion', 'tatuajes']"><i class="bi bi-pencil"></i> Tatuajes</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/gestion', 'informacion']"><i class="bi bi-pencil"></i> Información</a></li>
+
               <div class="dropdown-divider"></div>
             </ng-container>
-            <!-- Opción para cerrar sesión -->
-            <li><a class="dropdown-item" (click)="logout()">Cerrar sesión</a></li>
+
+            <li><a class="dropdown-item" (click)="logout()"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
           </ul>
         </div>
         </li>

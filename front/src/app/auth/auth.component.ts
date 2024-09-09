@@ -40,10 +40,14 @@ export class AuthComponent {
   // Métodos para cambiar la vista de formularios
   switchToLogin() {
     this.formMode = 'login';
+    this.registerForm.reset();
+
   }
 
   switchToRegister() {
     this.formMode = 'register';
+    this.loginForm.reset();
+
   }
 
   // Métodos para enviar los formularios de Inicio de sesión y Registro con sus llamadas a los métodos correspondientes
@@ -203,8 +207,7 @@ export class AuthComponent {
     });
   }
 
-  togglePasswordVisibility(formType: string) {
-    const passwordField = formType === 'login' ? this.loginForm.get('password') : this.registerForm.get('password');
+  togglePasswordVisibility() {
     const passwordFieldElement = document.getElementById('password');
   
     if (passwordFieldElement) {

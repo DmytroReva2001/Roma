@@ -70,5 +70,9 @@ export class VistaProductoComponent implements OnInit {
   {
     
   }
-  
+
+  addCesta(producto: Producto)
+  {
+
+  }
 }

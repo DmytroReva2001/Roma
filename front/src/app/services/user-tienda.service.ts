@@ -2,9 +2,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { InfoService } from './info.service';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +17,15 @@ export class UserTiendaService {
     this.apiUrl = this.infoService.getAuthUrl()+this.apiUrl;
   }
 
-  getUserName(): Observable<string> {
+  getUser(): Observable<User> {
     const token = localStorage.getItem('token');
     if (!token) {
-      return of(''); // Si no hay token, devuelve un Observable con una cadena vacía
+      return of({} as User);
     }
-
+  
     const email = this.jwtHelper.decodeToken(token).sub;
     const params = new HttpParams().set('email', email);
-    return this.http.get<any>(`${this.apiUrl}/get_user`, {params}).pipe(
-      map(user => user.nombre)
-    );
+    return this.http.get<User>(`${this.apiUrl}/get_user`, { params });
   }
 
   activateUser(email: string): Observable<any> {
