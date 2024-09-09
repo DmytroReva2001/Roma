@@ -2,7 +2,7 @@
 <i class="bi bi-arrow-left"> Volver</i>
 </div>
 
-<div *ngIf="product" class="container mt-5">
+<div *ngIf="product" class="container mt-5 bg-white">
   <div class="row">
     <!-- Columna de imágenes adicionales -->
     <div class="col-md-6 text-center">
@@ -33,12 +33,12 @@
             <sup class="decimal">{{ product.precio.toFixed(2).split('.')[1] }} €</sup>
           </h4>
           <div *ngIf="isAuthenticated; else loginMessage">
-            <button (click)="buy(product)" class="btn btn-outline-success">Comprar</button>
+            <button (click)="buy(product)" class="btn btn-outline-success mt-4">Comprar</button>
           </div>
           
           <!-- Mensaje si no está autenticado -->
-          <ng-template #loginMessage>
-            <p class="m-4">Para iniciar la compra, <a [routerLink]="['/auth']">inicie sesión</a>.</p>
+          <ng-template #loginMessage class="text-center mt-4">
+            <p>Para iniciar la compra, <a [routerLink]="['/auth']">inicie sesión</a>.</p>
           </ng-template>
       </div>
     </div>
