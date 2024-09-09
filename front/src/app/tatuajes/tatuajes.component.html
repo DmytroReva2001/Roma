@@ -3,9 +3,9 @@
   <h3 class="txt_tattoo"><strong>Diseños destacados:</strong></h3>
 
   <!-- Contenido principal de tatuajes -->
-  <div class="row">
-    <div class="col-md-4 mb-2" *ngFor="let tatuaje of tatuajes">
-      <div type="button" class="estilo-card-tatuajes m-1 p-2" (click)="verMas(tatuaje)">
+  <div class="col-md-10">
+    <div class="row">
+      <div type="button" class="estilo-card-tatuajes m-2 p-2" *ngFor="let tatuaje of tatuajes" (click)="verMas(tatuaje)">
         <div class="product-image tatuaje-image justify-content-center align-items-center">
           <img [src]="tatuaje.imagenes[0]" [alt]="tatuaje.nombreTatuaje">
         </div>
