@@ -49,4 +49,30 @@ public class UserTiendaController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+    @PostMapping("/update_user_data")
+    public ResponseEntity<?> updateUser(@RequestBody UserTienda userTienda) {
+        try {
+            UserTienda userFromDb = userTiendaService.obtenerUserTiendaByEmail(userTienda.getEmail())
+                    .orElseThrow(() -> new Exception("Usuario no encontrado"));
+
+            userFromDb.setNombre(userTienda.getNombre());
+            userFromDb.setApellidos(userTienda.getApellidos());
+            userFromDb.setTelefono(userTienda.getTelefono());
+
+            userTiendaService.save(userFromDb);
+
+            // Respuesta de éxito con formato JSON
+            Map<String, String> response = Collections.singletonMap("message", "¡Cuenta actualizada correctamente!");
+            return ResponseEntity.ok(response);
+        }
+        catch (Exception e) {
+            // Crear un mensaje de error
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Ha ocurrido un error al actualizar la cuenta");
+
+            // Devolver una respuesta con el mensaje de error en formato JSON
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
 }

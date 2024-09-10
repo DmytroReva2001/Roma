@@ -6,23 +6,20 @@
 
           <form [formGroup]="updateForm" (ngSubmit)="onSubmitUpdate()" *ngIf="user">
               
-              <div class="mb-3">
-                  <label for="imagen" class="form-label text-center">Foto de perfil</label>
+              <div class="mb-3 text-center">
+                  <label for="imagen" class="form-label text-center">Foto de perfil</label><br>
                   <img src="{{ user.imagen ? user.imagen : 'emptyAccountImage.jpg' }}" class="img-fluid mb-2" alt="Empty Image# {{accountImage}}" (click)="pickImg()">
               </div>
               
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" formControlName="email">
-                <div *ngIf="updateForm.get('email')!.invalid && updateForm.get('email')!.touched" class="text-danger">
-                  El email es requerido y debe ser válido.
-                </div>
+                <button type="button" class="btn btn-secondary w-100" (click)='changeEmail()' >Cambiar email</button>
               </div>
 
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                   
-                <!-- Meter boton de cambio de contraseña con dlg de contraseña antigua y 2 nuevas y botón de recuperar contraseña -->
+                <button type="button" class="btn btn-secondary w-100" (click)='changePassword()' >Cambiar contraseña</button>
 
                 <div *ngIf="updateForm.get('password')!.invalid && updateForm.get('password')!.touched" class="text-danger">
                   <strong>La contraseña debe tener:</strong><br>Al menos 6 caracteres.<br>Una letra mayúscula.<br>Una letra minúscula.<br>Un número.<br>Un carácter especial.
@@ -53,8 +50,8 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-outline-secondary w-100" [disabled]="updateForm.invalid">Actualizar</button>
-              <button class="btn btn-outline-error w-100" (click)='back()' >Cancelar</button>
+              <button type="submit" class="btn btn-outline-primary w-100 mb-1" [disabled]="updateForm.invalid">Actualizar</button>
+              <button type="button" class="btn btn-outline-danger w-100 mt-1" (click)='back()' >Cancelar</button>
             </form>
 
         </div>

@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request ->
                         request
                                 .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/user_tienda/update_user_data").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
                                 .requestMatchers(HttpMethod.GET, API).permitAll()
                                 .requestMatchers(HttpMethod.POST, API).hasAnyAuthority(Role.ADMIN.toString())
                                 .requestMatchers(HttpMethod.PUT, API).hasAnyAuthority(Role.ADMIN.toString())

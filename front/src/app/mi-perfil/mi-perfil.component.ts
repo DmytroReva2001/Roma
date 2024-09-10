@@ -23,7 +23,7 @@ export class MiPerfilComponent implements OnInit{
   constructor(
     private userTiendaService: UserTiendaService,
     private fb: FormBuilder,
-    private authService: AuthService,
+    authService: AuthService,
     private location: Location
   ) {
     this.updateForm = this.fb.group({
@@ -44,7 +44,6 @@ export class MiPerfilComponent implements OnInit{
 
   private cargarUser() {
 
-    /*
     Swal.fire({
       title: "Cargando...",
       allowEscapeKey: false,
@@ -54,7 +53,6 @@ export class MiPerfilComponent implements OnInit{
         Swal.showLoading();
       }
     });
-    */
   
     this.userTiendaService.getUser().subscribe({
       next: (user) => {
@@ -70,8 +68,6 @@ export class MiPerfilComponent implements OnInit{
           password: this.user.password,
           imagen: this.user.imagen
         });
-        
-        console.log('Usuario cargado: ', this.user.nombre);
   
         // Cerramos el Swal solo cuando terminamos de cargar el usuario
         Swal.close();
@@ -99,7 +95,7 @@ export class MiPerfilComponent implements OnInit{
     // Comprobar si formulario es valido
     if (this.updateForm.valid) {
       // Llamamos al método que inicia el procedimiento de Registro
-      this.authService.register(this.updateForm.value).subscribe({
+      this.userTiendaService.updateUserData(this.updateForm.value).subscribe({
         next: () => {
           Swal.close();
           
@@ -108,17 +104,15 @@ export class MiPerfilComponent implements OnInit{
             text: "Datos actualizados correctamente",
             icon: "success"
           });
-          this.cargarUser();
         },
         error: (error: any) => {
+          Swal.close();
+
           Swal.fire({
             icon: "error",
             title: "Se ha producido un error al actualizar",
             text: error.error.message,
           });
-          this.cargarUser();
-
-          Swal.close();
         }
       });
     }
@@ -160,5 +154,15 @@ export class MiPerfilComponent implements OnInit{
         passwordFieldElement.setAttribute('type', 'password');
       }
     }
+  }
+
+  changePassword()
+  {
+
+  }
+
+  changeEmail()
+  {
+
   }
 }
