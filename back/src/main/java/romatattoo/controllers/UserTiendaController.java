@@ -56,6 +56,7 @@ public class UserTiendaController {
             UserTienda userFromDb = userTiendaService.obtenerUserTiendaByEmail(userTienda.getEmail())
                     .orElseThrow(() -> new Exception("Usuario no encontrado"));
 
+            userFromDb.setImagen(userTienda.getImagen());
             userFromDb.setNombre(userTienda.getNombre());
             userFromDb.setApellidos(userTienda.getApellidos());
             userFromDb.setTelefono(userTienda.getTelefono());

@@ -156,7 +156,7 @@ export class NuevoProductoComponent implements OnInit{
 
     // Llama al servicio para guardar el producto
     this.productoService.guardarProducto(productoDatos).subscribe({
-      next: (response) => {
+      next: () => {
         Swal.fire({
           title: 'Éxito',
           text: `Producto guardado correctamente.`,

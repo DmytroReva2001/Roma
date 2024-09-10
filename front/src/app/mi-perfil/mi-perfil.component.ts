@@ -102,6 +102,9 @@ export class MiPerfilComponent implements OnInit{
             title: "¡Éxito!",
             text: "Datos actualizados correctamente",
             icon: "success"
+          }).then(() => {
+            // Recargar la página después de que el usuario haya visto el mensaje de éxito
+            location.reload();
           });
         },
         error: (error: any) => {
@@ -111,6 +114,9 @@ export class MiPerfilComponent implements OnInit{
             icon: "error",
             title: "Se ha producido un error al actualizar",
             text: error.error.message,
+          }).then(() => {
+            // Recargar la página después de que el usuario haya visto el mensaje de éxito
+            location.reload();
           });
         }
       });
@@ -137,6 +143,11 @@ export class MiPerfilComponent implements OnInit{
       reader.onload = (e) => {
         const result = e.target?.result as string;
         this.user.imagen = result;
+
+        this.updateForm.patchValue({
+          imagen: this.user.imagen
+        });
+
       };
       reader.readAsDataURL(file);
     }
