@@ -4,11 +4,11 @@
         <div class="col-md-6">
             <div class="row mb-2">
                 <div class="col-3">
-                    <img src="{{ imagenesAdicionales[image - 1] ? imagenesAdicionales[image - 1] : 'addImage.png' }}" class="img-principal img-fluid mb-2" alt="Empty Image# {{image}}" *ngFor="let image of [1, 2, 3, 4];" (click)="openFilePicker(image)">
+                    <img src="{{ imagenesAdicionales[image - 1] ? imagenesAdicionales[image - 1] : 'addImage.png' }}" class="img-fluid mb-2" alt="Empty Image# {{image}}" *ngFor="let image of [1, 2, 3, 4];" (click)="openFilePicker(image)">
                 </div>
                 <div class="col">
                     <!-- Imagen principal -->
-                    <img src="{{imagenPrincipal ? imagenPrincipal: 'addImage.png'}}" class="img-secundaria img-fluid mb-2" alt="Empty First Image" (click)="openFilePicker(0)">
+                    <img src="{{imagenPrincipal ? imagenPrincipal: 'addImage.png'}}" class="img-fluid mb-2" alt="Empty First Image" (click)="openFilePicker(0)">
                 </div>
             </div>
         </div>

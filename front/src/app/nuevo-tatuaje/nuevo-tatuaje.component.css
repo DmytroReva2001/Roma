@@ -3,16 +3,15 @@ img
     background-color: white;
 }
 
-.img-principal
+.img-fluid
 {
     width: 100%;
     height: auto;
 }
 
-.img-secundaria
+.img-fluid:hover
 {
-    width: 100%;
-    height: auto;
+    opacity: 0.5;
 }
 
 .form-group
