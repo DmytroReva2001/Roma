@@ -141,7 +141,7 @@ public class AuthController {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está activado."));
                 }
 
-                emailController.sendEmail(email, userTienda.getNombre(), "Recuperación de contraseña", "Si no has solicitado recuperación de contraseña ignora este mensaje. Para recuperar la contraseña acceda a siguiente enlace:", jwtService.generateToken(userTienda, 1));
+                emailController.sendEmail(email, userTienda, "Recuperación de contraseña", "Si no has solicitado recuperación de contraseña ignora este mensaje. Para recuperar la contraseña acceda a siguiente enlace:", jwtService.generateToken(userTienda, 1));
                 return ResponseEntity.status(HttpStatus.OK).body(Collections.singletonMap("message", "Correo fue enviado correctamente."));
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está registrado."));
@@ -162,8 +162,63 @@ public class AuthController {
 
             if (optionalUser.isPresent()) {
                 UserTienda userTienda = optionalUser.get();
-                emailController.sendEmail(userTienda.getEmail(), userTienda.getNombre(), "Registro", "Bienvenido, para activar su cuenta acceda a siguiente enlace:", jwtService.generateToken(userTienda, 1));
+                emailController.sendEmail(userTienda.getEmail(), userTienda, "Registro", "Bienvenido, para activar su cuenta acceda a siguiente enlace:", jwtService.generateToken(userTienda, 1));
                 return ResponseEntity.status(HttpStatus.OK).body(Collections.singletonMap("message", "Correo fue enviado correctamente."));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está registrado."));
+            }
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Error inesperado, intentelo más tarde."));
+        }
+    }
+
+    // Método REST para el envío de correo de recuperación de contraseña de un usuario
+    @GetMapping("/send_change_email")
+    public ResponseEntity<Map<String, String>> sendChangeEmail(@RequestParam("oldEmail") String oldEmail, @RequestParam("newEmail") String newEmail) {
+        try {
+            // Validar si el usuario ya existe
+            Optional<UserTienda> optionalUser = userTiendaService.obtenerUserTiendaByEmail(oldEmail);
+
+            if (optionalUser.isPresent()) {
+                UserTienda userTienda = optionalUser.get();
+
+                if (!userTienda.isActive())
+                {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está activado."));
+                }
+
+                emailController.sendEmail(newEmail, userTienda, "Cambio de email", "Si no has solicitado cambio de email ignora este mensaje. Para cambiar su email acceda a siguiente enlace:", jwtService.generateToken(userTienda, 1));
+                return ResponseEntity.status(HttpStatus.OK).body(Collections.singletonMap("message", "Correo fue enviado correctamente."));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está registrado."));
+            }
+        }
+        catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Error inesperado, intentelo más tarde."));
+        }
+    }
+
+    // Método REST para el envío de correo de recuperación de contraseña de un usuario
+    @GetMapping("/change_email")
+    public ResponseEntity<Map<String, String>> changeEmail(@RequestParam("oldEmail") String oldEmail, @RequestParam("newEmail") String newEmail) {
+        try {
+            // Validar si el usuario ya existe
+            Optional<UserTienda> optionalUser = userTiendaService.obtenerUserTiendaByEmail(oldEmail);
+
+            if (optionalUser.isPresent()) {
+                UserTienda userTienda = optionalUser.get();
+
+                if (!userTienda.isActive())
+                {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está activado."));
+                }
+
+                userTienda.setEmail(newEmail);
+                userTiendaService.save(userTienda);
+                return ResponseEntity.status(HttpStatus.OK).body(Collections.singletonMap("message", "Correo fue actualizado correctamente."));
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Usuario con este email no está registrado."));
             }

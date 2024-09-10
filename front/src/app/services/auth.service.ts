@@ -122,4 +122,22 @@ export class AuthService {
     const params = new HttpParams().set('email', tokenPayload.sub);
     return this.http.get<any>(`${this.apiUrl}/email_activar_cuenta`, { params });
   }
+
+  // Método para cambiar el email
+  enviarCorreoEmail (oldEmail: string, newEmail:string,): Observable<any>
+  {
+    const params = new HttpParams()
+      .set('oldEmail', oldEmail)
+      .set('newEmail', newEmail);
+
+    return this.http.get<any>(`${this.apiUrl}/send_change_email`, { params });
+  }
+
+    // Método para cambiar la contraseña de un usuario
+    changeEmail(oldEmail: any, newEmail: any) {
+      const params = new HttpParams()
+      .set('oldEmail', oldEmail)
+      .set('newEmail', newEmail);
+      return this.http.get<any>(`${this.apiUrl}/change_email`, { params });
+    }
 }

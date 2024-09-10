@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import romatattoo.entities.Informacion;
+import romatattoo.entities.UserTienda;
 import romatattoo.services.EmailService;
 import romatattoo.services.InformacionService;
 
@@ -26,14 +27,14 @@ public class EmailController {
     private String companyName;
 
     // Método para configurar la plantilla de correo y enviarlo a base de Service
-    public String sendEmail(String to, String name, String subject, String mensaje, String token) {
+    public void sendEmail(String to, UserTienda userTienda, String subject, String mensaje, String token) {
 
         // Consultamos logo de empresa
         Informacion logoInfo = informacionService.obtenerDatoPorNombre("Logo");
         String logo = logoInfo.getValor();
 
         Map<String, Object> variables = new HashMap<>();
-        variables.put("name", name);
+        variables.put("name", userTienda.getNombre());
         variables.put("subject", subject);
         variables.put ("mensaje", mensaje);
         variables.put ("companyName", companyName);
@@ -46,8 +47,6 @@ public class EmailController {
             emailService.sendEmail(to, subject, "email", variables);
         } catch (MessagingException e) {
             e.printStackTrace();
-            return "Error al enviar email";
         }
-        return "Email enviado correctamente";
     }
 }

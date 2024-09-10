@@ -20,12 +20,14 @@ import { GestionComponent } from './gestion/gestion.component';
 import { NuevaInformacionComponent } from './nueva-informacion/nueva-informacion.component';
 import { CestaComponent } from './cesta/cesta.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
+import { NuevoEmailComponent } from './nuevo-email/nuevo-email.component';
 
 const routes: Routes = [
   // Componentes sin header y footer
   { path: 'auth', component: AuthComponent },
   { path: 'activate', component: ActivateComponent },
   { path: 'nueva_clave', component: NuevaClaveComponent },
+  { path: 'nuevo_email', component: NuevoEmailComponent },
   {
     path: '',
     component: MainLayoutComponent, // Utilizar MainLayoutComponent como contenedor principal

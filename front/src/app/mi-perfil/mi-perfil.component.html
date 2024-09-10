@@ -23,10 +23,6 @@
                 <label for="password" class="form-label">Contraseña</label>
                   
                 <button type="button" class="btn btn-secondary w-100" (click)='changePassword()' >Cambiar contraseña</button>
-
-                <div *ngIf="updateForm.get('password')!.invalid && updateForm.get('password')!.touched" class="text-danger">
-                  <strong>La contraseña debe tener:</strong><br>Al menos 6 caracteres.<br>Una letra mayúscula.<br>Una letra minúscula.<br>Un número.<br>Un carácter especial.
-                </div>
               </div>
 
               <div class="mb-3">
@@ -53,7 +49,7 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-outline-primary w-100 mb-1" [disabled]="updateForm.invalid">Actualizar</button>
+              <button type="submit" class="btn btn-outline-primary w-100 mb-1" [disabled]="updateForm.invalid || !isFormChanged()">Actualizar</button>
               <button type="button" class="btn btn-outline-danger w-100 mt-1" (click)='back()' >Cancelar</button>
             </form>
 
