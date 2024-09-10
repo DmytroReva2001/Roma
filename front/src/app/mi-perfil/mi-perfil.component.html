@@ -6,11 +6,14 @@
 
           <form [formGroup]="updateForm" (ngSubmit)="onSubmitUpdate()" *ngIf="user">
               
-              <div class="mb-3 text-center">
-                  <label for="imagen" class="form-label text-center">Foto de perfil</label><br>
-                  <img src="{{ user.imagen ? user.imagen : 'emptyAccountImage.jpg' }}" class="img-fluid mb-2" alt="Empty Image# {{accountImage}}" (click)="pickImg()">
+            <div class="mb-3 text-center">
+              <label for="imagen" class="form-label">Foto de perfil</label><br>
+              <div class="image-container" (click)="pickImg()">
+                <img [src]="user.imagen ? user.imagen : 'emptyAccountImage.jpg'" class="img-fluid" alt="Foto de perfil">
               </div>
-              
+            </div>
+            
+            
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <button type="button" class="btn btn-secondary w-100" (click)='changeEmail()' >Cambiar email</button>
