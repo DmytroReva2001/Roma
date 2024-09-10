@@ -16,7 +16,6 @@ export class MiPerfilComponent implements OnInit{
   
   user!: User;
   updateForm!: FormGroup;
-  accountImage: String = '';
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
@@ -136,9 +135,8 @@ export class MiPerfilComponent implements OnInit{
       const file = files[0];
       const reader = new FileReader();
       reader.onload = (e) => {
-      const result = e.target?.result as string;
-        
-      this.accountImage = result;
+        const result = e.target?.result as string;
+        this.user.imagen = result;
       };
       reader.readAsDataURL(file);
     }
