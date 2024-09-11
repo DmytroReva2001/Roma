@@ -3,7 +3,7 @@
     <div class="row">   
       <!-- Contenido principal de productos -->
         <div class="row">
-          <div type="button" class="estilo-card-productos m-1 p-2" *ngFor="let product of filteredProducts" (click)="verMas(product)">
+          <div type="button" class="estilo-card-productos m-1 p-2" *ngFor="let product of cestProducts" (click)="verMas(product)">
             <div class="product-image ropa-image justify-content-center align-items-center">
               <img [src]="product.imagenes[0]" [alt]="product.nombreProducto">
             </div>
