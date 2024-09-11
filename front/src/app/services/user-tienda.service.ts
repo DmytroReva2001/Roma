@@ -34,7 +34,7 @@ export class UserTiendaService {
   }
 
   // Método para actualizar a un usuario
-  updateUserData(registerData: any): Observable<any> {
+  updateUserData(updateData: any): Observable<any> {
 
     const token = localStorage.getItem('token'); // Asumiendo que el token está en localStorage
 
@@ -44,6 +44,6 @@ export class UserTiendaService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.post<any>(`${this.apiUrl}/update_user_data`, registerData, { headers: headers });
+    return this.http.post<any>(`${this.apiUrl}/update_user_data`, updateData, { headers: headers });
   }
 }

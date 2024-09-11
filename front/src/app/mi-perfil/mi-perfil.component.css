@@ -29,4 +29,9 @@
     border-radius: 50%;
     background-color: white;
     opacity: 0.5; /* Ajusta la opacidad según lo necesites */
-  }  
+  }
+
+  .disabled-input
+  {
+    background-color: rgb(238, 238, 232);
+  }

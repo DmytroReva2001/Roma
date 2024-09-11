@@ -126,6 +126,53 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/reset_account_password")
+    public ResponseEntity<Map<String, String>> resetearClavePerfil(@RequestParam("email") String email, @RequestParam("oldPass") String oldPass, @RequestParam("newPass") String newPass) {
+
+        try {
+            // Buscamos a user
+            Optional<UserTienda> optionalUser = userTiendaService.obtenerUserTiendaByEmail(email);
+
+            // Confirmamos que user está en BD
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Error, usuario no existe."));
+            }
+            else
+            {
+                // Capturamos objeto en una variable
+                UserTienda userTienda = optionalUser.get();
+
+                // Comprobamos que nueva contraseña no puede ser la misma que la actual
+                if (!passwordEncoder.matches(oldPass, userTienda.getPassword()))
+                {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Contraseña incorrecta."));
+                }
+                else if (passwordEncoder.matches(newPass, userTienda.getPassword()))
+                {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Nueva contraseña no puede ser igual a la anterior."));
+                }
+
+                // Si contraseña es válida, encriptamos la contraseña
+                userTienda.setPassword(passwordEncoder.encode(newPass));
+
+                // Actualizamos al user
+                userTiendaService.save(userTienda);
+
+                // Respuesta de éxito con formato JSON
+                Map<String, String> response = Collections.singletonMap("message", "¡Contraseña actualizada correctamente!");
+                return ResponseEntity.ok(response);
+            }
+        }
+        catch (Exception e) {
+            // Crear el mensaje de error
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", "Error durante la actualización de contraseña");
+
+            // Devolver una respuesta con el mensaje de error en formato JSON
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
     // Método REST para el envío de correo de recuperación de contraseña de un usuario
     @GetMapping("/email_reset_password")
     public ResponseEntity<Map<String, String>> recuperarClave(@RequestParam("email") String email) {

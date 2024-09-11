@@ -93,7 +93,6 @@ export class AuthComponent {
   }
 
   onSubmitRegister() {
-
     // Animación de carga
     Swal.fire({
       title: "Cargando...",
@@ -104,18 +103,23 @@ export class AuthComponent {
         Swal.showLoading();
       }
     });
-
-    // Comprobar si formulario es valido
+  
+    // Comprobar si formulario es válido
     if (this.registerForm.valid) {
+      // Acceder directamente al valor del campo 'email'
+      const email = this.registerForm.value.email;
+
       // Llamamos al método que inicia el procedimiento de Registro
       this.authService.register(this.registerForm.value).subscribe({
-        next: (response: any) => {
+        next: () => {
           this.switchToLogin();
           Swal.close();
           
+          console.log("Correo: "+email);
+  
           Swal.fire({
             title: "¡Su cuenta ha sido creada exitosamente!",
-            text: "Se le ha enviado un correo a "+this.registerForm.value.email+", confirme su cuenta.",
+            text: `Se le ha enviado un correo a ${email}, confirme su cuenta.`,
             icon: "success"
           });
           this.clearData();
@@ -127,9 +131,8 @@ export class AuthComponent {
             text: error.error.message,
           });
           this.clearData();
-
-          // Cerramos la animación
-          Swal.close();
+  
+          Swal.close(); // Cerramos la animación
         }
       });
     }

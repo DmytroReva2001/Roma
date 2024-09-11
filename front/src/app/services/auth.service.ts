@@ -87,6 +87,14 @@ export class AuthService {
     return this.http.get<any>(`${this.apiUrl}/reset_password`, { params });
   }
 
+  changeAccountPassword(email: string, oldPass: string, newPass: string) {
+    const params = new HttpParams()
+    .set('email', email)
+    .set('oldPass', oldPass)
+    .set('newPass', newPass);
+    return this.http.get<any>(`${this.apiUrl}/reset_account_password`, { params });
+  }
+
   // Método validador personalizado para la fortaleza de la contraseña
   passwordValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
