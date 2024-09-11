@@ -32,9 +32,15 @@
             <span class="integer">{{ product.precio.toFixed(0) }}</span>
             <sup class="decimal">{{ product.precio.toFixed(2).split('.')[1] }} €</sup>
           </h4>
+
+          <div class="form-group mt-3">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" class="form-control" [(ngModel)]="cantidad" min="1" max="99">
+          </div>
+          
           <div *ngIf="isAuthenticated; else loginMessage" class="mt-2">
-            <button (click)="buy(product)" class="btn btn-outline-success">Comprar</button>
-            <button (click)="addCesta(product)" class="btn btn-outline-warning">Añadir a la cesta</button>
+            <button (click)="buy(product, cantidad)" class="btn btn-outline-success">Comprar</button>
+            <button (click)="addCesta(product, cantidad)" class="btn btn-outline-warning">Añadir a la cesta</button>
           </div>
           
           <!-- Mensaje si no está autenticado -->

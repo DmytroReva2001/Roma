@@ -1,22 +1,32 @@
 package romatattoo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import romatattoo.entities.Producto;
 import romatattoo.entities.ProductoCesta;
+import romatattoo.entities.UserTienda;
 import romatattoo.services.ProductoCestaService;
+import romatattoo.services.ProductoService;
+import romatattoo.services.UserTiendaService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cesta")
 public class ProductoCestaController {
 
     private final ProductoCestaService productoCestaService;
+    private final ProductoService productoService;
+    private final UserTiendaService userTiendaService;
 
     @Autowired
-    public ProductoCestaController(ProductoCestaService productoCestaService) {
+    public ProductoCestaController(ProductoCestaService productoCestaService, ProductoService productoService, UserTiendaService userTiendaService) {
         this.productoCestaService = productoCestaService;
+        this.productoService = productoService;
+        this.userTiendaService = userTiendaService;
     }
 
     // Obtener los productos de la cesta de un usuario por su email
@@ -32,9 +42,32 @@ public class ProductoCestaController {
         return ResponseEntity.ok(productosCesta);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<ProductoCesta> agregarProductoCesta(@RequestBody ProductoCesta productoCesta) {
+    @GetMapping("/add_producto")
+    public ResponseEntity<?> agregarProductoCesta(@RequestParam("email") String email,
+                                                  @RequestParam("idProducto") Long idProducto,
+                                                  @RequestParam("cantidad") int cantidad) {
+        // Buscar el producto por id
+        Producto producto = productoService.obtenerProductoPorId(idProducto);
+        if (producto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado");
+        }
+
+        // Buscar el usuario por email
+        Optional<UserTienda> userTiendaOpt = userTiendaService.obtenerUserTiendaByEmail(email);
+        if (userTiendaOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        // Crear la entidad ProductoCesta
+        ProductoCesta productoCesta = new ProductoCesta();
+        productoCesta.setCantidadProducto(cantidad);
+        productoCesta.setProducto(producto);
+        productoCesta.setUserTienda(userTiendaOpt.get());
+
+        // Agregar el producto a la cesta
         ProductoCesta nuevoProductoCesta = productoCestaService.agregarProductoCesta(productoCesta);
+
+        // Devolver el resultado
         return ResponseEntity.ok(nuevoProductoCesta);
     }
 }

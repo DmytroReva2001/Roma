@@ -10,7 +10,7 @@ import { CestaService } from '../services/cesta.service';
   styleUrl: './cesta.component.css'
 })
 export class CestaComponent {
-  cestProducts: Producto[] = [];
+  cestProducts: any[] = [];
 
   constructor(
     private cestaService: CestaService,

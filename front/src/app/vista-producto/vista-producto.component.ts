@@ -4,6 +4,7 @@ import { Producto } from '../models/producto';
 import { ProductoService } from '../services/producto.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth.service';
+import { CestaService } from '../services/cesta.service';
 
 @Component({
   selector: 'app-vista-producto',
@@ -15,11 +16,13 @@ export class VistaProductoComponent implements OnInit {
 
   selectedImage: string = '';
   isAuthenticated: boolean = false;
+  cantidad: number = 1;
 
   constructor(
     private route: ActivatedRoute,
     private productoService: ProductoService,
     private authService: AuthService,
+    private cestaService: CestaService
   ) {}
   
   ngOnInit(): void {
@@ -66,13 +69,33 @@ export class VistaProductoComponent implements OnInit {
     });
   }
 
-  buy(producto: Producto)
+  buy(producto: Producto, cantidad: number)
   {
     
   }
 
-  addCesta(producto: Producto)
-  {
-
+  addCesta(producto: Producto, cantidad: number): void {
+    this.cestaService.addCartProducto(producto.id!, cantidad).subscribe({
+      next: () => {
+        // Si la respuesta es exitosa
+        Swal.fire({
+          icon: 'success',
+          title: '¡Producto añadido!',
+          text: 'El producto se ha añadido a la cesta correctamente.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      },
+      error: (err) => {
+        // Si ocurre un error
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: `Ocurrió un problema al añadir el producto: ${err.message}`,
+          showConfirmButton: true
+        });
+      }
+    });
   }
+  
 }
