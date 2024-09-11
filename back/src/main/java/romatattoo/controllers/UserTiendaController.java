@@ -18,12 +18,10 @@ public class UserTiendaController {
 
     // Creación y inyección de servicio
     private final UserTiendaService userTiendaService;
-    private final EmailController emailController;
 
     @Autowired
-    public UserTiendaController(UserTiendaService userTiendaService, EmailController emailController) {
+    public UserTiendaController(UserTiendaService userTiendaService) {
         this.userTiendaService = userTiendaService;
-        this.emailController = emailController;
     }
 
     // Métodos REST para gestión de tabla de usuarios

@@ -1,8 +1,16 @@
 <div class="container-fluid p-5">
-    <h2 class="text-center m-4"><strong><i class="bi bi-cart"></i> Mi cesta:</strong></h2>
+    <h2 class="text-center m-4 bg-white"><strong><i class="bi bi-cart"></i> Mi cesta:</strong></h2>
     <div class="row">   
       <!-- Contenido principal de productos -->
         <div class="row">
+
+          <div *ngIf="!cestProducts || cestProducts.length === 0">
+            <div class="card-body d-flex flex-column text-center">
+              <h5 class="card-title bg-white m-2">No hay productos en la cesta.</h5>
+              <button [routerLink]="['/menu_ropa']" class="btn btn-warning">Iniciar la compra</button>
+            </div>
+          </div>
+
           <div type="button" class="estilo-card-productos m-1 p-2" *ngFor="let product of cestProducts" (click)="verMas(product)">
             <div class="product-image ropa-image justify-content-center align-items-center">
               <img [src]="product.imagenes[0]" [alt]="product.nombreProducto">

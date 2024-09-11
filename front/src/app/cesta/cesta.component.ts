@@ -32,6 +32,8 @@ export class CestaComponent {
     this.cestaService.getCartProducts().subscribe(products => {
       this.cestProducts = products;
     });
+
+    Swal.close();
   }
 
   // Dirigimos al user a otra pantalla con producto pasado por parámetro
