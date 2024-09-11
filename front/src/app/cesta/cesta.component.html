@@ -1,1 +1,23 @@
-<p>cesta works!</p>
+<div class="container-fluid p-5">
+    <h2 class="text-center m-4"><strong><i class="bi bi-cart"></i> Mi cesta:</strong></h2>
+    <div class="row">   
+      <!-- Contenido principal de productos -->
+        <div class="row">
+          <div type="button" class="estilo-card-productos m-1 p-2" *ngFor="let product of filteredProducts" (click)="verMas(product)">
+            <div class="product-image ropa-image justify-content-center align-items-center">
+              <img [src]="product.imagenes[0]" [alt]="product.nombreProducto">
+            </div>
+            <div class="card-body d-flex flex-column m-2">
+              <h5 class="card-title">{{ product.nombreProducto }}</h5>
+              <p class="card-text">{{ product.descripcionCorta }}</p>
+              <h4>
+                <strong>
+                <span>{{ product.precio.toFixed(0) }}</span>
+                  <sup>{{ product.precio.toFixed(2).split('.')[1] }} €</sup>
+                </strong>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>

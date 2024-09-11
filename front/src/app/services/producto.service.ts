@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { InfoService } from './info.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class ProductoService {
   private apiUrl = 'productos';
 
   // Construimos URL de Endpoint
-  constructor(private http: HttpClient, private infoService: InfoService) {
+  constructor(private http: HttpClient, private infoService: InfoService, private jwtHelper: JwtHelperService) {
     this.apiUrl = this.infoService.getAuthUrl()+this.apiUrl;
   }
 

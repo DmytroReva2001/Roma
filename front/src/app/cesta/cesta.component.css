@@ -1,0 +1,45 @@
+/* Estilo para filtros */
+.filter-option {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+    border: 1px solid;
+    border-radius: 30px 30px 30px 30px;
+    min-width: 100px;
+  }
+
+  /* Estilo de botón Restablecer */
+  .restablecer {
+    cursor: pointer;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #000000;
+    color: white;
+    transition: background-color 0.3s ease;
+    margin-bottom: 5%;
+    border-radius: 10px 10px 10px 10px;
+    min-width: 125px;
+  }
+  
+  /* Estilo de botones de filtros en hover */
+  .filter-option:hover {
+    background-color: #6e6e6e;
+  }
+
+  /* Estilo de botón Restablecer en hover */
+  .restablecer:hover {
+    background-color: #b4b4b4;
+  }
+
+  /* Estilo de botón seleccionado de filtros */
+  .selected {
+    background-color: #b4b4b4;
+    color: black; /* Cambia el color del texto para que sea visible sobre el fondo azul */
+  }
+
+  /* Estilo de botón seleccionado de filtros en hover*/
+  .selected:hover {
+    background-color: #969696; /* Cambia el color de fondo al hacer hover sobre un filtro seleccionado */
+  }
