@@ -125,8 +125,8 @@ handleFileChange(event: Event) {
   }
 }
 
-  togglePasswordVisibility() {
-    const passwordFieldElement = document.getElementById('password');
+  togglePasswordVisibility(element:string) {
+    const passwordFieldElement = document.getElementById(element) as HTMLInputElement;
   
     if (passwordFieldElement) {
       if (passwordFieldElement.getAttribute('type') === 'password') {
@@ -138,9 +138,8 @@ handleFileChange(event: Event) {
   }
 
   changePassword() {
-
     const email = this.updateForm.value.email;
-
+  
     const form = this.fb.group({
       oldPass: ['', Validators.required],
       newPass1: ['', [Validators.required, this.authService.passwordValidator]],
@@ -150,15 +149,39 @@ handleFileChange(event: Event) {
     Swal.fire({
       title: 'Cambio de contraseña',
       html:
-        `<label for="oldPass">Contraseña actual:</label>
-        <input type="password" id="oldPass" class="swal2-input">
-        <label for="newPass1">Nueva contraseña:</label>
-        <input type="password" id="newPass1" class="swal2-input">
-        <label for="newPass2">Repite la nueva contraseña:</label>
-        <input type="password" id="newPass2" class="swal2-input">`,
+        `<div class="password">
+          <input placeholder="Contraseña actual" type="password" id="oldPass" class="swal2-input">
+          <button type="button" id="toggleOldPass" class="toggle-password">
+          <img src="https://cdn-icons-png.flaticon.com/512/6405/6405909.png">
+          </button>
+        </div>
+
+        <hr>
+
+        <div class="password">
+          <input type="password" id="newPass1" class="swal2-input" placeholder="Nueva contraseña">
+          <button type="button" id="toggleNewPass1" class="toggle-password"><img src="https://cdn-icons-png.flaticon.com/512/6405/6405909.png"></button>
+        </div>
+
+        <div class="password">
+          <input type="password" id="newPass2" class="swal2-input" placeholder="Repita la contraseña">
+          <button type="button" id="toggleNewPass2" class="toggle-password"><img src="https://cdn-icons-png.flaticon.com/512/6405/6405909.png"></button>
+        </div>`,
       showCancelButton: true,
       confirmButtonText: 'Cambiar contraseña',
       cancelButtonText: 'Volver',
+      didOpen: () => {
+        const togglePasswordVisibility = (elementId: string) => {
+          const input = document.getElementById(elementId) as HTMLInputElement;
+          if (input) {
+            input.type = input.type === 'password' ? 'text' : 'password';
+          }
+        };
+  
+        document.getElementById('toggleOldPass')?.addEventListener('click', () => togglePasswordVisibility('oldPass'));
+        document.getElementById('toggleNewPass1')?.addEventListener('click', () => togglePasswordVisibility('newPass1'));
+        document.getElementById('toggleNewPass2')?.addEventListener('click', () => togglePasswordVisibility('newPass2'));
+      },
       preConfirm: () => {
         const oldPass = (document.getElementById('oldPass') as HTMLInputElement).value;
         const newPass1 = (document.getElementById('newPass1') as HTMLInputElement).value;
@@ -168,20 +191,16 @@ handleFileChange(event: Event) {
         form.get('newPass1')?.setValue(newPass1);
         form.get('newPass2')?.setValue(newPass2);
   
-        // Validaciones reactivas
         const errors = [];
   
-        // Verificar que las nuevas contraseñas coinciden
         if (newPass1 !== newPass2) {
           errors.push('<br>Las contraseñas no coinciden.<br>');
         }
   
-        // Validar que la nueva contraseña no sea igual a la antigua
         if (oldPass === newPass1) {
           errors.push('<br>La nueva contraseña no puede ser igual a la contraseña actual.<br>');
         }
   
-        // Validar la estructura de la nueva contraseña
         if (form.invalid) {
           errors.push(
             '<br>Por favor, introduzca una contraseña válida que cumpla con los siguientes requisitos:<br><br>' +
@@ -193,7 +212,6 @@ handleFileChange(event: Event) {
           );
         }
   
-        // Mostrar errores si los hay
         if (errors.length > 0) {
           Swal.showValidationMessage(errors.join('<br>'));
           return false;
@@ -215,7 +233,6 @@ handleFileChange(event: Event) {
           }
         });
   
-        // Llamada al servicio para cambiar la contraseña
         this.authService.changeAccountPassword(email, oldPass, newPass1).subscribe({
           next: (response: any) => {
             Swal.close();
@@ -241,7 +258,7 @@ handleFileChange(event: Event) {
         });
       }
     });
-  }  
+  }
 
   changeEmail() {
         // Abrimos formulario para consultar el email de user a recuperar la contraseña
