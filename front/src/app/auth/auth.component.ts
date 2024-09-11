@@ -3,8 +3,18 @@ import { AuthService } from '../services/auth.service';
 import { UserTiendaService } from '../services/user-tienda.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 
+// Validador personalizado para comprobar que las contraseñas coincidan
+function passwordMatchValidator(): ValidatorFn {
+  return (formGroup: AbstractControl): { [key: string]: boolean } | null => {
+    const password = formGroup.get('password');
+    const confirmPassword = formGroup.get('confirmPassword');
+    return password && confirmPassword && password.value !== confirmPassword.value
+      ? { 'passwordMismatch': true }
+      : null;
+  };
+}
 
 @Component({
   selector: 'app-auth',
@@ -31,9 +41,12 @@ export class AuthComponent {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, authService.passwordValidator]],
+      confirmPassword: ['', [Validators.required]],
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
       telefono: ['', Validators.required]
+    }, {
+      validators: passwordMatchValidator()  // Aplicar el validador personalizado al formulario
     });
   }
 
@@ -210,8 +223,8 @@ export class AuthComponent {
     });
   }
 
-  togglePasswordVisibility() {
-    const passwordFieldElement = document.getElementById('password');
+  togglePasswordVisibility(element:string) {
+    const passwordFieldElement = document.getElementById(element) as HTMLInputElement;
   
     if (passwordFieldElement) {
       if (passwordFieldElement.getAttribute('type') === 'password') {

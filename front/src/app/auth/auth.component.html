@@ -27,7 +27,7 @@
               <label for="password" class="form-label">Contraseña</label>
               <div class="password">
               <input type="password" id="password" class="form-control" formControlName="password">
-              <button type="button" (click)="togglePasswordVisibility()">
+              <button type="button" (click)="togglePasswordVisibility('password')">
                 <img src="https://cdn-icons-png.flaticon.com/512/6405/6405909.png">
               </button>
               </div>
@@ -72,12 +72,25 @@
               <label for="password" class="form-label">Contraseña</label>
               <div class="password">
                 <input type="password" id="password" class="form-control" formControlName="password">
-                <button type="button" (click)="togglePasswordVisibility()">
+                <button type="button" (click)="togglePasswordVisibility('password')">
                   <img src="https://cdn-icons-png.flaticon.com/512/6405/6405909.png">
                 </button>
                 </div>
               <div *ngIf="registerForm.get('password')!.invalid && registerForm.get('password')!.touched" class="text-danger">
                 <strong>La contraseña debe tener:</strong><br>Al menos 6 caracteres.<br>Una letra mayúscula.<br>Una letra minúscula.<br>Un número.<br>Un carácter especial.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+              <div class="password">
+              <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword">
+              <button type="button" (click)="togglePasswordVisibility('confirmPassword')">
+                <img src="https://cdn-icons-png.flaticon.com/512/6405/6405909.png">
+              </button>
+            </div>
+              <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')!.touched" class="text-danger">
+                Las contraseñas no coinciden.
               </div>
             </div>
 
