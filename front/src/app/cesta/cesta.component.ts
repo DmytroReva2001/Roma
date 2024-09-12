@@ -84,7 +84,15 @@ modifyProduct(product: any) {
 }
 
 onQuantityChange(product: any) {
-  this.modifyProduct(product);
+
+  if (product.cantidadProducto === 0)
+  {
+    this.removeProduct(product);
+  }
+  else
+  {
+    this.modifyProduct(product);
+  }
 }
 
 
