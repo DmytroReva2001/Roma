@@ -1,1 +1,47 @@
-<p>compra works!</p>
+<div class="container-fluid p-5">
+    <h2 class="text-center m-4 bg-white">
+      <strong><i class="bi bi-bag-check"></i> Finalizar pedido:</strong>
+    </h2>
+    
+    <div class="bg-white">
+    <!-- Lista de productos en la cesta -->
+    <div *ngFor="let product of cestProducts" class="row estilo-card-productos-cesta mb-2 p-3">
+          
+      <!-- Cantidad del producto -->
+      <div class="col-3 d-flex">
+        <h5>X {{ product.cantidadProducto }} </h5>
+    </div>
+
+      <!-- Detalles del producto -->
+      <div class="col-3 animacion" (click)="verMas(product.producto)">
+        <h5>{{ product.producto.descripcionCorta }}</h5>
+      </div>
+  
+      <!-- Precio por unidad -->
+      <div class="col-3">
+        <p>
+          <strong>
+            <span>{{ product.producto.precio.toFixed(0) }}</span>
+            <sup>{{ product.producto.precio.toFixed(2).split('.')[1] }} €</sup> / ud
+          </strong>
+        </p>
+      </div>
+  
+      <!-- Precio total de la línea -->
+      <div class="col-3 text-end">
+        <h4>
+          <strong>{{ (product.producto.precio * product.cantidadProducto).toFixed(2) }} €</strong>
+        </h4>
+    </div>
+    <hr>
+  </div>
+</div>
+
+  <div class="bg-white text-center">
+  <h1><strong>Total: {{total.toFixed(2)}}€</strong></h1>
+  
+    <div *ngIf="cestProducts" class="text-center">
+      <button class="btn btn-success w-25 m-2" (click)="compra()">Finalizar pedido</button>
+      <button class="btn btn-danger w-25 m-2" (click)="back()">Cancelar</button>
+    </div>
+</div>

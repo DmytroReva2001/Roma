@@ -159,19 +159,25 @@ export class NuevoProductoComponent implements OnInit{
       next: () => {
         Swal.fire({
           title: 'Éxito',
-          text: `Producto guardado correctamente.`,
+          text: 'Producto guardado correctamente.',
           icon: 'success',
+          confirmButtonText: 'Aceptar',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         });
-        this.clearData();
       },
       error: (error) => {
         Swal.fire({
           icon: 'error',
           title: 'Se ha producido un error al guardar el producto.',
           text: error.error.message,
+          confirmButtonText: 'Aceptar',
         });
       },
     });
+    
   }
 
   // Método que comprueba que hay imagenes guardadas en variables de imagenes para la validación
