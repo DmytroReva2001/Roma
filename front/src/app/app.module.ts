@@ -28,6 +28,7 @@ import { NuevaInformacionComponent } from './nueva-informacion/nueva-informacion
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { CestaComponent } from './cesta/cesta.component';
 import { NuevoEmailComponent } from './nuevo-email/nuevo-email.component';
+import { CompraComponent } from './compra/compra.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { NuevoEmailComponent } from './nuevo-email/nuevo-email.component';
     MiPerfilComponent,
     CestaComponent,
     NuevoEmailComponent,
+    CompraComponent,
   ],
   imports: [
     BrowserModule,

@@ -119,9 +119,4 @@ removeProduct(product: any) {
     }
   });
 }
-
-buy ()
-{
-  
-}
 }

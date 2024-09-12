@@ -21,6 +21,7 @@ import { NuevaInformacionComponent } from './nueva-informacion/nueva-informacion
 import { CestaComponent } from './cesta/cesta.component';
 import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { NuevoEmailComponent } from './nuevo-email/nuevo-email.component';
+import { CompraComponent } from './compra/compra.component';
 
 const routes: Routes = [
   // Componentes sin header y footer
@@ -53,6 +54,7 @@ const routes: Routes = [
       { path: 'gestion/:elemento', component: GestionComponent, canActivate: [AuthGuard] },
       { path: 'mi-perfil', component: MiPerfilComponent, canActivate: [AuthenticatedGuard] },
       { path: 'cesta', component: CestaComponent, canActivate: [AuthenticatedGuard] },
+      { path: 'compra', component: CompraComponent, canActivate: [AuthenticatedGuard]}
     ]
   }
 ];

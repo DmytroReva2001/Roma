@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from '../models/producto';
 import { ProductoService } from '../services/producto.service';
 import Swal from 'sweetalert2';
@@ -24,7 +24,8 @@ export class VistaProductoComponent implements OnInit {
     private productoService: ProductoService,
     private authService: AuthService,
     private cestaService: CestaService,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {}
   
   ngOnInit(): void {
@@ -73,7 +74,20 @@ export class VistaProductoComponent implements OnInit {
 
   buy(producto: Producto, cantidad: number)
   {
-    
+    this.cestaService.addCartProducto(producto.id!, cantidad).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/compra');
+      },
+      error: (err) => {
+        // Si ocurre un error
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: `Ocurrió un problema durante la gestión de producto: ${err.message}`,
+          showConfirmButton: true
+        });
+      }
+    });
   }
 
   addCesta(producto: Producto, cantidad: number): void {
