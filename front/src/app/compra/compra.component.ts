@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Producto } from '../models/producto';
 import { Location } from '@angular/common';
+import { catchError, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-compra',
@@ -139,13 +140,35 @@ back()
   this.location.back();
 }
 
-compra()
-{
-  Swal.fire({
-    title: 'Éxito',
-    text: 'Compra efectuada correctamente',
-    icon: 'success',
-    confirmButtonText: 'Aceptar'
+compra() {
+  // Crear un array con todas las solicitudes de eliminación
+  const requests = this.cestProducts.map(product => 
+    this.cestaService.eliminarProducto(product).pipe(
+      catchError(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error,
+          confirmButtonText: 'Aceptar'
+      });
+        // Retornar un observable vacío para continuar con el procesamiento
+        return of(null);
+      })
+    )
+  );
+
+  // Esperar a que todas las solicitudes se completen
+  forkJoin(requests).subscribe(() => {
+    Swal.fire({
+      title: 'Éxito',
+      text: 'Compra efectuada correctamente',
+      icon: 'success',
+      confirmButtonText: 'Aceptar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigateByUrl('/mis_pedidos');
+      }
+    });
   });
 }
 }
