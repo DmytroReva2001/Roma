@@ -65,4 +65,16 @@
   {
     width: 150px;
     height: 150px;
+    
+  }
+
+  .animacion
+  {
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+
+  .animacion:hover
+  {
+    transform: scale(1.1);
   }

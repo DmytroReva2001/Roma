@@ -129,3 +129,13 @@ body {
 img {
   background-color: #7a828b;
 }
+
+.estilo-card-productos,
+.estilo-card-tatuajes {
+  transition: transform 0.3s;
+}
+
+.estilo-card-productos:hover,
+.estilo-card-tatuajes:hover {
+  transform: scale(0.9);
+}
