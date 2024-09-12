@@ -48,12 +48,16 @@ export class CestaComponent {
   // Incrementar cantidad
 incrementQuantity(product: any) {
   product.cantidadProducto++;
+
+  this.modifyProduct(product);
 }
 
 // Decrementar cantidad
 decrementQuantity(product: any) {
   if (product.cantidadProducto >= 1) {
     product.cantidadProducto--;
+
+    this.modifyProduct(product);
   }
 
   if (product.cantidadProducto === 0)
@@ -61,6 +65,28 @@ decrementQuantity(product: any) {
     this.removeProduct(product);
   }
 }
+
+// Modificar producto
+modifyProduct(product: any) {
+  this.cestaService.modificarProducto(product).subscribe({
+    next: () => {
+      this.consultarProductosCesta();
+    },
+    error: (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error.message,
+        confirmButtonText: 'Aceptar'
+      });
+    }
+  });
+}
+
+onQuantityChange(product: any) {
+  this.modifyProduct(product);
+}
+
 
 // Eliminar producto
 removeProduct(product: any) {

@@ -26,7 +26,7 @@
     <!-- Cantidad del producto con input y botones -->
       <div class="col-2 d-flex align-items-center">
         <button class="btn btn-secondary btn-sm me-2" (click)="decrementQuantity(product)">-</button>
-        <input min="0" type="number" [(ngModel)]="product.cantidadProducto" class="form-control w-50">
+        <input type="number" [(ngModel)]="product.cantidadProducto" (change)="onQuantityChange(product)" class="form-control w-50">
         <button class="btn btn-secondary btn-sm ms-2" (click)="incrementQuantity(product)">+</button>
       </div>
 

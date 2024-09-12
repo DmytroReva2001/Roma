@@ -55,4 +55,12 @@ export class CestaService {
 
     return this.http.get<any>(`${this.apiUrl}/delete_producto`, { params });
 }
+
+modificarProducto(product: any): Observable<any> {
+  const params = new HttpParams()
+    .set('idProductoCesta', product.id)
+    .set('cantidad', product.cantidadProducto);
+
+  return this.http.get<any>(`${this.apiUrl}/modify_producto`, { params });
+}
 }

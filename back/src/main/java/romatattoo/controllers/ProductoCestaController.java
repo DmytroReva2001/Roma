@@ -12,6 +12,7 @@ import romatattoo.services.ProductoService;
 import romatattoo.services.UserTiendaService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -100,6 +101,25 @@ public class ProductoCestaController {
         productoCestaService.eliminarProductoCesta(productoCesta);
 
         // Devolver el resultado
-        return ResponseEntity.ok("Producto eliminado");
+        return ResponseEntity.ok(Map.of("message", "Producto eliminado"));
+    }
+
+    @GetMapping("/modify_producto")
+    public ResponseEntity<?> modificarProductoCesta(@RequestParam("idProductoCesta") Long idProductoCesta,
+                                                    @RequestParam("cantidad") int cantidad) {
+        // Buscar el producto por id
+        Optional<ProductoCesta> optionalProductoCesta = productoCestaService.obtenerProductoCestaPorId(idProductoCesta);
+
+        if (optionalProductoCesta.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Producto no encontrado"));
+        }
+
+        ProductoCesta productoCesta = optionalProductoCesta.get();
+        productoCesta.setCantidadProducto(cantidad);
+        // Agregar el producto a la cesta
+        productoCestaService.agregarProductoCesta(productoCesta);
+
+        // Devolver el resultado
+        return ResponseEntity.ok(Map.of("message", "Producto actualizado"));
     }
 }
