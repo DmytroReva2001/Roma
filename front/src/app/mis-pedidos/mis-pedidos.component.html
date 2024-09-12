@@ -1,1 +1,32 @@
-<p>mis-pedidos works!</p>
+<div class="container mt-5">
+    <h2>Mis Pedidos</h2>
+  
+    <!-- Mostrar pedidos -->
+    <div *ngIf="pedidos.length > 0">
+      <h3>Pedidos realizados:</h3>
+      <div *ngFor="let pedido of pedidos" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Núm. Pedido: {{ pedido.id }}</h5>
+          <p class="card-text"><strong>Fecha:</strong> {{ pedido.fecha | date }}</p>
+                    <!-- Mostrar lista productos = Ticket -->
+  
+          <!-- Lista de productos en el pedido -->
+          <ul>
+            <li *ngFor="let producto of pedido.productos">
+              Producto: {{ producto.producto.nombre }} - Cantidad: {{ producto.cantidadProducto }} - Precio: {{ producto.producto.precio | currency }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mensaje si no hay pedidos -->
+    <div *ngIf="pedidos.length === 0 && !cargando">
+      <p>No se encontraron pedidos para este usuario.</p>
+    </div>
+  
+    <!-- Cargando -->
+    <div *ngIf="cargando">
+      <p>Cargando pedidos...</p>
+    </div>
+  </div>  

@@ -87,6 +87,8 @@ export class AuthComponent {
           this.authService.updateAuthStatus(true);
           this.clearData();
 
+          console.log(response.token);
+
           // Cerramos la carga
           Swal.close();
         },

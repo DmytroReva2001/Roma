@@ -28,6 +28,15 @@ export class UserTiendaService {
     return this.http.get<User>(`${this.apiUrl}/get_user`, { params });
   }
 
+  getUserEmail(): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return of({} as User);
+    }
+  
+    return this.jwtHelper.decodeToken(token).sub;
+  }
+
   activateUser(email: string): Observable<any> {
     const params = new HttpParams().set('email', email);
     return this.http.get<any>(`${this.apiUrl}/activate`, { params });

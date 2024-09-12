@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CestaService } from '../services/cesta.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Producto } from '../models/producto';
 import { Location } from '@angular/common';
+import { PedidosService } from '../services/pedidos.service';
 import { catchError, forkJoin, of } from 'rxjs';
 
 @Component({
@@ -11,15 +11,16 @@ import { catchError, forkJoin, of } from 'rxjs';
   templateUrl: './compra.component.html',
   styleUrl: './compra.component.css'
 })
-export class CompraComponent {
+export class CompraComponent implements OnInit{
   cestProducts: any[] = [];
   total: number = 0;
 
   constructor(
     private cestaService: CestaService,
     private router: Router,
-    private location: Location
-    ) {}
+    private location: Location ,
+    private pedidoService: PedidosService
+  ) {}
 
   ngOnInit(): void {
 
@@ -55,120 +56,84 @@ export class CompraComponent {
     });
   }
 
-  // Dirigimos al user a otra pantalla con producto pasado por parámetro
-  verMas(product: Producto): void {
-      this.router.navigate(['/vista_producto', product.id]);
-  }
-
-  // Incrementar cantidad
-incrementQuantity(product: any) {
-  product.cantidadProducto++;
-
-  this.modifyProduct(product);
-}
-
-// Decrementar cantidad
-decrementQuantity(product: any) {
-  if (product.cantidadProducto >= 1) {
-    product.cantidadProducto--;
-
-    this.modifyProduct(product);
-  }
-
-  if (product.cantidadProducto === 0)
-  {
-    this.removeProduct(product);
-  }
-}
-
-// Modificar producto
-modifyProduct(product: any) {
-  this.cestaService.modificarProducto(product).subscribe({
-    next: () => {
-      this.consultarProductosCesta();
-    },
-    error: (error) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error.message,
-        confirmButtonText: 'Aceptar'
-      });
-    }
-  });
-}
-
-onQuantityChange(product: any) {
-
-  if(!product.cantidadProducto)
-  {
-    product.cantidadProducto = 1;
-    this.modifyProduct(product);
-
-  }
-  if (product.cantidadProducto === 0 )
-  {
-    this.removeProduct(product);
-  }
-  else
-  {
-    this.modifyProduct(product);
-  }
-}
-
-
-// Eliminar producto
-removeProduct(product: any) {
-  this.cestaService.eliminarProducto(product).subscribe({
-    next: () => {
-      this.consultarProductosCesta();
-      // Actualiza la vista o estado local aquí si es necesario
-    },
-    error: (error) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error,
-        confirmButtonText: 'Aceptar'
-      });
-    }
-  });
-}
-
 back()
 {
   this.location.back();
 }
 
 compra() {
-  // Crear un array con todas las solicitudes de eliminación
-  const requests = this.cestProducts.map(product => 
-    this.cestaService.eliminarProducto(product).pipe(
-      catchError(error => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error,
-          confirmButtonText: 'Aceptar'
-      });
-        // Retornar un observable vacío para continuar con el procesamiento
-        return of(null);
-      })
-    )
-  );
+  // Registrar el pedido en el backend
+  this.pedidoService.registrarPedido().subscribe({
+    next: (pedidoNuevo) => {
+      // Enviar la lista de productos al pedido creado
+      const productosPedidos = this.cestProducts.map(product => ({
+        productoId: product.producto.id,  // ID del producto
+        cantidad: product.cantidadProducto,  // Cantidad del producto
+        idPedido: pedidoNuevo.id // ID del pedido creado
+      }));
 
-  // Esperar a que todas las solicitudes se completen
-  forkJoin(requests).subscribe(() => {
-    Swal.fire({
-      title: 'Éxito',
-      text: 'Compra efectuada correctamente',
-      icon: 'success',
-      confirmButtonText: 'Aceptar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.router.navigateByUrl('/mis_pedidos');
+      this.pedidoService.agregarProductosAlPedido(pedidoNuevo.id, productosPedidos).subscribe({
+        next: () => {
+          // Crear un array con todas las solicitudes de eliminación
+          const requests = this.cestProducts.map(product =>
+            this.cestaService.eliminarProducto(product).pipe(
+              catchError(error => {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error,
+                  confirmButtonText: 'Aceptar'
+                });
+                return of(null); // Continuar aunque haya errores
+              })
+            )
+          );
+
+          // Esperar a que todas las solicitudes de eliminación se completen
+          forkJoin(requests).subscribe(() => {
+            Swal.fire({
+              title: 'Éxito',
+              text: '¡Compra efectuada correctamente!',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Navegar a otra página o realizar otra acción aquí, si es necesario
+                this.router.navigateByUrl('/mis_pedidos'); // Opcional, dependiendo de lo que necesites hacer a continuación
+              }
+            });
+          });
+        },
+        error: (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudieron agregar los productos al pedido. Código de error: ' + error.message,
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      });
+    },
+    error: (error) => {
+      let errorMessage = 'No se pudo registrar el pedido.';
+
+      // Verificar si el error tiene un cuerpo con mensaje
+      if (error.error) {
+        if (typeof error.error === 'string') {
+          errorMessage = error.error;
+        } else if (error.error.message) {
+          errorMessage = error.error.message;
+        }
       }
-    });
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: errorMessage,
+        confirmButtonText: 'Aceptar'
+      });
+    }
   });
 }
+
 }
