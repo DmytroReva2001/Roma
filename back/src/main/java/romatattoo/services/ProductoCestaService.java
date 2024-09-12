@@ -14,7 +14,7 @@ public class ProductoCestaService {
     @Autowired
     private ProductoCestaRepository productoCestaRepository;
 
-    public List<ProductoCesta> obtenerProductoCestaPorUserEmail(String email) {
+    public List<ProductoCesta> obtenerProductosCestaPorUserEmail(String email) {
         return productoCestaRepository.findByUserTienda_Email(email);
     }
 

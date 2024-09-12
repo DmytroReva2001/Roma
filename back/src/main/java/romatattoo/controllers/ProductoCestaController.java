@@ -13,6 +13,7 @@ import romatattoo.services.UserTiendaService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -33,7 +34,7 @@ public class ProductoCestaController {
     // Obtener los productos de la cesta de un usuario por su email
     @GetMapping("/get_cart_products")
     public ResponseEntity<List<ProductoCesta>> obtenerProductoCestaPorEmail(@RequestParam("email") String email) {
-        List<ProductoCesta> productosCesta = productoCestaService.obtenerProductoCestaPorUserEmail(email);
+        List<ProductoCesta> productosCesta = productoCestaService.obtenerProductosCestaPorUserEmail(email);
 
         // Verificar si la lista está vacía
         if (productosCesta.isEmpty()) {
@@ -57,6 +58,20 @@ public class ProductoCestaController {
         Optional<UserTienda> userTiendaOpt = userTiendaService.obtenerUserTiendaByEmail(email);
         if (userTiendaOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        List<ProductoCesta> productosCestaUsuario = productoCestaService.obtenerProductosCestaPorUserEmail(email);
+
+        // Comprobar que id producto pasado por parámetro no coincida con ninguno de los productos de productosCestaUsuario
+        for (ProductoCesta productoCesta : productosCestaUsuario) {
+
+            if (Objects.equals(productoCesta.getProducto().getId(), idProducto))
+            {
+                productoCesta.setCantidadProducto(productoCesta.getCantidadProducto()+cantidad);
+
+                ProductoCesta altaProductoCesta = productoCestaService.agregarProductoCesta(productoCesta);
+                return ResponseEntity.ok(altaProductoCesta);
+            }
         }
 
         // Crear la entidad ProductoCesta
