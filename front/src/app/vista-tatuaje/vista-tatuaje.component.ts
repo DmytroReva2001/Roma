@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
 import { Tatuaje } from '../models/tatuaje';
 import { TatuajeService } from '../services/tatuaje.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-vista-tatuaje',
@@ -16,7 +17,8 @@ export class VistaTatuajeComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private tatuajeService: TatuajeService
+    private tatuajeService: TatuajeService,
+    private location: Location
   ) {}
   
   ngOnInit(): void {
@@ -57,5 +59,10 @@ export class VistaTatuajeComponent {
       showCloseButton: true,
       showConfirmButton: false
     });
+  }
+
+  back()
+  {
+    this.location.back();
   }
 }

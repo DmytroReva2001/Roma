@@ -5,6 +5,7 @@ import { ProductoService } from '../services/producto.service';
 import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth.service';
 import { CestaService } from '../services/cesta.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-vista-producto',
@@ -22,7 +23,8 @@ export class VistaProductoComponent implements OnInit {
     private route: ActivatedRoute,
     private productoService: ProductoService,
     private authService: AuthService,
-    private cestaService: CestaService
+    private cestaService: CestaService,
+    private location: Location
   ) {}
   
   ngOnInit(): void {
@@ -96,6 +98,11 @@ export class VistaProductoComponent implements OnInit {
         });
       }
     });
+  }
+
+  back()
+  {
+    this.location.back();
   }
   
 }
