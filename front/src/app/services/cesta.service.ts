@@ -41,4 +41,18 @@ export class CestaService {
 
     return this.http.get<any[]>(`${this.apiUrl}/add_producto`, { params });
   }
+
+  eliminarProducto(product: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        return of({ error: 'Token no encontrado' }); // Devolver un Observable con error
+    }
+
+    const email = this.jwtHelper.decodeToken(token)?.sub; // Asegúrate de que la propiedad sub está presente
+    const params = new HttpParams()
+      .set('email', email)
+      .set('idProductoCesta', product.id);
+
+    return this.http.get<any>(`${this.apiUrl}/delete_producto`, { params });
+}
 }

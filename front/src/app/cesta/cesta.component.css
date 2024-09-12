@@ -43,3 +43,26 @@
   .selected:hover {
     background-color: #969696; /* Cambia el color de fondo al hacer hover sobre un filtro seleccionado */
   }
+
+  .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .estilo-card-productos-cesta {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: black;
+  }
+  
+
+  .estilo-card-productos-cesta img
+  {
+    width: 150px;
+    height: 150px;
+  }

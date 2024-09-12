@@ -18,6 +18,10 @@ export class CestaComponent {
 
   ngOnInit(): void {
 
+    this.consultarProductosCesta();
+  }
+
+  private consultarProductosCesta() {
     Swal.fire({
       title: "Cargando...",
       allowEscapeKey: false,
@@ -40,4 +44,44 @@ export class CestaComponent {
   verMas(product: Producto): void {
       this.router.navigate(['/vista_producto', product.id]);
   }
+
+  // Incrementar cantidad
+incrementQuantity(product: any) {
+  product.cantidadProducto++;
+}
+
+// Decrementar cantidad
+decrementQuantity(product: any) {
+  if (product.cantidadProducto >= 1) {
+    product.cantidadProducto--;
+  }
+
+  if (product.cantidadProducto === 0)
+  {
+    this.removeProduct(product);
+  }
+}
+
+// Eliminar producto
+removeProduct(product: any) {
+  this.cestaService.eliminarProducto(product).subscribe({
+    next: () => {
+      this.consultarProductosCesta();
+      // Actualiza la vista o estado local aquí si es necesario
+    },
+    error: (error) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error,
+        confirmButtonText: 'Aceptar'
+      });
+    }
+  });
+}
+
+buy ()
+{
+  
+}
 }

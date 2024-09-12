@@ -70,4 +70,36 @@ public class ProductoCestaController {
         // Devolver el resultado
         return ResponseEntity.ok(nuevoProductoCesta);
     }
+
+    @GetMapping("/delete_producto")
+    public ResponseEntity<?> eliminarProductoCesta(@RequestParam("email") String email,
+                                                   @RequestParam("idProductoCesta") Long idProductoCesta) {
+        // Buscar el producto por id
+        Optional<ProductoCesta> optionalProductoCesta = productoCestaService.obtenerProductoCestaPorId(idProductoCesta);
+
+        if (optionalProductoCesta.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado");
+        }
+
+        ProductoCesta productoCesta = optionalProductoCesta.get();
+
+        // Buscar el usuario por email
+        Optional<UserTienda> userTiendaOpt = userTiendaService.obtenerUserTiendaByEmail(email);
+        if (userTiendaOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        UserTienda userTienda = userTiendaOpt.get();
+
+        // Verificar si el producto pertenece a la cesta del usuario
+        if (!productoCesta.getUserTienda().equals(userTienda)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No autorizado para eliminar este producto");
+        }
+
+        // Agregar el producto a la cesta
+        productoCestaService.eliminarProductoCesta(productoCesta);
+
+        // Devolver el resultado
+        return ResponseEntity.ok("Producto eliminado");
+    }
 }

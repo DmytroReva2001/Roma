@@ -1,30 +1,60 @@
 <div class="container-fluid p-5">
-    <h2 class="text-center m-4"><strong><i class="bi bi-cart"></i> Mi cesta:</strong></h2>
-    <div class="row">   
-      <!-- Contenido principal de productos -->
-        <div class="row">
+  <h2 class="text-center m-4 bg-white">
+    <strong><i class="bi bi-cart"></i> Mi cesta:</strong>
+  </h2>
 
-          <div *ngIf="!cestProducts || cestProducts.length === 0">
-            <div class="card-body d-flex flex-column text-center bg-white">
-              <h5 class="card-title  m-2">No hay productos en la cesta.</h5>
-              <button [routerLink]="['/menu_ropa']" class="btn btn-warning">Iniciar la compra</button>
-            </div>
-          </div>
-
-          <div type="button" class="estilo-card-productos m-1 p-2" *ngFor="let product of cestProducts" (click)="verMas(product)">
-            <div class="product-image ropa-image justify-content-center align-items-center">
-              <img [src]="product.producto.imagenes[0]" [alt]="product.producto.nombre">
-            </div>
-            <div class="card-body d-flex flex-column m-2">
-              <h5 class="card-title">{{ product.cantidadProducto }} Uds</h5>
-              <h4>
-                <strong>
-                <span>{{ product.producto.precio.toFixed(0) }}</span>
-                  <sup>{{ product.producto.precio.toFixed(2).split('.')[1] }} €</sup>
-                </strong>
-              </h4>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- Contenido principal de productos -->
+  <div *ngIf="!cestProducts || cestProducts.length === 0">
+    <div class="card-body d-flex flex-column bg-white text-center">
+      <h5 class="card-title m-2">No hay productos en la cesta.</h5>
+      <button [routerLink]="['/menu_ropa']" class="btn btn-warning mt-2">Iniciar la compra</button>
+    </div>
   </div>
+
+  <!-- Lista de productos en la cesta -->
+  <div *ngFor="let product of cestProducts" class="row align-items-center estilo-card-productos-cesta mb-2 p-3">
+    <!-- Imagen del producto -->
+    <div class="col-2">
+      <img [src]="product.producto.imagenes[0]" [alt]="product.producto.nombre" class="img-fluid">
+    </div>
+
+    <!-- Detalles del producto -->
+    <div class="col-2">
+      <h5>{{ product.producto.descripcionCorta }}</h5>
+    </div>
+
+    <!-- Cantidad del producto con input y botones -->
+      <div class="col-2 d-flex align-items-center">
+        <button class="btn btn-secondary btn-sm me-2" (click)="decrementQuantity(product)">-</button>
+        <input min="0" type="number" [(ngModel)]="product.cantidadProducto" class="form-control w-50">
+        <button class="btn btn-secondary btn-sm ms-2" (click)="incrementQuantity(product)">+</button>
+      </div>
+
+    <!-- Precio por unidad -->
+    <div class="col-2">
+      <p>
+        <strong>
+          <span>{{ product.producto.precio.toFixed(0) }}</span>
+          <sup>{{ product.producto.precio.toFixed(2).split('.')[1] }} €</sup> / ud
+        </strong>
+      </p>
+    </div>
+
+    <!-- Precio total de la línea -->
+    <div class="col-2 text-end">
+      <h4>
+        <strong>{{ (product.producto.precio * product.cantidadProducto).toFixed(2) }} €</strong>
+      </h4>
+    </div>
+
+    <!-- Botón de eliminación -->
+    <div class="col-2 text-end mt-2">
+      <button class="btn btn-danger" (click)="removeProduct(product)">Eliminar</button>
+    </div>
+  </div>
+
+  <div *ngIf="cestProducts" class="text-center">
+    <button class="btn btn-success w-50 mt-2" (click)="buy()">Comprar</button>
+  </div>
+
+</div>
