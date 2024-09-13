@@ -13,21 +13,20 @@ import romatattoo.services.ProductoPedidoService;
 import romatattoo.services.ProductoService;
 import romatattoo.services.UserTiendaService;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
 
-    private PedidoService pedidoService;
-    private UserTiendaService userTiendaService;
-    private ProductoService productoService;
-    private ProductoPedidoService productoPedidoService;
+    private final PedidoService pedidoService;
+    private final UserTiendaService userTiendaService;
+    private final ProductoService productoService;
+    private final ProductoPedidoService productoPedidoService;
 
     @Autowired
     public PedidoController(PedidoService pedidoService, UserTiendaService userTiendaService, ProductoService productoService, ProductoPedidoService productoPedidoService) {
@@ -50,7 +49,7 @@ public class PedidoController {
     }
 
     @PostMapping("/crear_pedido")
-    public ResponseEntity<?> crearPedido(@RequestParam("email") String email) {
+    public ResponseEntity<?> crearPedido(@RequestParam("email") String email, @RequestParam("total") BigDecimal total) {
         try {
             // Verificar si el email es válido
             if (email == null || email.isEmpty()) {
@@ -71,6 +70,7 @@ public class PedidoController {
             Pedido pedido = new Pedido();
             pedido.setUserTienda(userTienda);
             pedido.setFecha(LocalDateTime.now());
+            pedido.setTotal(total);
 
             // Guardar el pedido
             Pedido pedidoGuardado = pedidoService.guardarPedido(pedido);
@@ -84,7 +84,6 @@ public class PedidoController {
                     .body("Error al crear el pedido: " + e.getMessage());
         }
     }
-
 
 
     @PostMapping("/agregar_productos")
@@ -141,6 +140,20 @@ public class PedidoController {
         }
     }
 
+    @GetMapping("/productos_pedido")
+    public ResponseEntity<?> getProductosPedido(@RequestParam Long idPedido) {
+        // Obtener el pedido por id
+        return pedidoService.obtenerPedidoPorId(idPedido)
+                .map(pedido -> {
+                    List<ProductoPedido> productosPedido = productoPedidoService.obtenerPedidoProductosPorPedido(pedido);
+
+                    if (productosPedido.isEmpty()) {
+                        return ResponseEntity.noContent().build(); // 204 si no hay productos
+                    }
+                    return ResponseEntity.ok(productosPedido); // 200 OK con la lista de productos
+                })
+                .orElse(ResponseEntity.notFound().build()); // 404 si el pedido no se encuentra
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarPedido(@PathVariable Long id) {

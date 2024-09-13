@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.antlr.v4.runtime.misc.NotNull;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -23,4 +24,7 @@ public class Pedido {
 
     @Column(name = "fecha")
     private LocalDateTime fecha;
+
+    @Column(name = "total")
+    private BigDecimal total;
 }

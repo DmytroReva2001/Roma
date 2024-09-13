@@ -27,15 +27,14 @@ export class PedidosService {
     return this.http.get<any[]>(`${this.apiUrl}/get_pedidos`, { params });
   }
 
-  registrarPedido(): Observable<any> {
+  registrarPedido(total:any): Observable<any> {
     const token = localStorage.getItem('token');
     
     if (!token) {
       return of([]); // Devolver un Observable de array vacío
     }
   
-    const email = this.jwtHelper.decodeToken(token)?.sub;
-    console.log("email: " + email);
+    const email = this.jwtHelper.decodeToken(token)?.sub;    
   
     // Crear los encabezados HTTP con el token
     const headers = new HttpHeaders({
@@ -44,7 +43,11 @@ export class PedidosService {
     });
   
     // Enviar email como cadena de texto
-    return this.http.post<any>(`${this.apiUrl}/crear_pedido?email=${encodeURIComponent(email)}`, {}, { headers });
+    return this.http.post<any>(
+      `${this.apiUrl}/crear_pedido?email=${encodeURIComponent(email)}&total=${total}`, 
+      {}, 
+      { headers }
+    );
 
   }
 
@@ -83,4 +86,13 @@ modificarProducto(product: any): Observable<any> {
 
   return this.http.get<any>(`${this.apiUrl}/modify_producto`, { params });
 }
+
+consultarProductosPedido(pedido: any): Observable<any>
+{
+  const params = new HttpParams()
+  .set('idPedido', pedido.id)
+
+return this.http.get<any>(`${this.apiUrl}/productos_pedido`, { params });
+}
+
 }

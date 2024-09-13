@@ -1,32 +1,29 @@
 <div class="container mt-5">
-    <h2>Mis Pedidos</h2>
+    <h2 class="text-center mb-4"><i class="bi bi-bag-fill"></i> Mis Pedidos:</h2>
   
     <!-- Mostrar pedidos -->
     <div *ngIf="pedidos.length > 0">
-      <h3>Pedidos realizados:</h3>
       <div *ngFor="let pedido of pedidos" class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Núm. Pedido: {{ pedido.id }}</h5>
-          <p class="card-text"><strong>Fecha:</strong> {{ pedido.fecha | date }}</p>
+          <p class="card-text"><strong>Fecha:</strong> {{ pedido.fecha | date:'dd/MM/yyyy' }}</p>
                     <!-- Mostrar lista productos = Ticket -->
   
           <!-- Lista de productos en el pedido -->
           <ul>
             <li *ngFor="let producto of pedido.productos">
-              Producto: {{ producto.producto.nombre }} - Cantidad: {{ producto.cantidadProducto }} - Precio: {{ producto.producto.precio | currency }}
+              <strong>Producto:</strong> {{ producto.producto.descripcionCorta }} - <strong>Cantidad:</strong> {{ producto.cantidadProducto }} - <strong>Precio:</strong> {{ producto.producto.precio * producto.cantidadProducto | currency:'EUR':'symbol':'1.2-2' }}
             </li>
           </ul>
+
+          <p>Total: {{ pedido.total | currency:'EUR':'symbol':'1.2-2' }}</p>
         </div>
       </div>
     </div>
   
     <!-- Mensaje si no hay pedidos -->
-    <div *ngIf="pedidos.length === 0 && !cargando">
+    <div *ngIf="pedidos.length === 0">
       <p>No se encontraron pedidos para este usuario.</p>
     </div>
   
-    <!-- Cargando -->
-    <div *ngIf="cargando">
-      <p>Cargando pedidos...</p>
-    </div>
-  </div>  
+</div>  

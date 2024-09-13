@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 })
 export class MisPedidosComponent implements OnInit {
   pedidos: any[] = [];
-  cargando: boolean = false;
+  total: number = 0;
 
   constructor(private pedidoService: PedidosService) {}
   
@@ -18,17 +18,26 @@ export class MisPedidosComponent implements OnInit {
   }
 
   consultarPedidos() {
-    
-    this.cargando = true;
-
+    Swal.fire({
+      title: "Cargando...",
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      timerProgressBar: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+  
     // Llamar al servicio para obtener los pedidos del usuario
     this.pedidoService.getPedidos().subscribe({
       next: (pedidos) => {
         this.pedidos = pedidos;
-        this.cargando = false;
+        Swal.close(); // Cerrar el modal de carga cuando se obtienen los pedidos
+
+        this.consultarProductosPedidos();
       },
       error: () => {
-        this.cargando = false;
+        Swal.close(); // Cerrar el modal también en caso de error
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -37,4 +46,21 @@ export class MisPedidosComponent implements OnInit {
       }
     });
   }
+
+  consultarProductosPedidos() {
+    // Iterar sobre la lista de pedidos
+    this.pedidos.forEach(pedido => {
+      // Llamar al servicio para obtener los productos de cada pedido
+      this.pedidoService.consultarProductosPedido(pedido).subscribe({
+        next: (productos) => {
+          // Añadir los productos al pedido actual
+          pedido.productos = productos; // Aquí añades los productos al pedido
+        },
+        error: () => {
+          console.error(`Error al cargar productos para el pedido con id ${pedido.id}`);
+        }
+      });
+    });
+  }
+  
 }

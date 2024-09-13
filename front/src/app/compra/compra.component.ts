@@ -63,7 +63,7 @@ back()
 
 compra() {
   // Registrar el pedido en el backend
-  this.pedidoService.registrarPedido().subscribe({
+  this.pedidoService.registrarPedido(this.total).subscribe({
     next: (pedidoNuevo) => {
       // Enviar la lista de productos al pedido creado
       const productosPedidos = this.cestProducts.map(product => ({
