@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PedidosService } from '../services/pedidos.service';
 import Swal from 'sweetalert2';
+import { forkJoin, tap } from 'rxjs';
 
 @Component({
   selector: 'app-mis-pedidos',
@@ -32,7 +33,7 @@ export class MisPedidosComponent implements OnInit {
     this.pedidoService.getPedidos().subscribe({
       next: (pedidos) => {
         this.pedidos = pedidos;
-        Swal.close(); // Cerrar el modal de carga cuando se obtienen los pedidos
+        // Cerrar el modal de carga cuando se obtienen los pedidos
 
         this.consultarProductosPedidos();
       },
@@ -48,18 +49,41 @@ export class MisPedidosComponent implements OnInit {
   }
 
   consultarProductosPedidos() {
-    // Iterar sobre la lista de pedidos
-    this.pedidos.forEach(pedido => {
-      // Llamar al servicio para obtener los productos de cada pedido
-      this.pedidoService.consultarProductosPedido(pedido).subscribe({
-        next: (productos) => {
-          // Añadir los productos al pedido actual
-          pedido.productos = productos; // Aquí añades los productos al pedido
-        },
-        error: () => {
-          console.error(`Error al cargar productos para el pedido con id ${pedido.id}`);
-        }
-      });
+    // Crear un array para almacenar las peticiones
+    const requests = this.pedidos.map(pedido => 
+      this.pedidoService.consultarProductosPedido(pedido).pipe(
+        // Añadir los productos al pedido cuando la petición se complete
+        tap(productos => {
+          pedido.productos = productos;
+        })
+      )
+    );
+  
+    // Mostrar un mensaje de carga mientras se realizan las peticiones
+    Swal.fire({
+      title: 'Cargando productos...',
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+  
+    // Usar forkJoin para esperar a que todas las peticiones terminen
+    forkJoin(requests).subscribe({
+      next: () => {
+        // Cerrar el mensaje de carga cuando todas las peticiones hayan finalizado
+        Swal.close();
+      },
+      error: () => {
+        // Manejar errores en caso de fallo
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ocurrió un problema al cargar los productos de los pedidos.',
+          showConfirmButton: true
+        });
+      }
     });
   }
   
