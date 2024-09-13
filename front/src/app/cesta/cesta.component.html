@@ -14,25 +14,24 @@
   <!-- Lista de productos en la cesta -->
   <div *ngFor="let product of cestProducts" class="row align-items-center estilo-card-productos-cesta mb-2 p-3">
     <!-- Imagen del producto -->
-    
-    <div class="col-2 animacion" (click)="verMas(product.producto)">
+    <div class="col-lg-2 col-md-3 col-sm-6 animacion" (click)="verMas(product.producto)">
       <img [src]="product.producto.imagenes[0]" [alt]="product.producto.nombre" class="img-fluid">
     </div>
 
     <!-- Detalles del producto -->
-    <div class="col-2 animacion" (click)="verMas(product.producto)">
+    <div class="col-lg-2 col-md-3 col-sm-6 animacion" (click)="verMas(product.producto)">
       <h5>{{ product.producto.descripcionCorta }}</h5>
     </div>
 
     <!-- Cantidad del producto con input y botones -->
-      <div class="col-2 d-flex align-items-center">
-        <button class="btn btn-secondary btn-sm me-2" (click)="decrementQuantity(product)">-</button>
-        <input type="number" [(ngModel)]="product.cantidadProducto" (change)="onQuantityChange(product)" class="form-control w-50">
-        <button class="btn btn-secondary btn-sm ms-2" (click)="incrementQuantity(product)">+</button>
-      </div>
+    <div class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center">
+      <button class="btn btn-secondary btn-sm me-2" (click)="decrementQuantity(product)">-</button>
+      <input type="number" [(ngModel)]="product.cantidadProducto" (change)="onQuantityChange(product)" class="form-control w-50">
+      <button class="btn btn-secondary btn-sm ms-2" (click)="incrementQuantity(product)">+</button>
+    </div>
 
     <!-- Precio por unidad -->
-    <div class="col-2">
+    <div class="col-lg-2 col-md-3 col-sm-6">
       <p>
         <strong>
           <span>{{ product.producto.precio.toFixed(0) }}</span>
@@ -42,14 +41,14 @@
     </div>
 
     <!-- Precio total de la línea -->
-    <div class="col-2 text-end">
+    <div class="col-lg-2 col-md-3 col-sm-6 text-end">
       <h4>
         <strong>{{ (product.producto.precio * product.cantidadProducto).toFixed(2) }} €</strong>
       </h4>
     </div>
 
     <!-- Botón de eliminación -->
-    <div class="col-2 text-end mt-2">
+    <div class="col-lg-2 col-md-3 col-sm-6 text-end mt-2">
       <button class="btn btn-danger" (click)="removeProduct(product)"><i class="bi bi-trash"></i></button>
     </div>
   </div>
@@ -57,5 +56,4 @@
   <div *ngIf="cestProducts.length != 0" class="text-center">
     <button class="btn btn-success w-50 mt-2" [routerLink]="['/compra']">Comprar</button>
   </div>
-
 </div>

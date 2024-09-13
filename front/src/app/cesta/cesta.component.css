@@ -78,3 +78,29 @@
   {
     transform: scale(1.1);
   }
+
+  /* Ajuste del tamaño de la imagen en pantallas pequeñas */
+@media (max-width: 768px) {
+  .estilo-card-productos-cesta img {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Centrar textos en pantallas más pequeñas */
+  .estilo-card-productos-cesta h5,
+  .estilo-card-productos-cesta p,
+  .estilo-card-productos-cesta h4 {
+    text-align: center;
+    margin: 5%
+  }
+
+  /* Ajustar el tamaño de los botones */
+  .estilo-card-productos-cesta .btn {
+    font-size: 0.75rem;
+  }
+
+  /* Alinear contenido en el centro */
+  .estilo-card-productos-cesta {
+    text-align: center;
+  }
+}
