@@ -1,22 +1,26 @@
 <div class="container mt-5">
-    <h2 class="text-center mb-4"><i class="bi bi-bag-fill"></i> Mis Pedidos:</h2>
+    <h2 class="text-center mb-4"><i class="bi bi-bag"></i> Mis Pedidos:</h2>
   
     <!-- Mostrar pedidos -->
     <div *ngIf="pedidos.length > 0">
       <div *ngFor="let pedido of pedidos" class="card mb-3">
         <div class="card-body">
-          <h5 class="card-title">Núm. Pedido: {{ pedido.id }}</h5>
+          <h5 class="card-title"><strong>Núm. Pedido:</strong> {{ pedido.id }}</h5>
           <p class="card-text"><strong>Fecha:</strong> {{ pedido.fecha | date:'dd/MM/yyyy' }}</p>
                     <!-- Mostrar lista productos = Ticket -->
   
           <!-- Lista de productos en el pedido -->
           <ul>
             <li *ngFor="let producto of pedido.productos">
-              <strong>Producto:</strong> {{ producto.producto.descripcionCorta }} - <strong>Cantidad:</strong> {{ producto.cantidadProducto }} - <strong>Precio:</strong> {{ producto.producto.precio * producto.cantidadProducto | currency:'EUR':'symbol':'1.2-2' }}
+              <strong>Producto:</strong> {{ producto.producto.descripcionCorta }} - 
+              <strong>Cantidad:</strong> {{ producto.cantidadProducto }} 
+              <ng-container *ngIf="producto.cantidadProducto > 1">unidades</ng-container>
+              <ng-container *ngIf="producto.cantidadProducto <= 1">unidad</ng-container> - 
+              <strong>Precio:</strong> {{ (producto.producto.precio * producto.cantidadProducto) | currency:'EUR':'symbol':'1.2-2' }}
             </li>
           </ul>
 
-          <p>Total: {{ pedido.total | currency:'EUR':'symbol':'1.2-2' }}</p>
+          <p><strong>Total:</strong> {{ pedido.total | currency:'EUR':'symbol':'1.2-2' }}</p>
         </div>
       </div>
     </div>
