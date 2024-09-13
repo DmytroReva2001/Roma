@@ -18,6 +18,8 @@ export class VistaProductoComponent implements OnInit {
   selectedImage: string = '';
   isAuthenticated: boolean = false;
   cantidad: number = 1;
+  isCantidadValida: boolean = true;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -117,6 +119,21 @@ export class VistaProductoComponent implements OnInit {
   back()
   {
     this.location.back();
+  }
+
+  onCantidadChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
+
+    // Comprobar si el valor es un entero positivo
+    const isInteger = /^\d+$/.test(value);
+    this.isCantidadValida = isInteger && Number(value) > 0;
+
+    if (!this.isCantidadValida) {
+      input.classList.add('is-invalid');
+    } else {
+      input.classList.remove('is-invalid');
+    }
   }
   
 }
