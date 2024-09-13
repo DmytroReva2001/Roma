@@ -1,5 +1,5 @@
 <div class="container mt-5">
-    <h2 class="text-center mb-4"><i class="bi bi-bag"></i> Mis Pedidos:</h2>
+    <h2 class="text-center mb-4 bg-white"><i class="bi bi-bag"></i> Mis Pedidos:</h2>
   
     <!-- Mostrar pedidos -->
     <div *ngIf="pedidos.length > 0">
@@ -26,8 +26,8 @@
     </div>
   
     <!-- Mensaje si no hay pedidos -->
-    <div *ngIf="pedidos.length === 0">
-      <p>No se encontraron pedidos para este usuario.</p>
+    <div class="text-center bg-white" *ngIf="pedidos.length === 0">
+      <h2>No se encontraron pedidos para este usuario.</h2>
     </div>
   
 </div>  

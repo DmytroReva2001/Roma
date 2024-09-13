@@ -29,16 +29,19 @@ export class MisPedidosComponent implements OnInit {
       }
     });
   
-    // Llamar al servicio para obtener los pedidos del usuario
     this.pedidoService.getPedidos().subscribe({
       next: (pedidos) => {
-        this.pedidos = pedidos;
-        // Cerrar el modal de carga cuando se obtienen los pedidos
-
-        this.consultarProductosPedidos();
+        // Asegurarse de que pedidos sea siempre un array
+        this.pedidos = pedidos || [];
+        
+        if (this.pedidos.length > 0) {
+          this.consultarProductosPedidos();
+        } else {
+          Swal.close();  // Cerrar el modal si no hay pedidos
+        }
       },
       error: () => {
-        Swal.close(); // Cerrar el modal también en caso de error
+        Swal.close(); 
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -49,17 +52,16 @@ export class MisPedidosComponent implements OnInit {
   }
 
   consultarProductosPedidos() {
-    // Crear un array para almacenar las peticiones
+    if (!this.pedidos || this.pedidos.length === 0) return;
+
     const requests = this.pedidos.map(pedido => 
       this.pedidoService.consultarProductosPedido(pedido).pipe(
-        // Añadir los productos al pedido cuando la petición se complete
         tap(productos => {
           pedido.productos = productos;
         })
       )
     );
   
-    // Mostrar un mensaje de carga mientras se realizan las peticiones
     Swal.fire({
       title: 'Cargando productos...',
       allowEscapeKey: false,
@@ -69,14 +71,11 @@ export class MisPedidosComponent implements OnInit {
       }
     });
   
-    // Usar forkJoin para esperar a que todas las peticiones terminen
     forkJoin(requests).subscribe({
       next: () => {
-        // Cerrar el mensaje de carga cuando todas las peticiones hayan finalizado
         Swal.close();
       },
       error: () => {
-        // Manejar errores en caso de fallo
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -86,5 +85,4 @@ export class MisPedidosComponent implements OnInit {
       }
     });
   }
-  
 }
