@@ -42,6 +42,17 @@ export class MiPerfilComponent implements OnInit {
   }
 
   private cargarUser() {
+
+    Swal.fire({
+      title: "Cargando...",
+      allowEscapeKey: false,
+      allowOutsideClick: false,
+      timerProgressBar: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
     this.userTiendaService.getUser().subscribe({
       next: (user) => {
         this.user = user;
@@ -56,9 +67,13 @@ export class MiPerfilComponent implements OnInit {
   
         // Guardamos el estado inicial del formulario
         this.initialFormValue = this.updateForm.getRawValue();
+
+        Swal.close();
       },
       error: (error) => {
         console.error('Error fetching user', error);
+
+        Swal.close();
       }
     });
   }
