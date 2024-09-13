@@ -54,7 +54,7 @@
     </div>
   </div>
 
-  <div *ngIf="cestProducts" class="text-center">
+  <div *ngIf="cestProducts.length != 0" class="text-center">
     <button class="btn btn-success w-50 mt-2" [routerLink]="['/compra']">Comprar</button>
   </div>
 

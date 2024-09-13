@@ -145,7 +145,7 @@ public class AuthController {
                 // Comprobamos que nueva contraseña no puede ser la misma que la actual
                 if (!passwordEncoder.matches(oldPass, userTienda.getPassword()))
                 {
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Contraseña incorrecta."));
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message", "Contraseña actual incorrecta."));
                 }
                 else if (passwordEncoder.matches(newPass, userTienda.getPassword()))
                 {

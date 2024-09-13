@@ -268,6 +268,8 @@ handleFileChange(event: Event) {
               text: error?.error?.message || 'No se pudo cambiar la contraseña. Inténtelo de nuevo más tarde.',
               icon: 'error',
               confirmButtonText: 'Aceptar'
+            }).then(() => {
+              this.changePassword(); // Ejecutar después de que el usuario confirme el mensaje de error
             });
           }
         });
