@@ -154,7 +154,7 @@ export class AuthService {
       
       // Si no hay token, considerarlo como expirado (no válido)
       if (!token) {
-        return true;
+        return false;
       }
     
       // Retornar si el token ha expirado
