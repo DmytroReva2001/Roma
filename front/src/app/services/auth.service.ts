@@ -154,9 +154,9 @@ export class AuthService {
       
       // Si no hay token, considerarlo como expirado (no válido)
       if (!token) {
-        return false;
+        return true;
       }
-  
+    
       // Retornar si el token ha expirado
       return this.jwtHelper.isTokenExpired(token);
     }

@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import Swal from 'sweetalert2';
 
 // Clase para controlar el tema de token y roles de usuario autenticado
-export const AuthGuard: CanActivateFn = (route, state) => {
+export const AuthGuard: CanActivateFn = (_route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const restrictedRoutes = ['/nuevo_producto', '/nuevo_tipo_producto', '/nuevo_tatuaje', '/productos_admin', '/gestion', '/nuava_informacion'];
@@ -23,7 +23,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
         return of(false);
       } 
       // Si tiene token, comprobar que sea válido
-      else if (isAuthenticated || authService.isTokenExpired())
+      else if (isAuthenticated && authService.isTokenExpired())
       {
         // Eliminar token si se caducó
       localStorage.removeItem('token');
@@ -87,7 +87,7 @@ export const AuthenticatedGuard: CanActivateFn = () => {
         router.navigateByUrl('/auth');
         return of(false);
       }
-      else if (isAuthenticated || authService.isTokenExpired())
+      else if (isAuthenticated && authService.isTokenExpired())
         {
           // Eliminar token si se caducó
         localStorage.removeItem('token');
