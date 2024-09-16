@@ -100,8 +100,10 @@ export class VistaProductoComponent implements OnInit {
           icon: 'success',
           title: '¡Producto añadido!',
           text: 'El producto se ha añadido a la cesta correctamente.',
-          timer: 2000,
-          showConfirmButton: false
+          showConfirmButton: true  // Cambiado para que muestre el botón de confirmación
+        }).then(() => {
+          // Redirige solo después de que el usuario cierre el Swal
+          this.router.navigateByUrl('/cesta');
         });
       },
       error: (err) => {
@@ -114,7 +116,7 @@ export class VistaProductoComponent implements OnInit {
         });
       }
     });
-  }
+  }  
 
   back()
   {
