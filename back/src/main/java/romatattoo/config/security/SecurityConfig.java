@@ -33,6 +33,9 @@ public class SecurityConfig {
                         request
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/user_tienda/update_user_data").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
+                                .requestMatchers(HttpMethod.POST, "/api/pedidos/crear_pedido").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
+                                .requestMatchers(HttpMethod.POST, "/api/pedidos/agregar_productos").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
+
                                 .requestMatchers(HttpMethod.GET, API).permitAll()
                                 .requestMatchers(HttpMethod.POST, API).hasAnyAuthority(Role.ADMIN.toString())
                                 .requestMatchers(HttpMethod.PUT, API).hasAnyAuthority(Role.ADMIN.toString())

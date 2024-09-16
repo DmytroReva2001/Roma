@@ -1,5 +1,7 @@
 <div class="container mt-5">
-    <h2 class="text-center mb-4 bg-white"><i class="bi bi-bag"></i> Mis Pedidos:</h2>
+    <h2 class="text-center mb-4 bg-white">
+      <strong><i class="bi bi-bag"></i> Mis Pedidos:</strong>
+    </h2>
   
     <!-- Mostrar pedidos -->
     <div *ngIf="pedidos.length > 0">
@@ -24,10 +26,11 @@
         </div>
       </div>
     </div>
-  
-    <!-- Mensaje si no hay pedidos -->
-    <div class="text-center bg-white" *ngIf="pedidos.length === 0">
-      <h2>No se encontraron pedidos.</h2>
-    </div>
-  
 </div>  
+
+<div *ngIf="pedidos.length === 0">
+  <div class="estilo-card-productos-cesta d-flex flex-column bg-white text-center m-4">
+    <h5 class="card-title m-2">No hay pedidos.</h5>
+    <button [routerLink]="['/menu_ropa']" class="btn btn-warning mt-2 w-25">Iniciar la compra</button>
+  </div>
+</div>
