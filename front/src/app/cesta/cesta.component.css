@@ -23,15 +23,6 @@
   font-size: 0.875rem;
 }
 
-.animacion {
-  transition: transform 0.3s;
-  cursor: pointer;
-}
-
-.animacion:hover {
-  transform: scale(1.1);
-}
-
 input
 {
   min-width: 40px;

@@ -6,12 +6,12 @@
   <!-- Lista de productos en la cesta -->
   <div *ngFor="let product of cestProducts" class="row align-items-center estilo-card-productos-cesta mb-2 p-3">
     <!-- Imagen del producto -->
-    <div class="col-lg-2 col-md-3 col-sm-6 animacion" (click)="verMas(product.producto)">
+    <div class="col-lg-2 col-md-3 col-sm-6 animacion cursor-pointer" (click)="verMas(product.producto)">
       <img [src]="product.producto.imagenes[0]" [alt]="product.producto.nombre" class="img-fluid">
     </div>
 
     <!-- Detalles del producto -->
-    <div class="col-lg-2 col-md-3 col-sm-6 animacion" (click)="verMas(product.producto)">
+    <div class="col-lg-2 col-md-3 col-sm-6 animacion cursor-pointer" (click)="verMas(product.producto)">
       <h5>{{ product.producto.descripcionCorta }}</h5>
     </div>
 
