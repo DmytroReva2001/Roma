@@ -18,10 +18,6 @@ export class CestaComponent {
 
   ngOnInit(): void {
 
-    this.consultarProductosCesta();
-  }
-
-  private consultarProductosCesta() {
     Swal.fire({
       title: "Cargando...",
       allowEscapeKey: false,
@@ -32,6 +28,11 @@ export class CestaComponent {
       }
     });
 
+    this.consultarProductosCesta();
+  }
+
+  private consultarProductosCesta() {
+    
     // Obtener los productos del servicio al inicializar el componente
     this.cestaService.getCartProducts().subscribe(products => {
       this.cestProducts = products;
