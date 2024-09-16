@@ -1,60 +1,114 @@
-  .btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
-  }
-  
-  .estilo-card-productos-cesta {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    color: black;
-  }
-  
+/* Estilos generales */
+.estilo-card-productos-cesta {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: black;
+}
 
-  .estilo-card-productos-cesta img
-  {
-    width: 150px;
-    height: 150px;
-    
-  }
+/* Imagen del producto */
+.estilo-card-productos-cesta img {
+  width: 150px;
+  height: 150px;
+  min-width: 100px;
+}
 
-  .animacion
-  {
-    transition: transform 0.3s;
-    cursor: pointer;
-  }
+/* Botones y animación */
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
 
-  .animacion:hover
-  {
-    transform: scale(1.1);
-  }
+.animacion {
+  transition: transform 0.3s;
+  cursor: pointer;
+}
 
-  /* Ajuste del tamaño de la imagen en pantallas pequeñas */
+.animacion:hover {
+  transform: scale(1.1);
+}
+
+input
+{
+  min-width: 40px;
+}
+
+/* Ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
+  .estilo-card-productos-cesta {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+  }
+
   .estilo-card-productos-cesta img {
     width: 100px;
     height: 100px;
+    margin-bottom: 10px; /* Espacio debajo de la imagen */
   }
 
-  /* Centrar textos en pantallas más pequeñas */
-  .estilo-card-productos-cesta h5,
-  .estilo-card-productos-cesta p,
-  .estilo-card-productos-cesta h4 {
+  .estilo-card-productos-cesta > div {
+    flex: 1 1 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    margin: 5%
+    margin-bottom: 10px; /* Espacio entre los elementos */
   }
 
-  /* Ajustar el tamaño de los botones */
   .estilo-card-productos-cesta .btn {
     font-size: 0.75rem;
   }
 
-  /* Alinear contenido en el centro */
-  .estilo-card-productos-cesta {
+  .estilo-card-productos-cesta input {
+    width: auto;
+    max-width: 120px;
+  }
+
+  .estilo-card-productos-cesta .text-end {
     text-align: center;
+    margin-top: 10px;
+  }
+
+  .estilo-card-productos-cesta .btn-danger {
+    margin-top: 10px;
+  }
+}
+
+/* Ajustes para pantallas grandes */
+@media (min-width: 769px) {
+  .estilo-card-productos-cesta {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+  }
+
+  .estilo-card-productos-cesta img {
+    width: 150px;
+    height: 150px;
+    margin-right: 15px; /* Espacio a la derecha de la imagen */
+  }
+
+  .estilo-card-productos-cesta > div {
+    flex: 1;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .estilo-card-productos-cesta .btn {
+    font-size: 0.875rem;
+  }
+
+  .estilo-card-productos-cesta input {
+    width: auto;
+    max-width: 120px;
   }
 }
