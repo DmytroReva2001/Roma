@@ -9,8 +9,8 @@ import { NuevoProductoComponent } from './nuevo-producto/nuevo-producto.componen
 import { NuevoTatuajeComponent } from './nuevo-tatuaje/nuevo-tatuaje.component';
 import { NuevoTipoProductoComponent } from './nuevo-tipo-producto/nuevo-tipo-producto.component';
 import { AuthComponent } from './auth/auth.component';
-import { AuthGuard } from './auth/role.guard';
-import { AuthenticatedGuard } from './auth/role.guard';
+import { AuthGuard } from './auth/token.guard';
+import { AuthenticatedGuard } from './auth/token.guard';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { ProductosAdminComponent } from './productos-admin/productos-admin.component';
 import { ActivateComponent } from './activate/activate.component';

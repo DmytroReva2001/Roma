@@ -2,8 +2,9 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { CanActivateFn } from '@angular/router';
-import { tap, map, switchMap, catchError } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import Swal from 'sweetalert2';
 
 // Clase para controlar el tema de token y roles de usuario autenticado
 export const AuthGuard: CanActivateFn = (route, state) => {
@@ -21,7 +22,25 @@ export const AuthGuard: CanActivateFn = (route, state) => {
         router.navigateByUrl('/auth');
         return of(false);
       } 
-      // Si tiene token
+      // Si tiene token, comprobar que sea válido
+      else if (isAuthenticated || authService.isTokenExpired())
+      {
+        // Eliminar token si se caducó
+      localStorage.removeItem('token');
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Sesión expirada',
+        text: 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.',
+        confirmButtonText: 'Aceptar'
+      }).then(() => {
+        // Redirigir a la página de login
+        router.navigate(['/auth']);
+      });
+
+      return of(false);
+      }
+      // Si tiene token válido
       else {
         // Verificar el rol de administrador antes de permitir acceso a rutas específicas
         if (restrictedRoutes.some(route => state.url.includes(route))) {
@@ -29,7 +48,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
           return authService.isAdmin().pipe(
             map(isAdmin => {
               if (!isAdmin) {
-                // Si no es admin se dirige a menú principal
+                // Si no es admin se dirige a menú principalx
                 router.navigateByUrl('/menu_principal');
                 return false;
               }
@@ -57,7 +76,6 @@ export const AuthGuard: CanActivateFn = (route, state) => {
 export const AuthenticatedGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const restrictedRoutes = ['/mi_perfil', '/cesta'];
 
   // Consultamos el método de validación de token
   return authService.tokenValidation().pipe(
@@ -68,7 +86,24 @@ export const AuthenticatedGuard: CanActivateFn = () => {
         // Lo dirigimos a login
         router.navigateByUrl('/auth');
         return of(false);
-      } 
+      }
+      else if (isAuthenticated || authService.isTokenExpired())
+        {
+          // Eliminar token si se caducó
+        localStorage.removeItem('token');
+  
+        Swal.fire({
+          icon: 'warning',
+          title: 'Sesión expirada',
+          text: 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.',
+          confirmButtonText: 'Aceptar'
+        }).then(() => {
+          // Redirigir a la página de login
+          router.navigate(['/auth']);
+        });
+  
+        return of(false);
+        } 
       // Si tiene token
       else {
         return of(true);

@@ -148,4 +148,16 @@ export class AuthService {
       .set('newEmail', newEmail);
       return this.http.get<any>(`${this.apiUrl}/change_email`, { params });
     }
+
+    isTokenExpired(): boolean {
+      const token = localStorage.getItem('token');
+      
+      // Si no hay token, considerarlo como expirado (no válido)
+      if (!token) {
+        return false;
+      }
+  
+      // Retornar si el token ha expirado
+      return this.jwtHelper.isTokenExpired(token);
+    }
 }
