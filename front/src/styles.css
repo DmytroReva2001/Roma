@@ -11,6 +11,23 @@ body {
   min-width: 400px;
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Hace que el contenedor principal ocupe toda la altura de la ventana */
+}
+
+app-footer
+{
+  flex:auto;
+  background-color: #000000;
+}
+
 /* Estilo para botón de recuperación de contraseña que simula un enlace */
 .volver {
   padding: 1%;
