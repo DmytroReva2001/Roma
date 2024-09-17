@@ -12,16 +12,20 @@
                     <!-- Mostrar lista productos = Ticket -->
   
           <!-- Lista de productos en el pedido -->
-          <ul>
+          <ol>
             <li *ngFor="let producto of pedido.productos">
-              <strong>Producto:</strong> {{ producto.producto.descripcionCorta }} - 
-              <strong>Cantidad:</strong> {{ producto.cantidadProducto }} 
-              <ng-container *ngIf="producto.cantidadProducto > 1">unidades</ng-container>
-              <ng-container *ngIf="producto.cantidadProducto <= 1">unidad</ng-container> - 
-              <strong>Precio:</strong> {{ (producto.producto.precio * producto.cantidadProducto) | currency:'EUR':'symbol':'1.2-2' }}
-              <strong>Talla:</strong> {{producto.talla}}
+              <ul class="m-4">
+                <li><strong>Producto:</strong> {{ producto.producto.descripcionCorta }}</li>
+                <li>
+                  <strong>Cantidad:</strong> {{ producto.cantidadProducto }} 
+                  <ng-container *ngIf="producto.cantidadProducto > 1">unidades</ng-container> 
+                  <ng-container *ngIf="producto.cantidadProducto <= 1">unidad</ng-container>
+                </li>
+                <li><strong>Precio:</strong> {{ (producto.producto.precio * producto.cantidadProducto) | currency:'EUR':'symbol':'1.2-2' }}</li>
+                <li><strong>Talla:</strong> {{producto.talla}}</li>
+              </ul>
             </li>
-          </ul>
+          </ol>
 
           <p><strong>Total:</strong> {{ pedido.total | currency:'EUR':'symbol':'1.2-2' }}</p>
         </div>
