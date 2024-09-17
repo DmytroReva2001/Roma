@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { UserTiendaService } from '../services/user-tienda.service';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { User } from '../models/user';
 
 @Component({
@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user!: User;
   isAdmin: boolean = false;
   private authSubscription: Subscription | undefined;
+  private routerSubscription: Subscription | undefined;
 
   constructor(
     private authService: AuthService,
@@ -40,11 +41,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     
     this.checkAuthentication(); // Unificamos la lógica de autenticación inicial
+
+    this.routerSubscription = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.closeNavbar();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
+    }
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
     }
   }
 
@@ -95,5 +105,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/auth');
       }
     });
+  }
+
+  closeNavbar(): void {
+    const navbarCollapse = document.querySelector('#navbarSupportedContent') as HTMLElement;
+    if (navbarCollapse) {
+      navbarCollapse.classList.remove('show');
+    }
   }
 }
