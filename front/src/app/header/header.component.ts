@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router, NavigationEnd } from '@angular/router';
 import { User } from '../models/user';
+import { CestaService } from '../services/cesta.service';
 
 @Component({
   selector: 'app-header',
@@ -21,11 +22,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAdmin: boolean = false;
   private authSubscription: Subscription | undefined;
   private routerSubscription: Subscription | undefined;
+  numeroArticulosCesta: number = 0;
 
   constructor(
     private authService: AuthService,
     private userTiendaService: UserTiendaService,
-    private router: Router
+    private router: Router,
+    private cestaService: CestaService,
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.closeNavbar();
       }
+    });
+
+    this.cestaService.getCartProducts().subscribe(products => {
+      this.numeroArticulosCesta = Array.isArray(products) ? products.length : 0;
     });
   }
 

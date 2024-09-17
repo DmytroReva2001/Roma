@@ -43,9 +43,10 @@
 
         <li class="m-auto">
           <div>
-          <a class="nav-link" [routerLink]="['/cesta']"
-            ><i class="bi bi-cart-fill"></i> Mi cesta</a
-          >
+          <a class="nav-link" [routerLink]="['/cesta']">
+            <span *ngIf="numeroArticulosCesta != 0" class="numero_articulos_cesta m-1">{{numeroArticulosCesta}}</span>
+            <i class="bi bi-cart-fill"></i> Mi cesta
+          </a>
           </div>
         </li>
 
