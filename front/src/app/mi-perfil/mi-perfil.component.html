@@ -10,7 +10,7 @@
               <label for="imagen" class="form-label">Foto de perfil</label><br>
               <div class="image-container" (click)="pickImg()">
                 <img [src]="user.imagen ? user.imagen : 'emptyAccountImage.jpg'" class="img-fluid" alt="Foto de perfil">
-                <div class="camera-icon" (click)="pickImg()">
+                <div class="camera-icon">
                   <i class="bi bi-camera"></i>
                 </div>
               </div>
