@@ -24,6 +24,10 @@ public class ProductoCesta {
     private Integer cantidadProducto;
 
     @NotNull
+    @Column(name = "talla")
+    private String talla;
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserTienda userTienda;

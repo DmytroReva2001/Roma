@@ -6,32 +6,36 @@
 
   <!-- Lista de productos en la cesta -->
   <div class="bg-white p-3 rounded shadow-sm">
-    <div *ngFor="let product of cestProducts" class="row mb-3 p-3 border rounded">
-      <!-- Contenedor flexible para los datos del producto -->
-      <div class="col-12 d-flex flex-column flex-md-row align-items-center">
-        <!-- Cantidad del producto -->
-        <div class="col-12 col-md-3 text-center text-md-start mb-2 mb-md-0">
-          <h5 class="mb-0">X {{ product.cantidadProducto }}</h5>
-        </div>
+    <div *ngFor="let product of cestProducts" class="row mb-3 p-3 border rounded align-items-center">
+      <!-- Cantidad del producto -->
+      <div class="col-12 col-md-2 text-center text-md-start mb-2 mb-md-0">
+        <h5 class="mb-0">X {{ product.cantidadProducto }}</h5>
+      </div>
 
-        <!-- Detalles del producto -->
-        <div class="col-12 col-md-6 text-center text-md-start mb-2 mb-md-0">
-          <h5 class="mb-0">{{ product.producto.descripcionCorta }}</h5>
-        </div>
+      <!-- Detalles del producto -->
+      <div class="col-12 col-md-4 text-center text-md-start mb-2 mb-md-0">
+        <h5 class="mb-0">{{ product.producto.descripcionCorta }}</h5>
+      </div>
 
-        <!-- Precio por unidad -->
-        <div class="col-12 col-md-3 text-center text-md-end mb-2 mb-md-0">
-          <p class="mb-0">
-            <strong>
-              <span>{{ product.producto.precio.toFixed(0) }}</span>
-              <sup>{{ product.producto.precio.toFixed(2).split('.')[1] }} €</sup> / ud
-            </strong>
-          </p>
-        </div>
+      <!-- Talla -->
+      <div class="col-12 col-md-2 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0">
+          <strong>Talla: {{ product.talla }}</strong>
+        </p>
+      </div>
+
+      <!-- Precio por unidad -->
+      <div class="col-12 col-md-2 text-center text-md-end mb-2 mb-md-0">
+        <p class="mb-0">
+          <strong>
+            <span>{{ product.producto.precio.toFixed(0) }}</span>
+            <sup>{{ product.producto.precio.toFixed(2).split('.')[1] }} €</sup> / ud
+          </strong>
+        </p>
       </div>
 
       <!-- Precio total de la línea -->
-      <div class="col-12 text-center text-md-end mt-2">
+      <div class="col-12 col-md-2 text-center text-md-end mt-2 mt-md-0">
         <h4 class="mb-0">
           <strong>Precio: {{ (product.producto.precio * product.cantidadProducto).toFixed(2) }} €</strong>
         </h4>

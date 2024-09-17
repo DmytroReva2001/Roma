@@ -106,6 +106,7 @@ public class PedidoController {
         for (Map<String, Object> productoPedidoData : productosPedidosData) {
             Long productoId = ((Number) productoPedidoData.get("productoId")).longValue();
             Integer cantidad = ((Number) productoPedidoData.get("cantidad")).intValue();
+            String talla = (String) productoPedidoData.get("talla");
 
             Producto producto = productoService.obtenerProductoPorId(productoId);
             if (producto == null) {
@@ -116,6 +117,7 @@ public class PedidoController {
             productoPedido.setProducto(producto);
             productoPedido.setCantidadProducto(cantidad);
             productoPedido.setPedido(pedido);
+            productoPedido.setTalla(talla);
 
             productoPedidoService.guardarPedidoProducto(productoPedido);
         }

@@ -47,7 +47,9 @@ public class ProductoCestaController {
     @GetMapping("/add_producto")
     public ResponseEntity<?> agregarProductoCesta(@RequestParam("email") String email,
                                                   @RequestParam("idProducto") Long idProducto,
-                                                  @RequestParam("cantidad") int cantidad) {
+                                                  @RequestParam("cantidad") int cantidad,
+                                                  @RequestParam("talla") String talla)
+    {
         // Buscar el producto por id
         Producto producto = productoService.obtenerProductoPorId(idProducto);
         if (producto == null) {
@@ -68,6 +70,7 @@ public class ProductoCestaController {
             if (Objects.equals(productoCesta.getProducto().getId(), idProducto))
             {
                 productoCesta.setCantidadProducto(productoCesta.getCantidadProducto()+cantidad);
+                productoCesta.setTalla(talla);
 
                 ProductoCesta altaProductoCesta = productoCestaService.agregarProductoCesta(productoCesta);
                 return ResponseEntity.ok(altaProductoCesta);

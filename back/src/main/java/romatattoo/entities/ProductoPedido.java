@@ -27,4 +27,8 @@ public class ProductoPedido {
     @NotNull
     @Column(name = "cantidad_producto")
     private Integer cantidadProducto;
+
+    @NotNull
+    @Column(name = "talla")
+    private String talla;
 }

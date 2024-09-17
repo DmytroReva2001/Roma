@@ -19,6 +19,7 @@
               <ng-container *ngIf="producto.cantidadProducto > 1">unidades</ng-container>
               <ng-container *ngIf="producto.cantidadProducto <= 1">unidad</ng-container> - 
               <strong>Precio:</strong> {{ (producto.producto.precio * producto.cantidadProducto) | currency:'EUR':'symbol':'1.2-2' }}
+              <strong>Talla:</strong> {{producto.talla}}
             </li>
           </ul>
 

@@ -69,7 +69,8 @@ compra() {
       const productosPedidos = this.cestProducts.map(product => ({
         productoId: product.producto.id,  // ID del producto
         cantidad: product.cantidadProducto,  // Cantidad del producto
-        idPedido: pedidoNuevo.id // ID del pedido creado
+        idPedido: pedidoNuevo.id, // ID del pedido creado
+        talla: product.talla // Talla de producto
       }));
 
       this.pedidoService.agregarProductosAlPedido(pedidoNuevo.id, productosPedidos).subscribe({

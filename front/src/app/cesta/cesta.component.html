@@ -1,4 +1,4 @@
-<div class="container-fluid p-5">
+<div class="container-fluid p-5 m-auto">
   <h2 class="text-center m-4 bg-white">
     <strong><i class="bi bi-cart"></i> Mi cesta:</strong>
   </h2>
@@ -6,25 +6,32 @@
   <!-- Lista de productos en la cesta -->
   <div *ngFor="let product of cestProducts" class="row align-items-center estilo-card-productos-cesta mb-2 p-3">
     <!-- Imagen del producto -->
-    <div class="col-lg-2 col-md-3 col-sm-6 animacion cursor-pointer" (click)="verMas(product.producto)">
+    <div class="col-lg-2 col-md-3 col-sm-6 d-flex justify-content-center animacion cursor-pointer" (click)="verMas(product.producto)">
       <img [src]="product.producto.imagenes[0]" [alt]="product.producto.nombre" class="img-fluid">
     </div>
 
     <!-- Detalles del producto -->
-    <div class="col-lg-2 col-md-3 col-sm-6 animacion cursor-pointer" (click)="verMas(product.producto)">
-      <h5>{{ product.producto.descripcionCorta }}</h5>
+    <div class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center animacion cursor-pointer" (click)="verMas(product.producto)">
+      <h5 class="text-center">{{ product.producto.descripcionCorta }}</h5>
     </div>
 
     <!-- Cantidad del producto con input y botones -->
-    <div class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center">
+    <div class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center">
       <button class="btn btn-secondary btn-sm me-2" (click)="decrementQuantity(product)">-</button>
       <input type="number" [(ngModel)]="product.cantidadProducto" (change)="onQuantityChange(product)" class="form-control w-50">
       <button class="btn btn-secondary btn-sm ms-2" (click)="incrementQuantity(product)">+</button>
     </div>
 
+    <!-- Talla -->
+    <div class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center">
+      <p class="mb-0 text-center">
+        <strong>Talla:</strong> {{ product.talla }}
+      </p>
+    </div>
+
     <!-- Precio por unidad -->
-    <div class="col-lg-2 col-md-3 col-sm-6">
-      <p>
+    <div class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center justify-content-center">
+      <p class="mb-0 text-center">
         <strong>
           <span>{{ product.producto.precio.toFixed(0) }}</span>
           <sup>{{ product.producto.precio.toFixed(2).split('.')[1] }} €</sup> / ud
@@ -33,28 +40,31 @@
     </div>
 
     <!-- Precio total de la línea -->
-    <div class="col-lg-2 col-md-3 col-sm-6 text-end">
-      <h4>
+    <div class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center text-center">
+      <h4 class="mb-0">
         <strong>{{ (product.producto.precio * product.cantidadProducto).toFixed(2) }} €</strong>
       </h4>
     </div>
 
     <!-- Botón de eliminación -->
-    <div class="col-lg-2 col-md-3 col-sm-6 text-end mt-2">
+    <div class="col-lg-2 col-md-3 col-sm-6 d-flex align-items-center text-center mt-2">
       <button class="btn btn-danger" (click)="removeProduct(product)"><i class="bi bi-trash"></i></button>
     </div>
   </div>
 
   <!-- Contenido principal de productos -->
-  <div *ngIf="!cestProducts || cestProducts.length === 0">
+  <div *ngIf="!cestProducts || cestProducts.length === 0" class="text-center">
     <div class="estilo-card-productos-cesta d-flex flex-column bg-white text-center">
       <h5 class="card-title m-2">No hay productos en la cesta.</h5>
       <button [routerLink]="['/menu_ropa']" class="btn btn-warning mt-2">Iniciar la compra</button>
     </div>
   </div>
 
-  <div *ngIf="cestProducts" class="text-center">
-    <button class="btn btn-success w-25 m-2" [routerLink]="['/compra']">Comprar</button>
-    <button class="btn btn-warning w-25 m-2" [routerLink]="['/menu_ropa']">Seguir comprando</button>
+  <div *ngIf="cestProducts" class="text-center mt-4">
+    <div class="d-flex flex-column flex-sm-row justify-content-center">
+      <button class="btn btn-success mb-2 mb-sm-0 me-sm-2" [routerLink]="['/compra']">Comprar</button>
+      <button class="btn btn-warning" [routerLink]="['/menu_ropa']">Seguir comprando</button>
+    </div>
   </div>
+
 </div>

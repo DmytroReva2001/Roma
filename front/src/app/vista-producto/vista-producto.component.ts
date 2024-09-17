@@ -19,6 +19,8 @@ export class VistaProductoComponent implements OnInit {
   isAuthenticated: boolean = false;
   cantidad: number = 1;
   isCantidadValida: boolean = true;
+  sizes: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  selectedSize: string = '';
 
 
   constructor(
@@ -74,9 +76,8 @@ export class VistaProductoComponent implements OnInit {
     });
   }
 
-  buy(producto: Producto, cantidad: number)
-  {
-    this.cestaService.addCartProducto(producto.id!, cantidad).subscribe({
+  buy(producto: Producto, cantidad: number, size: string) {
+    this.cestaService.addCartProducto(producto.id!, cantidad, size).subscribe({
       next: () => {
         this.router.navigateByUrl('/compra');
       },
@@ -92,18 +93,31 @@ export class VistaProductoComponent implements OnInit {
     });
   }
 
-  addCesta(producto: Producto, cantidad: number): void {
-    this.cestaService.addCartProducto(producto.id!, cantidad).subscribe({
+  addCesta(producto: Producto, cantidad: number, talla:string): void {
+    this.cestaService.addCartProducto(producto.id!, cantidad, talla).subscribe({
       next: () => {
         // Si la respuesta es exitosa
         Swal.fire({
           icon: 'success',
           title: '¡Producto añadido!',
           text: 'El producto se ha añadido a la cesta correctamente.',
-          showConfirmButton: true  // Cambiado para que muestre el botón de confirmación
-        }).then(() => {
-          // Redirige solo después de que el usuario cierre el Swal
-          this.router.navigateByUrl('/cesta');
+          showConfirmButton: true,
+          confirmButtonText: 'Ir a cesta',
+          showCancelButton: true,
+          cancelButtonText: 'Seguir comprando',
+          // Añade una clase para personalizar los botones si es necesario
+          customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-warning'
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // El usuario ha hecho clic en 'Ir a cesta'
+            this.router.navigateByUrl('/cesta');
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // El usuario ha hecho clic en 'Seguir comprando' o cerró el modal
+            Swal.close();
+          }
         });
       },
       error: (err) => {

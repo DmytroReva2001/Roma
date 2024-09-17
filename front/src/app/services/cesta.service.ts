@@ -27,7 +27,7 @@ export class CestaService {
     return this.http.get<any[]>(`${this.apiUrl}/get_cart_products`, { params });
   }
 
-  addCartProducto(idProducto: number, cantidad: number): Observable<any[]> {
+  addCartProducto(idProducto: number, cantidad: number, size:string): Observable<any[]> {
     const token = localStorage.getItem('token');
     if (!token) {
       return of([]); // Devolver un Observable de array vacío
@@ -37,7 +37,8 @@ export class CestaService {
     const params = new HttpParams()
       .set('email', email)
       .set('idProducto', idProducto)
-      .set('cantidad', cantidad);
+      .set('cantidad', cantidad)
+      .set('talla', size);
 
     return this.http.get<any[]>(`${this.apiUrl}/add_producto`, { params });
   }
