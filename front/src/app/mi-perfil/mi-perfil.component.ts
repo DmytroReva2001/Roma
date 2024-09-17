@@ -278,72 +278,79 @@ handleFileChange(event: Event) {
   }
 
   changeEmail() {
-        // Abrimos formulario para consultar el email de user a recuperar la contraseña
+    // Abrimos formulario para consultar el email de user a recuperar la contraseña
+    Swal.fire({
+      title: 'Escriba su nuevo correo electrónico',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar email',
+      cancelButtonText: 'Cancelar',
+      showLoaderOnConfirm: true,
+      preConfirm: async (email: string) => {
+        // Crear un FormControl para validar el correo electrónico
+        const emailControl = new FormControl(email, [Validators.required, Validators.email]);
+        
+        // Verificar si el correo electrónico es válido
+        if (emailControl.invalid) {
+          // Mostrar un mensaje de validación y evitar la confirmación
+          Swal.showValidationMessage('Por favor, introduzca un correo electrónico válido');
+          return false; // Asegúrate de que el modal no se confirme si el correo es inválido
+        }
+  
+        // Verificar si el nuevo correo electrónico es igual al actual
+        if (email === this.user.email) {
+          Swal.showValidationMessage('El nuevo correo electrónico no puede ser igual al actual');
+          return false;
+        }
+        
+        // Si el correo electrónico es válido y diferente al actual, devolverlo para su uso posterior
+        return email;
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Animación de carga
         Swal.fire({
-          title: 'Escriba su nuevo correo electrónico',
-          input: 'text',
-          inputAttributes: {
-            autocapitalize: 'off'
-          },
-          showCancelButton: true,
-          confirmButtonText: 'Confirmar email',
-          cancelButtonText: 'Cancelar',
-          showLoaderOnConfirm: true,
-          preConfirm: async (email: string) => {
-            // Crear un FormControl para validar el correo electrónico
-            const emailControl = new FormControl(email, [Validators.required, Validators.email]);
-      
-            // Verificar si el correo electrónico es válido
-            if (emailControl.invalid) {
-              // Mostrar un mensaje de validación y evitar la confirmación
-              Swal.showValidationMessage('Por favor, introduzca un correo electrónico válido');
-              return false; // Asegúrate de que el modal no se confirme si el correo es inválido
-            }
-            // Si el correo electrónico es válido, devolverlo para su uso posterior
-            return email;
-          },
-          allowOutsideClick: () => !Swal.isLoading()
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // Animación de carga
+          title: "Cargando...",
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          timerProgressBar: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+        
+        // Obtener el correo electrónico del resultado
+        const email = result.value;
+        
+        // Suscribirse al método del servicio que maneja el inicio de procedimiento de recuperación de contraseña
+        this.authService.enviarCorreoEmail(this.user.email, email).subscribe({
+          next: () => {
+            Swal.close();
+  
             Swal.fire({
-              title: "Cargando...",
-              allowEscapeKey: false,
-              allowOutsideClick: false,
-              timerProgressBar: false,
-              didOpen: () => {
-                Swal.showLoading();
-              }
+              title: 'Correo electrónico enviado',
+              text: `Se le ha enviado un correo electrónico a ${email} para confirmar su nuevo email.`,
+              icon: 'success'
+            }).then(() => {
+              localStorage.removeItem('token');
+              this.router.navigateByUrl('/auth');
             });
-            
-            // Obtener el correo electrónico del resultado
-            const email = result.value;
-            
-            // Suscribirse al método del servicio que maneja el inicio de procedimiento de recuperación de contraseña
-            this.authService.enviarCorreoEmail(this.user.email, email).subscribe({
-              next: () => {
-                Swal.close();
-    
-                Swal.fire({
-                  title: 'Correo electrónico enviado',
-                  text: `Se le ha enviado un correo electrónico a ${email} para confirmar su nuevo email.`,
-                  icon: 'success'
-                }).then(() => {
-                  localStorage.removeItem('token');
-                  this.router.navigateByUrl('/auth');
-                });
-              },
-              error: (error: any) => {
-                Swal.fire({
-                  icon: "error",
-                  title: "Se ha producido un error",
-                  text: error.error.message,
-                });
-              }
+          },
+          error: (error: any) => {
+            Swal.fire({
+              icon: "error",
+              title: "Se ha producido un error",
+              text: error.error.message,
             });
           }
         });
-  }
+      }
+    });
+  }  
 
   // Compara los valores actuales del formulario con los valores iniciales
   isFormChanged(): boolean {
