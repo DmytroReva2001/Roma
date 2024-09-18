@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { CestaService } from '../services/cesta.service';
 import { SharedService } from '../services/shared.service';
 import { AuthService } from '../services/auth.service';
-import { User } from '../models/user';
 
 @Component({
   selector: 'app-cesta',
@@ -89,19 +88,40 @@ decrementQuantity(product: any) {
 
 // Modificar producto
 modifyProduct(product: any) {
-  this.cestaService.modificarProducto(product).subscribe({
-    next: () => {
-      this.consultarProductosCesta();
-    },
-    error: (error) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error.message,
-        confirmButtonText: 'Aceptar'
-      });
-    }
-  });
+
+  if (this.isAuthenticated)
+  {
+    this.cestaService.modificarProducto(product).subscribe({
+      next: () => {
+        this.consultarProductosCesta();
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema durante el proceso. Intenta de nuevo más tarde. Código de error: ' + error.message,
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
+  }
+  else
+  {
+    this.cestaService.modificarProductoCestaInvitado(product).subscribe({
+      next: () => {
+        this.consultarProductosCesta();
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema durante el proceso. Intenta de nuevo más tarde. Código de error: ' + error.message,
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
+  }
+  
 }
 
 onQuantityChange(product: any) {
@@ -125,19 +145,40 @@ onQuantityChange(product: any) {
 
 // Eliminar producto
 removeProduct(product: any) {
-  this.cestaService.eliminarProducto(product).subscribe({
-    next: () => {
-      this.consultarProductosCesta();
-      // Actualiza la vista o estado local aquí si es necesario
-    },
-    error: (error) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error,
-        confirmButtonText: 'Aceptar'
-      });
-    }
-  });
+
+  if (this.isAuthenticated)
+  {
+    this.cestaService.eliminarProducto(product).subscribe({
+      next: () => {
+        this.consultarProductosCesta();
+        // Actualiza la vista o estado local aquí si es necesario
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error,
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
+  }
+  else
+  {
+    this.cestaService.eliminarProductoCestaInvitado(product).subscribe({
+      next: () => {
+        this.consultarProductosCesta();
+        // Actualiza la vista o estado local aquí si es necesario
+      },
+      error: (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Hubo un problema al intentar eliminar el producto de la cesta. Intenta de nuevo más tarde. Código de error: ' + error,
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    });
+  }
 }
 }

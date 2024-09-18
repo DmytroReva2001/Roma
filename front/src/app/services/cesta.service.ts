@@ -109,11 +109,77 @@ export class CestaService {
     return this.http.get<any>(`${this.apiUrl}/delete_producto`, { params });
 }
 
+eliminarProductoCestaInvitado(product: any): Observable<any> {
+  // Obtener el token del localStorage
+  const token = localStorage.getItem('romaInvitedSesion');
+
+  // Si el token no existe, devolver un Observable con un mensaje de error
+  if (!token) {
+    return of({ error: 'Token no encontrado' });
+  }
+
+  let cart: any[] = [];
+  try {
+    cart = JSON.parse(token); // Intentar parsear el token
+  } catch (error) {
+    return of({ error: 'Error en el parseo del token' });
+  }
+
+  // Buscar el índice del producto a eliminar
+  const productIndex = cart.findIndex(p => p.idProducto === product.id);
+
+  // Si el producto no se encuentra en el carrito, devolver un Observable con un mensaje de error
+  if (productIndex === -1) {
+    return of({ error: 'Producto no encontrado en el carrito' });
+  }
+
+  // Eliminar el producto del carrito
+  cart.splice(productIndex, 1);
+
+  // Guardar el carrito actualizado en el localStorage
+  localStorage.setItem('romaInvitedSesion', JSON.stringify(cart));
+
+  // Devolver el carrito actualizado como respuesta
+  return of(cart);
+}
+
 modificarProducto(product: any): Observable<any> {
   const params = new HttpParams()
     .set('idProductoCesta', product.id)
     .set('cantidad', product.cantidadProducto);
 
   return this.http.get<any>(`${this.apiUrl}/modify_producto`, { params });
+}
+
+modificarProductoCestaInvitado(product: any): Observable<any> {
+  // Obtener el token del localStorage
+  const token = localStorage.getItem('romaInvitedSesion');
+
+  // Si el token no existe, devolver un Observable con un mensaje de error
+  if (!token) {
+    return of({ error: 'Token no encontrado' });
+  }
+
+  let cart: any[] = [];
+  try {
+    cart = JSON.parse(token); // Intentar parsear el token
+  } catch (error) {
+    return of({ error: 'Error en el parseo del token' });
+  }
+
+  // Buscar el producto en el carrito
+  const productIndex = cart.findIndex(p => p.producto.id === product.producto.id);
+  if (productIndex === -1) {
+    return of({ error: 'Producto no encontrado en el carrito' });
+  }
+
+  // Actualizar la cantidad del producto
+  cart[productIndex].cantidadProducto = product.cantidadProducto;
+
+  // Guardar el carrito actualizado en el localStorage
+  localStorage.setItem('romaInvitedSesion', JSON.stringify(cart));
+
+  // Devolver el carrito actualizado como respuesta
+  return of(cart);
 }
 }
