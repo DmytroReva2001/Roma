@@ -84,7 +84,6 @@ h2 {
     transition: box-shadow 0.3s ease; /* Transición suave de sombra */
     display: flex;
     flex-direction: column; /* Cambiar a columna en dispositivos móviles */
-    height: 100%; /* Asegura que la tarjeta ocupe toda la altura disponible */
 }
 
 /* Estilo para el contenido de cada card */
@@ -111,3 +110,9 @@ h2 {
     margin-right: 5%;
     margin-left: 5%
 }
+
+@media screen and (max-width: 768px) {
+    .product-card {
+        height: 700px;
+    }
+  }
