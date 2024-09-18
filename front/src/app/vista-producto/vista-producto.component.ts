@@ -115,7 +115,7 @@ export class VistaProductoComponent implements OnInit {
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          this.router.navigateByUrl('/auth');
+          this.router.navigate(['/auth', '/compra']);
         }
       });
     }

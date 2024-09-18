@@ -26,6 +26,7 @@ import { MisPedidosComponent } from './mis-pedidos/mis-pedidos.component';
 
 const routes: Routes = [
   // Componentes sin header y footer
+  { path: 'auth/:url', component: AuthComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'activate', component: ActivateComponent },
   { path: 'nueva_clave', component: NuevaClaveComponent },

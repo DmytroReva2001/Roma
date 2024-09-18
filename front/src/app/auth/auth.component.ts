@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { CestaService } from '../services/cesta.service';
@@ -30,13 +30,15 @@ export class AuthComponent {
   // Variables para el control de formularios
   loginForm: FormGroup;
   registerForm: FormGroup;
+  url: any;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
     private cestaService: CestaService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private route: ActivatedRoute
   ) {
     
     // Validadores de formularios
@@ -55,6 +57,19 @@ export class AuthComponent {
     }, {
       validators: passwordMatchValidator()  // Aplicar el validador personalizado al formulario
     });
+
+    const paramUrl = this.route.snapshot.paramMap.get('url');
+    
+    if (paramUrl)
+    {
+      this.url = paramUrl;
+      console.log("URL: "+this.url);
+    }
+    else
+    {
+      this.url = "/menu_principal";
+      console.log("URL: "+this.url);
+    }
   }
 
   // Métodos para cambiar la vista de formularios
