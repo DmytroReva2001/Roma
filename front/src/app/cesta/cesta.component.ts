@@ -51,8 +51,10 @@ export class CestaComponent {
             this.sharedService.updateCartItems(products);
           });
         } else {
-          this.user = {} as User;
-          console.log('User Invitado');
+          this.cestaService.getCartProductsInvitado().subscribe(products => {
+            this.cestProducts = products;
+            this.sharedService.updateCartItems(products);
+          });
         }
         Swal.close();
       }

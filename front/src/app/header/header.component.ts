@@ -1,8 +1,7 @@
 // Importaciones de módulos y servicios necesarios
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { UserTiendaService } from '../services/user-tienda.service';
-import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router, NavigationEnd } from '@angular/router';
 import { User } from '../models/user';
@@ -21,7 +20,6 @@ export class HeaderComponent implements OnInit {
   isAuthenticated = false;
   user!: User;
   isAdmin: boolean = false;
-  private routerSubscription: Subscription | undefined;
   numeroArticulosCesta: number = 0;
 
   constructor(
@@ -33,7 +31,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.routerSubscription = this.router.events.subscribe(event => {
+    this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.closeNavbar();
       }

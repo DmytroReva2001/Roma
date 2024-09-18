@@ -82,7 +82,7 @@ export class VistaProductoComponent implements OnInit {
 
     if (this.isAuthenticated)
     {
-      this.cestaService.addCartProducto(producto.id!, cantidad, size).subscribe({
+      this.cestaService.addCartProducto(producto, cantidad, size).subscribe({
         next: () => {
           this.cestaService.getCartProducts().subscribe(products => {
             this.sharedService.updateCartItems(products);
@@ -107,10 +107,12 @@ export class VistaProductoComponent implements OnInit {
         text: "Para seguir con la compra se necesita que inicie sesión",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#28a745",
-        cancelButtonColor: "#ffc107",
         confirmButtonText: "Iniciar sesión",
-        cancelButtonText: "Seguir mirando"
+        cancelButtonText: "Seguir mirando",
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-warning'
+        }
       }).then((result) => {
         if (result.isConfirmed) {
           this.router.navigateByUrl('/auth');
@@ -120,47 +122,92 @@ export class VistaProductoComponent implements OnInit {
   }
 
   addCesta(producto: Producto, cantidad: number, talla:string): void {
-    this.cestaService.addCartProducto(producto.id!, cantidad, talla).subscribe({
-      next: () => {
-        // Actualizamos la cesta
-        this.cestaService.getCartProducts().subscribe(products => {
-          this.sharedService.updateCartItems(products);
-        });
 
-        // Si la respuesta es exitosa
-        Swal.fire({
-          icon: 'success',
-          title: '¡Producto añadido!',
-          text: 'El producto se ha añadido a la cesta correctamente.',
-          showConfirmButton: true,
-          confirmButtonText: 'Ir a cesta',
-          showCancelButton: true,
-          cancelButtonText: 'Seguir comprando',
-          // Añade una clase para personalizar los botones si es necesario
-          customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-warning'
-          }
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // El usuario ha hecho clic en 'Ir a cesta'
-            this.router.navigateByUrl('/cesta');
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            // El usuario ha hecho clic en 'Seguir comprando' o cerró el modal
-            Swal.close();
-          }
-        });
-      },
-      error: (err) => {
-        // Si ocurre un error
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: `Ocurrió un problema al añadir el producto: ${err.message}`,
-          showConfirmButton: true
-        });
-      }
-    });
+    if (this.isAuthenticated)
+    {
+      this.cestaService.addCartProducto(producto, cantidad, talla).subscribe({
+        next: () => {
+          // Actualizamos la cesta
+          this.cestaService.getCartProducts().subscribe(products => {
+            this.sharedService.updateCartItems(products);
+          });
+  
+          // Si la respuesta es exitosa
+          Swal.fire({
+            icon: 'success',
+            title: '¡Producto añadido!',
+            text: 'El producto se ha añadido a la cesta correctamente.',
+            showConfirmButton: true,
+            confirmButtonText: 'Ir a cesta',
+            showCancelButton: true,
+            cancelButtonText: 'Seguir comprando',
+            // Añade una clase para personalizar los botones si es necesario
+            customClass: {
+              confirmButton: 'btn btn-success',
+              cancelButton: 'btn btn-warning'
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // El usuario ha hecho clic en 'Ir a cesta'
+              this.router.navigateByUrl('/cesta');
+            }
+          });
+        },
+        error: (err) => {
+          // Si ocurre un error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Ocurrió un problema al añadir el producto: ${err.message}`,
+            showConfirmButton: true
+          });
+        }
+      });
+    }
+    else
+    {
+      this.cestaService.addCartProductoInvitado(producto, cantidad, talla).subscribe({
+        next: () => {
+          // Actualizamos la cesta
+          this.cestaService.getCartProductsInvitado().subscribe(products => {
+            this.sharedService.updateCartItems(products);
+          });
+  
+          // Si la respuesta es exitosa
+          Swal.fire({
+            icon: 'success',
+            title: '¡Producto añadido!',
+            text: 'El producto se ha añadido a la cesta correctamente.',
+            showConfirmButton: true,
+            confirmButtonText: 'Ir a cesta',
+            showCancelButton: true,
+            cancelButtonText: 'Seguir comprando',
+            // Añade una clase para personalizar los botones si es necesario
+            customClass: {
+              confirmButton: 'btn btn-success',
+              cancelButton: 'btn btn-warning'
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // El usuario ha hecho clic en 'Ir a cesta'
+              this.router.navigateByUrl('/cesta');
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              // El usuario ha hecho clic en 'Seguir comprando' o cerró el modal
+              Swal.close();
+            }
+          });
+        },
+        error: (err) => {
+          // Si ocurre un error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Ocurrió un problema al añadir el producto: ${err.message}`,
+            showConfirmButton: true
+          });
+        }
+      });
+    }
   }  
 
   back()

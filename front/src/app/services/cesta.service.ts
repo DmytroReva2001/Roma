@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { InfoService } from './info.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Producto } from '../models/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,31 @@ export class CestaService {
     return this.http.get<any[]>(`${this.apiUrl}/get_cart_products`, { params });
   }
 
-  addCartProducto(idProducto: number, cantidad: number, size:string): Observable<any[]> {
+  getCartProductsInvitado(): Observable<any[]> {
+    // Obtener el token del localStorage
+    const token = localStorage.getItem('romaInvitedSesion');
+
+    // Si el token no existe, devolver un Observable de array vacío
+    if (!token) {
+      return of([]);
+    }
+
+    // Intentar parsear el token y obtener los productos
+    let products: any[] = [];
+    
+    try {
+      products = JSON.parse(token);
+    } catch (error) {
+      // En caso de error en el parseo, devolver un array vacío
+      console.error('Error parsing cart token:', error);
+      return of([]);
+    }
+
+    // Devolver la lista de productos como un Observable
+    return of(products);
+  }
+
+  addCartProducto(producto: Producto, cantidad: number, size:string): Observable<any[]> {
     const token = localStorage.getItem('token');
     if (!token) {
       return of([]); // Devolver un Observable de array vacío
@@ -36,11 +61,38 @@ export class CestaService {
     const email = this.jwtHelper.decodeToken(token)?.sub; // Asegúrate de que la propiedad sub está presente
     const params = new HttpParams()
       .set('email', email)
-      .set('idProducto', idProducto)
+      .set('idProducto', producto.id!)
       .set('cantidad', cantidad)
       .set('talla', size);
 
     return this.http.get<any[]>(`${this.apiUrl}/add_producto`, { params });
+  }
+
+  addCartProductoInvitado(producto: Producto, cantidad: number, size: string): Observable<any[]> {
+    // Obtener el token del localStorage
+    let token = localStorage.getItem('romaInvitedSesion');
+
+    // Si el token no existe, crear uno nuevo
+    let cart: any[] = [];
+    if (token) {
+      cart = JSON.parse(token);
+    }
+
+    // Crear el objeto del producto a añadir
+    const cartProduct = {
+      producto: producto,
+      cantidadProducto: cantidad,
+      talla: size
+    };
+
+    // Añadir el nuevo producto al carrito
+    cart.push(cartProduct);
+
+    // Guardar el carrito actualizado en el localStorage
+    localStorage.setItem('romaInvitedSesion', JSON.stringify(cart));
+
+    // Devolver el carrito actualizado como respuesta
+    return of(cart); // Utilizamos `of` para devolver un Observable con el carrito actualizado
   }
 
   eliminarProducto(product: any): Observable<any> {
