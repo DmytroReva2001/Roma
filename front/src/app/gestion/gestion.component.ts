@@ -62,7 +62,6 @@ export class GestionComponent implements OnInit {
     }
   }
 
-
   private startLoading() {
     Swal.fire({
       title: 'Cargando...',
@@ -107,7 +106,7 @@ export class GestionComponent implements OnInit {
         if (this.nombreElemento === 'productos') {
           // Eliminar con su servicio correspondiente a elemento por su id
           this.productoService.deleteProductById(id).subscribe({
-            next: (response) => {
+            next: () => {
               this.loadData();
             },
             error: (error) => {
@@ -122,7 +121,7 @@ export class GestionComponent implements OnInit {
         } else if (this.nombreElemento === 'tatuajes') {
           // Eliminar con su servicio correspondiente a elemento por su id
           this.tatuajesService.deleteTatuajeById(id).subscribe({
-            next: (response) => {
+            next: () => {
               this.loadData();
             },
             error: (error) => {
@@ -137,7 +136,7 @@ export class GestionComponent implements OnInit {
         } else if (this.nombreElemento === 'tipos_productos') {
           // Eliminar con su servicio correspondiente a elemento por su id
           this.tipoProductoService.deleteTipoDeProductoById(id).subscribe({
-            next: (response) => {
+            next: () => {
               this.loadData();
             },
             error: (error) => {
@@ -152,7 +151,7 @@ export class GestionComponent implements OnInit {
         } else {
           // Eliminar con su servicio correspondiente a elemento por su id
           this.informacionService.deleteInfoById(id).subscribe({
-            next: (response) => {
+            next: () => {
               this.loadData();
             },
             error: (error) => {
