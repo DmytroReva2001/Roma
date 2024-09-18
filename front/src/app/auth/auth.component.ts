@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { UserTiendaService } from '../services/user-tienda.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
+import { CestaService } from '../services/cesta.service';
+import { SharedService } from '../services/shared.service';
 
 // Validador personalizado para comprobar que las contraseñas coincidan
 function passwordMatchValidator(): ValidatorFn {
@@ -30,7 +31,13 @@ export class AuthComponent {
   loginForm: FormGroup;
   registerForm: FormGroup;
 
-  constructor(private authService: AuthService, private userTiendaService: UserTiendaService, private router: Router, private fb: FormBuilder) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder,
+    private cestaService: CestaService,
+    private sharedService: SharedService
+  ) {
     
     // Validadores de formularios
     this.loginForm = this.fb.group({
@@ -88,6 +95,8 @@ export class AuthComponent {
           this.clearData();
 
           console.log(response.token);
+
+          this.actualizarCesta();
 
           // Cerramos la carga
           Swal.close();
@@ -236,5 +245,33 @@ export class AuthComponent {
       }
     }
   }
-  
+
+  actualizarCesta() {
+    if (localStorage.getItem('romaInvitedSesion'))
+    {
+      this.cestaService.getCartProductsInvitado().subscribe(productsCestaInvitado => {
+        productsCestaInvitado.forEach(product => {
+          this.cestaService.addCartProducto(product.producto, product.cantidadProducto, product.talla).subscribe({
+            next: () => {
+              // Actualizamos la cesta
+              this.cestaService.getCartProducts().subscribe(products => {
+                this.sharedService.updateCartItems(products);
+              });
+            },
+            error: (err) => {
+              // Si ocurre un error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `Ocurrió un problema al añadir el producto: ${err.message}`,
+                showConfirmButton: true
+              });
+            }
+          });
+        });
+      });
+    }
+
+    localStorage.removeItem('romaInvitedSesion')
+  }
 }
