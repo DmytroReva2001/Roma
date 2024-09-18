@@ -102,20 +102,37 @@ export class VistaProductoComponent implements OnInit {
     }
     else
     {
-      Swal.fire({
-        title: "Se necesita iniciar sesión",
-        text: "Para seguir con la compra se necesita que inicie sesión",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Iniciar sesión",
-        cancelButtonText: "Seguir mirando",
-        customClass: {
-          confirmButton: 'btn btn-success',
-          cancelButton: 'btn btn-warning'
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.router.navigate(['/auth', '/compra']);
+      this.cestaService.addCartProductoInvitado(producto, cantidad, size).subscribe({
+        next: () => {
+          this.cestaService.getCartProductsInvitado().subscribe(products => {
+            this.sharedService.updateCartItems(products);
+          });
+          
+          Swal.fire({
+            title: "Se necesita iniciar sesión",
+            text: "Para seguir con la compra se necesita que inicie sesión",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Iniciar sesión",
+            cancelButtonText: "Seguir mirando",
+            customClass: {
+              confirmButton: 'btn btn-success',
+              cancelButton: 'btn btn-warning'
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/auth', '/compra']);
+            }
+          });
+        },
+        error: (err) => {
+          // Si ocurre un error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Ocurrió un problema durante la gestión de producto: ${err.message}`,
+            showConfirmButton: true
+          });
         }
       });
     }

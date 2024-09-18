@@ -40,6 +40,11 @@ export class AuthComponent {
     private sharedService: SharedService,
     private route: ActivatedRoute
   ) {
+
+    if(localStorage.getItem('token'))
+    {
+      this.router.navigateByUrl('/menu_principal');
+    }
     
     // Validadores de formularios
     this.loginForm = this.fb.group({
@@ -63,12 +68,10 @@ export class AuthComponent {
     if (paramUrl)
     {
       this.url = paramUrl;
-      console.log("URL: "+this.url);
     }
     else
     {
       this.url = "/menu_principal";
-      console.log("URL: "+this.url);
     }
   }
 
@@ -105,7 +108,7 @@ export class AuthComponent {
         next: (response: any) => {
           // Del response sacamos datos del usuario y dirigimos al user al menú principal con token guardado en localStorage y modificamos estado de user autenticado.
           localStorage.setItem('token', response.token);
-          this.router.navigateByUrl('/menu_principal');
+          this.router.navigateByUrl(this.url);
           this.authService.updateAuthStatus(true);
           this.clearData();
 
