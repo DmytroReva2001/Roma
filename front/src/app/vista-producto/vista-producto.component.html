@@ -59,16 +59,10 @@
             </div>
           </div>
           
-          <div *ngIf="isAuthenticated; else loginMessage" class="mt-2">
+          <div class="mt-2">
             <button (click)="buy(product, cantidad, selectedSize)" class="btn btn-outline-success" [disabled]="!isCantidadValida">Comprar</button>
             <button (click)="addCesta(product, cantidad, selectedSize)" class="btn btn-outline-warning" [disabled]="!isCantidadValida">Añadir a la cesta</button>
           </div>
-          
-          <!-- Mensaje si no está autenticado -->
-          <ng-template #loginMessage class="text-center mt-4">
-            <button [routerLink]="['/auth']" class="btn btn-outline-success" [disabled]="!isCantidadValida">Comprar</button>
-            <button [routerLink]="['/auth']" class="btn btn-outline-warning" [disabled]="!isCantidadValida">Añadir a la cesta</button>
-          </ng-template>
       </div>
     </div>
   </div>

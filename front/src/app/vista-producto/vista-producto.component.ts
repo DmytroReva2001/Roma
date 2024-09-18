@@ -79,23 +79,44 @@ export class VistaProductoComponent implements OnInit {
   }
 
   buy(producto: Producto, cantidad: number, size: string) {
-    this.cestaService.addCartProducto(producto.id!, cantidad, size).subscribe({
-      next: () => {
-        this.cestaService.getCartProducts().subscribe(products => {
-          this.sharedService.updateCartItems(products);
-        });
-        this.router.navigateByUrl('/compra');
-      },
-      error: (err) => {
-        // Si ocurre un error
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: `Ocurrió un problema durante la gestión de producto: ${err.message}`,
-          showConfirmButton: true
-        });
-      }
-    });
+
+    if (this.isAuthenticated)
+    {
+      this.cestaService.addCartProducto(producto.id!, cantidad, size).subscribe({
+        next: () => {
+          this.cestaService.getCartProducts().subscribe(products => {
+            this.sharedService.updateCartItems(products);
+          });
+          this.router.navigateByUrl('/compra');
+        },
+        error: (err) => {
+          // Si ocurre un error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: `Ocurrió un problema durante la gestión de producto: ${err.message}`,
+            showConfirmButton: true
+          });
+        }
+      });
+    }
+    else
+    {
+      Swal.fire({
+        title: "Se necesita iniciar sesión",
+        text: "Para seguir con la compra se necesita que inicie sesión",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#ffc107",
+        confirmButtonText: "Iniciar sesión",
+        cancelButtonText: "Seguir mirando"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.router.navigateByUrl('/auth');
+        }
+      });
+    }
   }
 
   addCesta(producto: Producto, cantidad: number, talla:string): void {
