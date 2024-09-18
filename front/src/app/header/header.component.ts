@@ -50,33 +50,23 @@ export class HeaderComponent implements OnInit {
         this.isAuthenticated = isAuthenticated;
         if (this.isAuthenticated) {
           this.updateUserAndRole();
+
+          this.cestaService.getCartProducts().subscribe(products => {
+            this.sharedService.updateCartItems(products);
+          });
+
         } else {
           this.user = {} as User;
+
+          this.cestaService.getCartProductsInvitado().subscribe(products => {
+            this.sharedService.updateCartItems(products);
+          });
         }
       }
     });
 
-    this.checkAuthentication(); // Unificamos la lógica de autenticación inicial
-
     // Contar los productos y actualizar servicio
-    this.cestaService.getCartProducts().subscribe(products => {
-      this.sharedService.updateCartItems(products);
-    });
-  }
-
-  // Verifica la autenticación del usuario
-  checkAuthentication(): void {
-    this.authService.tokenValidation().subscribe({
-      next: (isAuthenticated) => {
-        this.isAuthenticated = isAuthenticated;
-        if (this.isAuthenticated) {
-          this.updateUserAndRole(); // Unificamos la actualización del usuario y rol
-        } else {
-          this.user = {} as User;
-        }
-      },
-      error: (error) => console.error('Error during token validation', error)
-    });
+   
   }
 
   // Actualiza el usuario y el rol
