@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { InfoService } from './services/info.service';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from './services/auth.service';
-import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 @Component({

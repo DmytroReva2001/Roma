@@ -32,6 +32,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.routerSubscription = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.closeNavbar();
+      }
+    });
+    
+    this.updateData();
+  }
+
+  public updateData() {
     this.authSubscription = this.authService.authChanged.subscribe({
       next: (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
@@ -42,14 +52,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     });
-    
-    this.checkAuthentication(); // Unificamos la lógica de autenticación inicial
 
-    this.routerSubscription = this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.closeNavbar();
-      }
-    });
+    this.checkAuthentication(); // Unificamos la lógica de autenticación inicial
 
     this.cestaService.getCartProducts().subscribe(products => {
       this.numeroArticulosCesta = Array.isArray(products) ? products.length : 0;

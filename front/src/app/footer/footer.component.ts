@@ -1,14 +1,13 @@
-import { Component, AfterViewChecked } from '@angular/core';
+import { Component } from '@angular/core';
 import { InfoService } from '../services/info.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
-export class FooterComponent implements AfterViewChecked {
+export class FooterComponent {
   // Variable para guardar info
   informacion: any = {};
 
@@ -22,19 +21,10 @@ export class FooterComponent implements AfterViewChecked {
         this.informacion[item.dato] = item.valor;
       });
     });
-
-    // Suscribirse a NavigationEnd para desplazar a la parte superior después de la navegación
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 100); // Retraso opcional para asegurar que la página se haya cargado completamente
-    });
   }
 
-  // Método para asegurar que la página se desplaza hacia arriba
-  ngAfterViewChecked(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  goTo(url:string)
+  {
+    this.router.navigateByUrl(url);
   }
 }

@@ -14,10 +14,10 @@
         <!-- Enlaces -->
         <div class="col-md-8 col-sm-12">
           <div class="footer-links d-flex justify-content-center justify-content-md-end flex-wrap">
-            <a [routerLink]="['/menu_principal']" class="footer-link d-block text-center mb-2 mx-2">Página principal</a>
-            <a [routerLink]="['/menu_ropa']" class="footer-link d-block text-center mb-2 mx-2">Ropa</a>
-            <a [routerLink]="['/tatuajes']" class="footer-link d-block text-center mb-2 mx-2">Tatuajes</a>
-            <a [routerLink]="['/contacto']" class="footer-link d-block text-center mb-2 mx-2">Contacto</a>
+            <a (click)="goTo('/menu_principal')" class="cursor-pointer footer-link d-block text-center mb-2 mx-2">Página principal</a>
+            <a (click)="goTo('/menu_ropa')" class="cursor-pointer footer-link d-block text-center mb-2 mx-2">Ropa</a>
+            <a (click)="goTo('/tatuajes')" class="cursor-pointer footer-link d-block text-center mb-2 mx-2">Tatuajes</a>
+            <a (click)="goTo('/contacto')" class="cursor-pointer footer-link d-block text-center mb-2 mx-2">Contacto</a>
           </div>
         </div>
       </div>
