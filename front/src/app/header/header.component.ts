@@ -14,14 +14,13 @@ import { SharedService } from '../services/shared.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
   
   // Variables de clase
   informacion: any = {};
   isAuthenticated = false;
   user!: User;
   isAdmin: boolean = false;
-  private authSubscription: Subscription | undefined;
   private routerSubscription: Subscription | undefined;
   numeroArticulosCesta: number = 0;
 
@@ -48,7 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   updateData() {
-    this.authSubscription = this.authService.authChanged.subscribe({
+    this.authService.authChanged.subscribe({
       next: (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
         if (this.isAuthenticated) {
@@ -65,15 +64,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.cestaService.getCartProducts().subscribe(products => {
       this.sharedService.updateCartItems(products);
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.authSubscription) {
-      this.authSubscription.unsubscribe();
-    }
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
   }
 
   // Verifica la autenticación del usuario

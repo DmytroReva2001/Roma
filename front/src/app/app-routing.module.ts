@@ -54,7 +54,7 @@ const routes: Routes = [
       { path: 'productos_admin', component: ProductosAdminComponent, canActivate: [AuthGuard] },
       { path: 'gestion/:elemento', component: GestionComponent, canActivate: [AuthGuard] },
       { path: 'mi-perfil', component: MiPerfilComponent, canActivate: [AuthenticatedGuard] },
-      { path: 'cesta', component: CestaComponent, canActivate: [AuthenticatedGuard] },
+      { path: 'cesta', component: CestaComponent },
       { path: 'compra', component: CompraComponent, canActivate: [AuthenticatedGuard]},
       { path: 'mis_pedidos', component: MisPedidosComponent, canActivate: [AuthenticatedGuard]}
     ]

@@ -4,6 +4,8 @@ import { Producto } from '../models/producto';
 import { Router } from '@angular/router';
 import { CestaService } from '../services/cesta.service';
 import { SharedService } from '../services/shared.service';
+import { AuthService } from '../services/auth.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-cesta',
@@ -12,11 +14,15 @@ import { SharedService } from '../services/shared.service';
 })
 export class CestaComponent {
   cestProducts: any[] = [];
+  isAuthenticated = false;
+  user: any;
 
   constructor(
     private cestaService: CestaService,
     private router: Router,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private authService: AuthService,
+
   ) {}
 
   ngOnInit(): void {
@@ -35,14 +41,22 @@ export class CestaComponent {
   }
 
   private consultarProductosCesta() {
-    
-    // Obtener los productos del servicio al inicializar el componente
-    this.cestaService.getCartProducts().subscribe(products => {
-      this.cestProducts = products;
-      this.sharedService.updateCartItems(products);
-    });
 
-    Swal.close();
+    this.authService.authChanged.subscribe({
+      next: (isAuthenticated) => {
+        this.isAuthenticated = isAuthenticated;
+        if (this.isAuthenticated) {
+          this.cestaService.getCartProducts().subscribe(products => {
+            this.cestProducts = products;
+            this.sharedService.updateCartItems(products);
+          });
+        } else {
+          this.user = {} as User;
+          console.log('User Invitado');
+        }
+        Swal.close();
+      }
+    });
   }
 
   // Dirigimos al user a otra pantalla con producto pasado por parámetro
