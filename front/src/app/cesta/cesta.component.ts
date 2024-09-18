@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { Producto } from '../models/producto';
 import { Router } from '@angular/router';
 import { CestaService } from '../services/cesta.service';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-cesta',
@@ -14,7 +15,9 @@ export class CestaComponent {
 
   constructor(
     private cestaService: CestaService,
-    private router: Router  ) {}
+    private router: Router,
+    private sharedService: SharedService
+  ) {}
 
   ngOnInit(): void {
 
@@ -36,6 +39,7 @@ export class CestaComponent {
     // Obtener los productos del servicio al inicializar el componente
     this.cestaService.getCartProducts().subscribe(products => {
       this.cestProducts = products;
+      this.sharedService.updateCartItems(products);
     });
 
     Swal.close();

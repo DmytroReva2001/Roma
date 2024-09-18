@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth.service';
 import { CestaService } from '../services/cesta.service';
 import { Location } from '@angular/common';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-vista-producto',
@@ -29,7 +30,8 @@ export class VistaProductoComponent implements OnInit {
     private authService: AuthService,
     private cestaService: CestaService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private sharedService: SharedService
   ) {}
   
   ngOnInit(): void {
@@ -79,6 +81,9 @@ export class VistaProductoComponent implements OnInit {
   buy(producto: Producto, cantidad: number, size: string) {
     this.cestaService.addCartProducto(producto.id!, cantidad, size).subscribe({
       next: () => {
+        this.cestaService.getCartProducts().subscribe(products => {
+          this.sharedService.updateCartItems(products);
+        });
         this.router.navigateByUrl('/compra');
       },
       error: (err) => {
@@ -96,6 +101,11 @@ export class VistaProductoComponent implements OnInit {
   addCesta(producto: Producto, cantidad: number, talla:string): void {
     this.cestaService.addCartProducto(producto.id!, cantidad, talla).subscribe({
       next: () => {
+        // Actualizamos la cesta
+        this.cestaService.getCartProducts().subscribe(products => {
+          this.sharedService.updateCartItems(products);
+        });
+
         // Si la respuesta es exitosa
         Swal.fire({
           icon: 'success',

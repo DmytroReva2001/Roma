@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Router, NavigationEnd } from '@angular/router';
 import { User } from '../models/user';
 import { CestaService } from '../services/cesta.service';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private userTiendaService: UserTiendaService,
     private router: Router,
     private cestaService: CestaService,
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         this.closeNavbar();
       }
+    });
+
+    this.sharedService.cartItems$.subscribe(count => {
+      this.numeroArticulosCesta = count;
     });
     
     this.updateData();
@@ -55,8 +61,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.checkAuthentication(); // Unificamos la lógica de autenticación inicial
 
+    // Contar los productos y actualizar servicio
     this.cestaService.getCartProducts().subscribe(products => {
-      this.numeroArticulosCesta = Array.isArray(products) ? products.length : 0;
+      this.sharedService.updateCartItems(products);
     });
   }
 
