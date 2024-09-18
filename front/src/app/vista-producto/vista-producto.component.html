@@ -7,14 +7,14 @@
     <!-- Columna de imágenes adicionales -->
     <div class="col-md-6 text-center">
 
-    <img [src]="selectedImage" class="img-fluid" (click)="abrirImg()" alt="{{ product.nombreProducto }}">
+    <img [src]="selectedImage" class="img-fluid animacion" (click)="abrirImg()" alt="{{ product.nombreProducto }}">
 
       <div class="row">
-        <div class="col-3" *ngFor="let imagen of product.imagenes; let i = index">
+        <div class="col-3 img-secundarias" *ngFor="let imagen of product.imagenes; let i = index">
           <!-- Iterar sobre las imágenes del producto -->
           <img 
             [src]="imagen" 
-            class="img-fluid" 
+            class="img-fluid animacion" 
             [alt]="product.nombreProducto" 
             (click)="selectImage(imagen)">
         </div>        

@@ -30,3 +30,10 @@ img
 {
   margin: 5px;
 }
+
+@media screen and (max-width: 768px) {
+  .img-secundarias img
+  {
+    height: 70px;
+  }
+}
