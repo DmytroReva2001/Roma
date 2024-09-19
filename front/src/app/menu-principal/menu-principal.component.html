@@ -2,7 +2,7 @@
 <div id="carouselTatuajes" class="carousel slide mt-5" data-ride="carousel" data-interval="5000">
     <div class="carousel-inner p-4">
         <div class="carrousel-title text-center background-title-carrousel fs-5">
-            <p><strong>Diseños destacados:</strong></p>
+            <p><strong>Diseños destacados</strong></p>
         </div>
         <div *ngFor="let tatuaje of tatuajes; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
             <div class="card product-card mx-auto p-4">
@@ -38,7 +38,7 @@
 <div id="carouselProductos" class="carousel slide mt-5" data-ride="carousel" data-interval="5000">
     <div class="carousel-inner p-4">
         <div class="carrousel-title text-center background-title-carrousel fs-5">
-            <p><strong>Ropa destacada:</strong></p>
+            <p><strong>Ropa destacada</strong></p>
         </div>
         <div *ngFor="let product of products; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
             <div class="card product-card mx-auto p-4">
