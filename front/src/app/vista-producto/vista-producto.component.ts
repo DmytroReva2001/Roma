@@ -85,6 +85,7 @@ export class VistaProductoComponent implements OnInit {
           left: 10px;
           z-index: 1;
           background: rgba(255, 255, 255, 0.8);
+          opacity: 70%;
         "><i class="bi bi-chevron-left"></i></button>
         <img src="${this.selectedImage}" id="mainImg" style="
           max-width: 100%;
@@ -96,6 +97,7 @@ export class VistaProductoComponent implements OnInit {
           right: 10px;
           z-index: 1;
           background: rgba(255, 255, 255, 0.8);
+          opacity: 70%;
         "><i class="bi bi-chevron-right"></i></button>
       </div>
     `,
