@@ -71,12 +71,61 @@ export class VistaProductoComponent implements OnInit {
 
   abrirImg() {
     Swal.fire({
-      imageUrl: this.selectedImage,
-      imageAlt: 'Imagen seleccionada',
+      html: `
+      <div style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 90vw;
+        max-height: 80vh;
+        overflow: hidden;
+      ">
+        <button class="btn btn-light" id="prevImg" style="
+          position: absolute;
+          left: 10px;
+          z-index: 1;
+          background: rgba(255, 255, 255, 0.8);
+        "><i class="bi bi-chevron-left"></i></button>
+        <img src="${this.selectedImage}" id="mainImg" style="
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+        ">
+        <button class="btn btn-light" id="nextImg" style="
+          position: absolute;
+          right: 10px;
+          z-index: 1;
+          background: rgba(255, 255, 255, 0.8);
+        "><i class="bi bi-chevron-right"></i></button>
+      </div>
+    `,
+      didOpen: () => {
+        const prevBtn = document.getElementById('prevImg');
+        const nextBtn = document.getElementById('nextImg');
+        const imgElement = document.getElementById('mainImg') as HTMLImageElement;
+  
+        let currentIndex = this.product.imagenes.indexOf(this.selectedImage);
+  
+        prevBtn?.addEventListener('click', () => {
+          if (currentIndex > 0) {
+            currentIndex--;
+            imgElement.src = this.product.imagenes[currentIndex];
+            this.selectedImage = this.product.imagenes[currentIndex];
+          }
+        });
+  
+        nextBtn?.addEventListener('click', () => {
+          if (currentIndex < this.product.imagenes.length - 1) {
+            currentIndex++;
+            imgElement.src = this.product.imagenes[currentIndex];
+            this.selectedImage = this.product.imagenes[currentIndex];
+          }
+        });
+      },
       showCloseButton: true,
       showConfirmButton: false
     });
-  }
+  }  
 
   buy(producto: Producto, cantidad: number, size: string) {
 
