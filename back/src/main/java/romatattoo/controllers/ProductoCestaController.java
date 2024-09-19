@@ -67,7 +67,7 @@ public class ProductoCestaController {
         // Comprobar que id producto pasado por parámetro no coincida con ninguno de los productos de productosCestaUsuario
         for (ProductoCesta productoCesta : productosCestaUsuario) {
 
-            if (Objects.equals(productoCesta.getProducto().getId(), idProducto))
+            if (Objects.equals(productoCesta.getProducto().getId(), idProducto) && Objects.equals(productoCesta.getTalla(), talla))
             {
                 productoCesta.setCantidadProducto(productoCesta.getCantidadProducto()+cantidad);
                 productoCesta.setTalla(talla);
@@ -77,11 +77,12 @@ public class ProductoCestaController {
             }
         }
 
-        // Crear la entidad ProductoCesta
+        // Crear objeto ProductoCesta si no ocurrió la fusión
         ProductoCesta productoCesta = new ProductoCesta();
         productoCesta.setCantidadProducto(cantidad);
         productoCesta.setProducto(producto);
         productoCesta.setUserTienda(userTiendaOpt.get());
+        productoCesta.setTalla(talla);
 
         // Agregar el producto a la cesta
         ProductoCesta nuevoProductoCesta = productoCestaService.agregarProductoCesta(productoCesta);
