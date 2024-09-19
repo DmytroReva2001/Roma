@@ -10,7 +10,10 @@
             <p><i class="bi bi-envelope-at"></i> <a href="mailto:{{informacion.email}}"> {{informacion.email}}</a></p>
             <p><i class="bi bi-instagram"></i> <a href="{{informacion.instagram}}" target="_blank"> Instagram</a></p>
             <p><i class="bi bi-geo-alt"></i> <a href="{{informacion.ubicacion}}" target="_blank"> Tienda {{informacion.nombreEmpresa}}</a></p>
-        </div>
+            <div class="map-container mt-4">
+              <iframe [src]="informacion.refGoogleMaps | safeUrl" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
         <div class="mt-4">
             <h3><strong>Horarios de atención</strong></h3>
             <p class="m-auto">{{informacion.horarioLaboral}}</p>

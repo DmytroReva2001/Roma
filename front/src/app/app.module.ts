@@ -30,6 +30,7 @@ import { CestaComponent } from './cesta/cesta.component';
 import { NuevoEmailComponent } from './nuevo-email/nuevo-email.component';
 import { CompraComponent } from './compra/compra.component';
 import { MisPedidosComponent } from './mis-pedidos/mis-pedidos.component';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { MisPedidosComponent } from './mis-pedidos/mis-pedidos.component';
     NuevoEmailComponent,
     CompraComponent,
     MisPedidosComponent,
+    SafeUrlPipe,
   ],
   imports: [
     BrowserModule,

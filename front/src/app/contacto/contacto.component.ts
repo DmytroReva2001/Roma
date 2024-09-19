@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { InfoService } from '../services/info.service';
 import Swal from 'sweetalert2';
-import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-contacto',
