@@ -23,6 +23,7 @@ import { MiPerfilComponent } from './mi-perfil/mi-perfil.component';
 import { NuevoEmailComponent } from './nuevo-email/nuevo-email.component';
 import { CompraComponent } from './compra/compra.component';
 import { MisPedidosComponent } from './mis-pedidos/mis-pedidos.component';
+import { DatosEnvioComponent } from './datos-envio/datos-envio.component';
 
 const routes: Routes = [
   // Componentes sin header y footer
@@ -57,7 +58,8 @@ const routes: Routes = [
       { path: 'mi-perfil', component: MiPerfilComponent, canActivate: [AuthenticatedGuard] },
       { path: 'cesta', component: CestaComponent },
       { path: 'compra', component: CompraComponent, canActivate: [AuthenticatedGuard]},
-      { path: 'mis_pedidos', component: MisPedidosComponent, canActivate: [AuthenticatedGuard]}
+      { path: 'mis_pedidos', component: MisPedidosComponent, canActivate: [AuthenticatedGuard]},
+      { path: 'datos_envio', component: DatosEnvioComponent, canActivate: [AuthenticatedGuard]}
     ]
   }
 ];

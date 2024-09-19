@@ -31,6 +31,7 @@ import { NuevoEmailComponent } from './nuevo-email/nuevo-email.component';
 import { CompraComponent } from './compra/compra.component';
 import { MisPedidosComponent } from './mis-pedidos/mis-pedidos.component';
 import { SafeUrlPipe } from './safe-url.pipe';
+import { DatosEnvioComponent } from './datos-envio/datos-envio.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { SafeUrlPipe } from './safe-url.pipe';
     CompraComponent,
     MisPedidosComponent,
     SafeUrlPipe,
+    DatosEnvioComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,26 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4 bg-white">
+      <strong><i class="bi bi-geo-alt-fill"></i> Direcciones:</strong>
+    </h2>
+  
+    <div *ngIf="directions && directions.length > 0">
+      <div *ngFor="let direccion of directions" class="card mb-3">
+        <div class="card-body">
+          <p class="card-text"><strong>Dirección:</strong> {{ direccion.direccion }}</p>
+          <p class="card-text"><strong>CP:</strong> {{ direccion.cp }}</p>
+          <p *ngIf="direccion.principal" class="card-text"><strong>Predeterminada</strong></p>
+          <div class="text-center">
+            <button (click)="addDirection(direccion, false)" *ngIf="!direccion.principal" class="btn btn-warning m-2">Establecer como predeterminado</button>
+            <button class="btn btn-primary m-2">Editar</button>
+            <button class="btn btn-danger m-2">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div>
+      <div class="estilo-card d-flex flex-column bg-white text-center m-4">
+        <h5 class="card-title m-2">No hay direcciones.</h5>
+        <button (click)="openSwalAddDirection()" class="btn btn-success mt-2 w-25">Añadir una nueva dirección</button>
+      </div>
+    </div>
