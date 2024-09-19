@@ -60,3 +60,30 @@
   border-radius: 45%;
   padding: 8px;
 }
+
+/* Ajustes para vistas móviles */
+@media (max-width: 767px) {
+  /* Cambiar la posición del logo y del toggle */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Mover el botón toggle a la izquierda */
+  .navbar-toggler {
+    order: 1;
+    margin-left: 0;
+  }
+
+  /* Mover el logo a la derecha */
+  .navbar-brand {
+    order: 2;
+    margin-right: 0;
+  }
+
+  /* Asegurar que el contenido de la navbar colapsada se vea bien */
+  .collapse.navbar-collapse {
+    text-align: center;
+  }
+}
