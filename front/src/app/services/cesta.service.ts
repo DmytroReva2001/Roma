@@ -71,29 +71,39 @@ export class CestaService {
   addCartProductoInvitado(producto: Producto, cantidad: number, size: string): Observable<any[]> {
     // Obtener el token del localStorage
     let token = localStorage.getItem('romaInvitedSesion');
-
+  
     // Si el token no existe, crear uno nuevo
     let cart: any[] = [];
     if (token) {
       cart = JSON.parse(token);
     }
-
+  
     // Crear el objeto del producto a añadir
     const cartProduct = {
+      idProducto: producto.id, // Asegúrate de que `idProducto` se use para identificar el producto
       producto: producto,
       cantidadProducto: cantidad,
       talla: size
     };
-
-    // Añadir el nuevo producto al carrito
-    cart.push(cartProduct);
-
+  
+    // Buscar el índice del producto en el carrito con el mismo ID y talla
+    const productIndex = cart.findIndex(p => p.idProducto === producto.id && p.talla === size);
+  
+    // Si el producto ya existe en el carrito, sumamos la cantidad
+    if (productIndex !== -1) {
+      cart[productIndex].cantidadProducto += cantidad; // Aumentamos la cantidad del producto existente
+    } else {
+      // Si no existe, añadimos el nuevo producto al carrito
+      cart.push(cartProduct);
+    }
+  
     // Guardar el carrito actualizado en el localStorage
     localStorage.setItem('romaInvitedSesion', JSON.stringify(cart));
-
+  
     // Devolver el carrito actualizado como respuesta
     return of(cart); // Utilizamos `of` para devolver un Observable con el carrito actualizado
   }
+  
 
   eliminarProducto(product: any): Observable<any> {
     const token = localStorage.getItem('token');
@@ -126,7 +136,7 @@ eliminarProductoCestaInvitado(product: any): Observable<any> {
   }
 
   // Buscar el índice del producto a eliminar
-  const productIndex = cart.findIndex(p => p.idProducto === product.id);
+  const productIndex = cart.findIndex(p => p.id === product.id && p.talla === product.talla);
 
   // Si el producto no se encuentra en el carrito, devolver un Observable con un mensaje de error
   if (productIndex === -1) {
@@ -168,7 +178,7 @@ modificarProductoCestaInvitado(product: any): Observable<any> {
   }
 
   // Buscar el producto en el carrito
-  const productIndex = cart.findIndex(p => p.producto.id === product.producto.id);
+  const productIndex = cart.findIndex(p => p.producto.id === product.producto.id && p.talla === product.talla);
   if (productIndex === -1) {
     return of({ error: 'Producto no encontrado en el carrito' });
   }
