@@ -20,7 +20,7 @@ export class DatosEnvioComponent implements OnInit {
       id: [''],
       direccion: ['', [Validators.required]],  // Campo dirección obligatorio
       cp: ['', [Validators.required, Validators.pattern(/^\d+$/)]],  // Campo CP obligatorio y debe ser numérico
-      predeterminada: [false, [Validators.required]],
+      principal: [false, [Validators.required]],
     });
   }
 
@@ -62,7 +62,7 @@ export class DatosEnvioComponent implements OnInit {
     const form = this.fb.group({
       direccion: ['', Validators.required],
       cp: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
-      predeterminada: [false]  // Checkbox para establecer como dirección principal
+      principal: [false]  // Checkbox para establecer como dirección principal
     });
   
     Swal.fire({
@@ -77,8 +77,8 @@ export class DatosEnvioComponent implements OnInit {
             <div id="cpError" class="text-danger"></div>
           </div>
           <div class="text-left">
-            <input type="checkbox" id="predeterminada" class="mr-2">
-            <label for="predeterminada">Establecer como principal</label>
+            <input type="checkbox" id="principal" class="mr-2">
+            <label for="principal">Establecer como principal</label>
           </div>`,
       showCancelButton: true,
       confirmButtonText: 'Añadir',
@@ -86,12 +86,12 @@ export class DatosEnvioComponent implements OnInit {
       preConfirm: () => {
         const direccion = (document.getElementById('direccion') as HTMLInputElement).value;
         const cp = (document.getElementById('cp') as HTMLInputElement).value;
-        const predeterminada = (document.getElementById('predeterminada') as HTMLInputElement).checked;  // Obtener valor del checkbox
+        const principal = (document.getElementById('principal') as HTMLInputElement).checked;  // Obtener valor del checkbox
   
         // Actualizamos los valores del formulario reactivo
         form.get('direccion')?.setValue(direccion);
         form.get('cp')?.setValue(cp);
-        form.get('predeterminada')?.setValue(predeterminada);  // Actualizar valor del checkbox
+        form.get('principal')?.setValue(principal);  // Actualizar valor del checkbox
   
         const errors: string[] = [];
   
@@ -115,39 +115,126 @@ export class DatosEnvioComponent implements OnInit {
         }
   
         // Si todo está correcto, retornamos los valores
-        return { direccion, cp, predeterminada };
+        return { direccion, cp, principal };
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       if (result.isConfirmed) {
-        const { direccion, cp, predeterminada } = result.value as { direccion: string, cp: string, predeterminada: boolean };
+        const { direccion, cp, principal } = result.value as { direccion: string, cp: string, principal: boolean };
   
         // Llamar al servicio para añadir la dirección
-        this.directionsService.addDirection(direccion, cp, predeterminada).subscribe({
+        this.directionsService.addDirection(direccion, cp, principal).subscribe({
           next: () => {
             Swal.fire('Éxito', 'La dirección ha sido añadida correctamente', 'success');
             this.cargarDirecciones();  // Actualizar la lista de direcciones
           },
           error: (error) => {
-            Swal.fire('Error', 'Hubo un problema al añadir la dirección', error);
+            console.error("Error durante el alta:", error);  // Registrar el error para depuración
+            Swal.fire('Error', 'Hubo un problema durante el alta', 'error');
           }
         });
       }
     });
   } 
 
-  modifyDirection(direccion: any)
+  openSwalModifyDirection(direccionParam:any) {
+    const form = this.fb.group({
+      direccion: [direccionParam.direccion, Validators.required],
+      cp: [direccionParam.cp, [Validators.required, Validators.pattern(/^\d+$/)]],
+      principal: [direccionParam.principal]  // Checkbox para establecer como dirección principal
+    });
+  
+    Swal.fire({
+      title: 'Editar dirección',
+      html:
+        `<div>
+            <input type="text" id="direccion" class="swal2-input" placeholder="Dirección" value="${direccionParam.direccion}">
+            <div id="direccionError" class="text-danger"></div>
+          </div>
+          <div>
+            <input type="text" id="cp" class="swal2-input" placeholder="Código Postal" value="${direccionParam.cp}">
+            <div id="cpError" class="text-danger"></div>
+          </div>
+          <div class="text-left">
+            <input type="checkbox" id="principal" class="mr-2" ${direccionParam.principal ? 'checked' : ''}>
+            <label for="principal">Establecer como principal</label>
+          </div>`,
+      showCancelButton: true,
+      confirmButtonText: 'Modificar',
+      cancelButtonText: 'Cancelar',
+      preConfirm: () => {
+        const direccion = (document.getElementById('direccion') as HTMLInputElement).value;
+        const cp = (document.getElementById('cp') as HTMLInputElement).value;
+        const principal = (document.getElementById('principal') as HTMLInputElement).checked;  // Obtener valor del checkbox
+    
+        // Validaciones personalizadas
+        const errors: string[] = [];
+    
+        if (!direccion) {
+          errors.push('La dirección es obligatoria.');
+        }
+    
+        if (!cp) {
+          errors.push('El Código Postal es obligatorio.');
+        } else if (!/^\d+$/.test(cp)) {
+          errors.push('El Código Postal debe ser numérico.');
+        }
+    
+        if (errors.length > 0) {
+          // Mostramos los mensajes de error
+          document.getElementById('direccionError')!.innerHTML = direccion ? '' : 'La dirección es obligatoria.';
+          document.getElementById('cpError')!.innerHTML = cp ? (/^\d+$/.test(cp) ? '' : 'El Código Postal debe ser numérico.') : 'El Código Postal es obligatorio.';
+          Swal.showValidationMessage('Por favor, corrige los errores antes de continuar.');
+          return false; // Prevenir el cierre del Swal si hay errores
+        }
+    
+        // Si todo está correcto, retornamos los valores
+        return { direccion, cp, principal };
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const { direccion, cp, principal } = result.value as { direccion: string, cp: string, principal: boolean };
+    
+        direccionParam.direccion = direccion;
+        direccionParam.cp = cp;
+        direccionParam.principal = principal;
+    
+        // Llamar al método para modificar la dirección
+        this.modifyDirection(direccionParam, principal);
+      }
+    });
+    
+  } 
+
+  modifyDirection(direccion: any, principal: boolean)
   {
-            // Llamar al servicio para modificar la dirección
-            this.directionsService.modifyDirection(direccion).subscribe({
-              next: () => {
-                Swal.fire('Éxito', 'La dirección ha sido añadida correctamente', 'success');
-                this.cargarDirecciones();  // Actualizar la lista de direcciones
-              },
-              error: (error) => {
-                Swal.fire('Error', 'Hubo un problema al añadir la dirección', error);
-              }
-            });
+    // Llamar al servicio para modificar la dirección
+    this.directionsService.modifyDirection(direccion, principal).subscribe({
+      next: () => {
+        Swal.fire('Éxito', 'La dirección ha sido añadida correctamente', 'success');
+        this.cargarDirecciones();  // Actualizar la lista de direcciones
+      },
+      error: (error) => {
+        console.error("Error durante la modificación:", error);  // Registrar el error para depuración
+        Swal.fire('Error', 'Hubo un problema durante la modificación', 'error');
+      }
+    });
+  }
+
+  deleteDirection(direccionId: any)
+  {
+    // Llamar al servicio para modificar la dirección
+    this.directionsService.deleteDirection(direccionId).subscribe({
+      next: () => {
+        Swal.fire('Éxito', 'La dirección ha sido eliminada correctamente', 'success');
+        this.cargarDirecciones();  // Actualizar la lista de direcciones
+      },
+      error: (error) => {
+        console.error("Error durante la baja:", error);  // Registrar el error para depuración
+        Swal.fire('Error', 'Hubo un problema durante la baja', 'error');
+      }
+    });
   }
 
 }

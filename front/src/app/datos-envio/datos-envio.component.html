@@ -8,11 +8,11 @@
         <div class="card-body">
           <p class="card-text"><strong>Dirección:</strong> {{ direccion.direccion }}</p>
           <p class="card-text"><strong>CP:</strong> {{ direccion.cp }}</p>
-          <p *ngIf="direccion.principal" class="card-text"><strong>Predeterminada</strong></p>
+          <p *ngIf="direccion.principal" class="card-text"><strong>Principal</strong></p>
           <div class="text-center">
-            <button (click)="addDirection(direccion, false)" *ngIf="!direccion.principal" class="btn btn-warning m-2">Establecer como predeterminado</button>
-            <button class="btn btn-primary m-2">Editar</button>
-            <button class="btn btn-danger m-2">Eliminar</button>
+            <button (click)="modifyDirection(direccion, true)" *ngIf="!direccion.principal" class="btn btn-warning m-2">Establecer como predeterminado</button>
+            <button (click)="openSwalModifyDirection(direccion)" class="btn btn-primary m-2">Editar</button>
+            <button (click)="deleteDirection(direccion.id)" class="btn btn-danger m-2">Eliminar</button>
           </div>
         </div>
       </div>

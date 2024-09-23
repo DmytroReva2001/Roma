@@ -36,6 +36,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/pedidos/crear_pedido").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
                                 .requestMatchers(HttpMethod.POST, "/api/pedidos/agregar_productos").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
                                 .requestMatchers(HttpMethod.POST, "/api/pedidos/add_direccion").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
+                                .requestMatchers(HttpMethod.PUT, "/api/pedidos/modify_direccion").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
+                                .requestMatchers(HttpMethod.DELETE, "/api/pedidos/delete_direccion/*").hasAnyAuthority(Role.ADMIN.toString(), Role.USER.toString())
 
                                 .requestMatchers(HttpMethod.GET, API).permitAll()
                                 .requestMatchers(HttpMethod.POST, API).hasAnyAuthority(Role.ADMIN.toString())

@@ -27,7 +27,7 @@ export class DirectionsService {
     return this.http.get<any[]>(`${this.apiUrl}/get_direcciones`, { params });
   }
 
-  addDirection(direccion: string, cp: string, predeterminada:boolean): Observable<any> {
+  addDirection(direccion: string, cp: string, principal:boolean): Observable<any> {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -41,10 +41,10 @@ export class DirectionsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.post<any>(`${this.apiUrl}/add_direccion`, {direccion, cp, email, predeterminada }, { headers });
+    return this.http.post<any>(`${this.apiUrl}/add_direccion`, {direccion, cp, email, principal }, { headers });
   }
 
-  modifyDirection(direction:any): Observable<any> {
+  modifyDirection(direction:any, principal: boolean): Observable<any> {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -52,12 +52,28 @@ export class DirectionsService {
     }
 
     const email = this.jwtHelper.decodeToken(token)?.sub;
+    const { id, cp, direccion } = direction;
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<any>(`${this.apiUrl}/modify_direccion`, { direction }, { headers });
+    return this.http.put<any>(`${this.apiUrl}/modify_direccion`, { id, email, cp, direccion, principal }, { headers });
+  }
+
+  deleteDirection(directionId: any): Observable<any> {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      return of([]); // Devolver un Observable de array vacío
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.delete<any>(`${this.apiUrl}/` + directionId, { headers });
   }
 }

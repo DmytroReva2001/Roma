@@ -34,11 +34,12 @@ public class DireccionController {
     @PostMapping("/add_direccion")
     public ResponseEntity<?> crearDireccion(@RequestBody Map<String, Object> requestBody) {
         try {
-            Long id = requestBody.get("id") != null ? Long.valueOf(requestBody.get("id").toString()) : null;
             String email = (String) requestBody.get("email");
             String cp = (String) requestBody.get("cp");
             String direccion = (String) requestBody.get("direccion");
-            boolean isPrincipal = Boolean.parseBoolean(requestBody.get("predeterminada").toString());
+            boolean isPrincipal = Boolean.parseBoolean(requestBody.get("principal").toString());
+
+            System.out.println("Datos: [EMAIL]"+email+", [CP]"+cp+", [DIR]"+direccion+", [isPrincipal]="+isPrincipal);
 
             // Validaciones
             if (email == null || email.isEmpty()) {
@@ -52,7 +53,6 @@ public class DireccionController {
 
             UserTienda userTienda = optionalUserTienda.get();
             Direccion direccionNueva = new Direccion();
-            direccionNueva.setId(id);
             direccionNueva.setUserTienda(userTienda);
             direccionNueva.setCp(cp);
             direccionNueva.setDireccion(direccion);
@@ -101,6 +101,56 @@ public class DireccionController {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/modify_direccion")
+    public ResponseEntity<?> modificarDireccion(@RequestBody Map<String, Object> requestBody) {
+        try {
+            Long id = requestBody.get("id") != null ? Long.valueOf(requestBody.get("id").toString()) : null;
+            String email = (String) requestBody.get("email");
+            String cp = (String) requestBody.get("cp");
+            String direccion = (String) requestBody.get("direccion");
+            boolean isPrincipal = Boolean.parseBoolean(requestBody.get("principal").toString());
+
+            // Validaciones
+            if (email == null || email.isEmpty()) {
+                return ResponseEntity.badRequest().body("El email no puede estar vacío.");
+            }
+
+            Optional<UserTienda> optionalUserTienda = userTiendaService.obtenerUserTiendaByEmail(email);
+            if (optionalUserTienda.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se encontró un usuario con el email proporcionado.");
+            }
+
+            UserTienda userTienda = optionalUserTienda.get();
+            Optional<Direccion> optionalDireccion = direccionService.obtenerDireccionPorId(id);
+            if (optionalDireccion.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            Direccion direccionExistente = optionalDireccion.get();
+            direccionExistente.setUserTienda(userTienda);
+            direccionExistente.setCp(cp);
+            direccionExistente.setDireccion(direccion);
+            direccionExistente.setPrincipal(isPrincipal);
+
+            // Manejo de direcciones principales
+            if (isPrincipal) {
+                List<Direccion> direcciones = direccionService.obtenerDireccionPorUser(email);
+                for (Direccion direccionLista : direcciones) {
+                    if (direccionLista.isPrincipal() && !direccionLista.getId().equals(id)) {
+                        direccionLista.setPrincipal(false);
+                        direccionService.guardarDireccion(direccionLista);
+                    }
+                }
+            }
+
+            Direccion direccionModificada = direccionService.guardarDireccion(direccionExistente);
+            return ResponseEntity.ok(direccionModificada);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al modificar la dirección: " + e.getMessage());
         }
     }
 }
