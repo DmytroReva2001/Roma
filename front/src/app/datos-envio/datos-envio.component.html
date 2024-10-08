@@ -20,7 +20,7 @@
     
     <div>
       <div class="estilo-card d-flex flex-column bg-white text-center m-4">
-        <h5 class="card-title m-2">No hay direcciones.</h5>
+        <h5 *ngIf="!directions" class="card-title m-2">No hay direcciones.</h5>
         <button (click)="openSwalAddDirection()" class="btn btn-success mt-2 w-25">Añadir una nueva dirección</button>
       </div>
     </div>
