@@ -39,24 +39,28 @@ export class DatosEnvioComponent implements OnInit {
       }
     });
   
-    this.directionsService.getDirections().subscribe(directions => {
-      if (directions && Array.isArray(directions)) {
-        // Coloca las direcciones con 'principal = true' al inicio
-        const principales = directions.filter(dir => dir.principal === true);
-        const noPrincipales = directions.filter(dir => dir.principal !== true);
+    this.directionsService.getDirections().subscribe({
+      next: (directions) => {
+        if (directions && Array.isArray(directions)) {
+          // Coloca las direcciones con 'principal = true' al inicio
+          const principales = directions.filter(dir => dir.principal === true);
+          const noPrincipales = directions.filter(dir => dir.principal !== true);
   
-        // Reorganiza la lista con la dirección principal al inicio
-        this.directions = [...principales, ...noPrincipales];
-      } else {
-        this.directions = [];
+          // Reorganiza la lista con la dirección principal al inicio
+          this.directions = [...principales, ...noPrincipales];
+        } else {
+          this.directions = [];
+        }
+  
+        Swal.close();
+      },
+      error: (error) => {
+        console.error("Error al cargar direcciones:", error);
+        Swal.close();
       }
-  
-      Swal.close();
-    }, error => {
-      console.error("Error al cargar direcciones:", error);
-      Swal.close();
     });
-  }   
+  }
+     
 
   openSwalAddDirection() {
     const form = this.fb.group({
