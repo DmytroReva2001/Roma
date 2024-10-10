@@ -112,8 +112,6 @@ export class AuthComponent {
           this.authService.updateAuthStatus(true);
           this.clearData();
 
-          console.log(response.token);
-
           this.actualizarCesta();
 
           // Cerramos la carga
@@ -156,8 +154,6 @@ export class AuthComponent {
         next: () => {
           this.switchToLogin();
           Swal.close();
-          
-          console.log("Correo: "+email);
   
           Swal.fire({
             title: "¡Su cuenta ha sido creada exitosamente!",

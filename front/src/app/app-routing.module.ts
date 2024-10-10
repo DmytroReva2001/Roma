@@ -9,7 +9,7 @@ import { NuevoProductoComponent } from './nuevo-producto/nuevo-producto.componen
 import { NuevoTatuajeComponent } from './nuevo-tatuaje/nuevo-tatuaje.component';
 import { NuevoTipoProductoComponent } from './nuevo-tipo-producto/nuevo-tipo-producto.component';
 import { AuthComponent } from './auth/auth.component';
-import { AuthGuard } from './auth/token.guard';
+import { AuthRoleGuard } from './auth/token.guard';
 import { AuthenticatedGuard } from './auth/token.guard';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { ProductosAdminComponent } from './productos-admin/productos-admin.component';
@@ -45,21 +45,21 @@ const routes: Routes = [
       { path: 'menu_ropa/:tipoProducto', component: MenuRopaComponent },
       { path: 'contacto', component: ContactoComponent },
       { path: 'tatuajes', component: TatuajesComponent },
-      { path: 'nuevo_producto', component: NuevoProductoComponent, canActivate: [AuthGuard] },
-      { path: 'nueva_informacion', component: NuevaInformacionComponent, canActivate: [AuthGuard] },
-      { path: 'nuevo_tatuaje', component: NuevoTatuajeComponent, canActivate: [AuthGuard] },
-      { path: 'nuevo_tipo_producto', component: NuevoTipoProductoComponent, canActivate: [AuthGuard] },
-      { path: 'nuevo_producto/:id', component: NuevoProductoComponent, canActivate: [AuthGuard] },
-      { path: 'nueva_informacion/:id', component: NuevaInformacionComponent, canActivate: [AuthGuard] },
-      { path: 'nuevo_tatuaje/:id', component: NuevoTatuajeComponent, canActivate: [AuthGuard] },
-      { path: 'nuevo_tipo_producto/:id', component: NuevoTipoProductoComponent, canActivate: [AuthGuard] },
-      { path: 'productos_admin', component: ProductosAdminComponent, canActivate: [AuthGuard] },
-      { path: 'gestion/:elemento', component: GestionComponent, canActivate: [AuthGuard] },
+      { path: 'nuevo_producto', component: NuevoProductoComponent, canActivate: [AuthRoleGuard] },
+      { path: 'nueva_informacion', component: NuevaInformacionComponent, canActivate: [AuthRoleGuard] },
+      { path: 'nuevo_tatuaje', component: NuevoTatuajeComponent, canActivate: [AuthRoleGuard] },
+      { path: 'nuevo_tipo_producto', component: NuevoTipoProductoComponent, canActivate: [AuthRoleGuard] },
+      { path: 'nuevo_producto/:id', component: NuevoProductoComponent, canActivate: [AuthRoleGuard] },
+      { path: 'nueva_informacion/:id', component: NuevaInformacionComponent, canActivate: [AuthRoleGuard] },
+      { path: 'nuevo_tatuaje/:id', component: NuevoTatuajeComponent, canActivate: [AuthRoleGuard] },
+      { path: 'nuevo_tipo_producto/:id', component: NuevoTipoProductoComponent, canActivate: [AuthRoleGuard] },
+      { path: 'productos_admin', component: ProductosAdminComponent, canActivate: [AuthRoleGuard] },
+      { path: 'gestion/:elemento', component: GestionComponent, canActivate: [AuthRoleGuard] },
       { path: 'mi-perfil', component: MiPerfilComponent, canActivate: [AuthenticatedGuard] },
       { path: 'cesta', component: CestaComponent },
       { path: 'compra', component: CompraComponent, canActivate: [AuthenticatedGuard]},
       { path: 'mis_pedidos', component: MisPedidosComponent, canActivate: [AuthenticatedGuard]},
-      { path: 'datos_envio', component: DatosEnvioComponent, canActivate: [AuthenticatedGuard]}
+      { path: 'datos_envio', component: DatosEnvioComponent, canActivate: [AuthenticatedGuard]},
     ]
   }
 ];

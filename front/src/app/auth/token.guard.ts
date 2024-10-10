@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import Swal from 'sweetalert2';
 
 // Clase para controlar el tema de token y roles de usuario autenticado
-export const AuthGuard: CanActivateFn = (_route, state) => {
+export const AuthRoleGuard: CanActivateFn = (_route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const restrictedRoutes = ['/nuevo_producto', '/nuevo_tipo_producto', '/nuevo_tatuaje', '/productos_admin', '/gestion', '/nuava_informacion'];

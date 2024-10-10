@@ -44,7 +44,7 @@ export class PedidosService {
   
     // Enviar email como cadena de texto
     return this.http.post<any>(
-      `${this.apiUrl}/crear_pedido?email=${encodeURIComponent(email)}&total=${total}`, 
+      `${this.apiUrl}/crear_pedido?email=${encodeURIComponent(email)}&total=${total}`,
       {}, 
       { headers }
     );

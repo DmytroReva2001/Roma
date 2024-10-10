@@ -6,7 +6,9 @@
   <div class="bg-white p-3 rounded shadow-sm">
     <div *ngFor="let product of cestProducts" class="row mb-3 p-3 border rounded align-items-center">
       <div class="col-auto text-center pe-2">
-        <input type="checkbox" id="productCheckbox-{{ product.producto.id }}" [checked]="product.selected" (change)="toggleSelection(product)" />
+        <label for="productCheckbox-{{ product.producto.id }}">
+          <input type="checkbox" id="productCheckbox-{{ product.producto.id }}" [checked]="product.selected" (change)="toggleSelection(product)" />
+        </label>
       </div>
 
       <div class="col-12 col-md-2 text-center text-md-start mb-2 mb-md-0">
